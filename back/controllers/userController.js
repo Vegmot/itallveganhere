@@ -1,5 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
+import Profile from '../models/profileModel.js';
+import Order from '../models/orderModel.js';
 import generateToken from '../utils/generateToken.js';
 
 // Authenticate user and get logged in
@@ -137,9 +139,24 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // DELETE /api/users/:userId
 // private / private_admin
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+  const user = await User.findById(req.params.userId);
+  const order = await Order.findOne({ user: req.params.userId });
+  const profile = await Profile.findOne({ user: req.params.userId });
+  // reset avatar first
+  await User.findOneAndUpdate(
+    { _id: req.params.userId },
+    {
+      avatar:
+        'https://gravatar.com/avatar/a9a5b0968dbea215c3fc8dd56c0234a5?d=mm&r=pg&s=200',
+    },
+    { new: true }
+  );
 
   if (user) {
+    // I would rather leave posts and comments, even if the user gets deleted
+    // and display the user's name as like (Deleted User)
+    if (order) await order.remove();
+    if (profile) await profile.remove();
     await user.remove();
     res.json({ message: 'Successfully deleted the user' });
   } else {
