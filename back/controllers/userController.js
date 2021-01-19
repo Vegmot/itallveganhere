@@ -17,9 +17,8 @@ const authUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      isBronze: user.isBronze,
-      isSilver: user.isSilver,
-      isGold: user.isGold,
+      isPremium: user.isPremium,
+      premiumAt: user.premiumAt && user.premiumAt,
       token: generateToken(user._id),
     });
   } else {
@@ -57,9 +56,8 @@ const registerUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      isBronze: user.isBronze,
-      isSilver: user.isSilver,
-      isGold: user.isGold,
+      isPremium: user.isPremium,
+      premiumAt: user.premiumAt && user.premiumAt,
       token: generateToken(user._id),
     });
   } else {
@@ -81,9 +79,8 @@ const getUserInfo = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      isBronze: user.isBronze,
-      isSilver: user.isSilver,
-      isGold: user.isGold,
+      isPremium: user.isPremium,
+      premiumAt: user.premiumAt && user.premiumAt,
     });
   } else {
     res.status(404);
@@ -118,9 +115,8 @@ const updateUserInfo = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      isBronze: user.isBronze,
-      isSilver: user.isSilver,
-      isGold: user.isGold,
+      isPremium: user.isPremium,
+      premiumAt: user.premiumAt && user.premiumAt,
       token: generateToken(user._id),
     });
   } else {
@@ -180,6 +176,8 @@ const adminUpdateUserInfo = asyncHandler(async (req, res) => {
       req.body.lastName.charAt(0).toUpperCase() +
         req.body.lastName.slice(1).toLowerCase() || user.lastName;
     user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin || user.isAdmin;
+    user.isPremium = req.body.isPremium || user.isPremium;
 
     await user.save();
 
@@ -189,9 +187,8 @@ const adminUpdateUserInfo = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      isBronze: user.isBronze,
-      isSilver: user.isSilver,
-      isGold: user.isGold,
+      isPremium: user.isPremium,
+      premiumAt: user.premiumAt && user.premiumAt,
     });
   } else {
     res.status(404);

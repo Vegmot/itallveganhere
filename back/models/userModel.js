@@ -23,17 +23,13 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isBronze: {
+    isPremium: {
       type: Boolean,
       default: false,
     },
-    isSilver: {
-      type: Boolean,
-      default: false,
-    },
-    isGold: {
-      type: Boolean,
-      default: false,
+    premiumAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true }
