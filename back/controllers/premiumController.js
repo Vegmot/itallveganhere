@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import Premium from '../models/premiumModel.js';
 
 // Get premium package item
-// GET /api/premium
+// GET /api/premiums
 // public
 const getPremiumPackages = asyncHandler(async (req, res) => {
   const premiumPackages = await Premium.find({});
@@ -16,7 +16,7 @@ const getPremiumPackages = asyncHandler(async (req, res) => {
 });
 
 // Create a new premium package item
-// POST /api/premium
+// POST /api/premiums
 // private_admin
 const createPremiumPackage = asyncHandler(async (req, res) => {
   const { name, image, description, price } = req.body;
@@ -31,8 +31,29 @@ const createPremiumPackage = asyncHandler(async (req, res) => {
   res.json(createdPackage);
 });
 
+// Update a premium package
+// PUT /api/premiums/:premiumId
+// private_admin
+const updatePremiumPackage = asyncHandler(async (req, res) => {
+  const { name, image, description, price } = req.body;
+  const premiumPackage = await Premium.findById(req.params.premiumId);
+
+  if (premiumPackage) {
+    premiumPackage.name = premiumPackage.name || name;
+    premiumPackage.image = premiumPackage.image || image;
+    premiumPackage.description = premiumPackage.description || description;
+    premiumPackage.price = premiumPackage.price || price;
+
+    const updatedPremiumPackage = await premiumPackage.save();
+    res.json(updatedPremiumPackage);
+  } else {
+    res.status(404);
+    throw new Error('Package not found');
+  }
+});
+
 // Delete a premium package item
-// DELETE /api/premium/:premiumId
+// DELETE /api/premiums/:premiumId
 // private_admin
 const deletePremiumPackage = asyncHandler(async (req, res) => {
   const premiumPackage = await Premium.findById(req.params.premiumId);
@@ -43,7 +64,7 @@ const deletePremiumPackage = asyncHandler(async (req, res) => {
     res.json({ message: 'Successfully deleted the package' });
   } else {
     res.status(404);
-    throw new Error('Package(s) not found');
+    throw new Error('Package not found');
   }
 });
 
@@ -65,6 +86,7 @@ const setUserToPremium = asyncHandler(async (req, res) => {
 export {
   getPremiumPackages,
   createPremiumPackage,
+  updatePremiumPackage,
   deletePremiumPackage,
   setUserToPremium,
 };
