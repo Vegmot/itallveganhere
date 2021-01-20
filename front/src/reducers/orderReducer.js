@@ -64,21 +64,41 @@ export const orderToPaidReducer = (state = {}, action) => {
       return state;
   }
 };
-export const listOrdersReducer = (state, action) => {
+export const listOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
+    case LIST_MY_ORDERS_REQUEST:
+      return { loading: true };
+    case LIST_MY_ORDERS_SUCCESS:
+      return { loading: false, orders: action.payload };
+    case LIST_MY_ORDERS_FAIL:
+      return { loading: false, error: action.payload };
+    case LIST_MY_ORDERS_RESET:
+      return { orders: [] };
     default:
       return state;
   }
 };
 
-export const adminGetAllOrdersReducer = (state, action) => {
+export const adminGetAllOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
+    case ADMIN_GET_ALL_ORDERS_REQUEST:
+      return { loading: true };
+    case ADMIN_GET_ALL_ORDERS_SUCCESS:
+      return { loading: false, orders: action.payload };
+    case ADMIN_GET_ALL_ORDERS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
-export const adminSetOrderOutForDeliveryReducer = (state, action) => {
+export const adminSetOrderOutForDeliveryReducer = (state = {}, action) => {
   switch (action.type) {
+    case ADMIN_OUT_FOR_DELIVERY_REQUEST:
+      return { loading: true };
+    case ADMIN_OUT_FOR_DELIVERY_SUCCESS:
+      return { loading: false, success: true };
+    case ADMIN_OUT_FOR_DELIVERY_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

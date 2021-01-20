@@ -10,9 +10,9 @@ import {
 import { protect, admin } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.route('/:orderId/paid').put(protect, updateOrderToPaid);
+router.route('/:orderId/pay').put(protect, updateOrderToPaid);
 router
-  .route('/:orderId/setout')
+  .route('/:orderId/deliver')
   .put(protect, admin, updateOrderToOutForDelivery);
 router.route('/:orderId').get(protect, getOrderById);
 router.route('/myorders').get(protect, getMyOrders);
