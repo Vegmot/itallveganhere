@@ -10,12 +10,16 @@ import {
   getUserById,
   adminUpdateUserInfo,
 } from '../controllers/userController.js';
-import { setUserToPremium } from '../controllers/premiumController.js';
+import {
+  setUserToPremium,
+  cancelUserPremium,
+} from '../controllers/premiumController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
 router.route('/login').post(authUser);
 router.route('/register').post(registerUser);
 router.route('/userInfo/premium').put(protect, setUserToPremium);
+router.route('/userInfo/unpremium').put(protect, cancelUserPremium);
 router
   .route('/userInfo')
   .get(protect, getUserInfo)
