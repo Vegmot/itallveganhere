@@ -30,9 +30,7 @@ import { LIST_MY_ORDERS_RESET } from '../constants/orderConstants';
 
 export const login = (email, password) => async dispatch => {
   try {
-    dispatch({
-      type: USER_LOGIN_REQUEST,
-    });
+    dispatch({ type: USER_LOGIN_REQUEST });
 
     const config = {
       headers: {
@@ -70,9 +68,7 @@ export const register = (
   password
 ) => async dispatch => {
   try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+    dispatch({ type: USER_REGISTER_REQUEST });
 
     const config = {
       headers: {
@@ -120,12 +116,10 @@ export const logout = () => dispatch => {
   document.location.href = '/';
 };
 
-// logged in user
-export const getUserInfo = () => async (dispatch, getState) => {
+// logged in user gets her/his own info
+export const getuserData = () => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USER_INFO_REQUEST,
-    });
+    dispatch({ type: USER_INFO_REQUEST });
 
     const {
       userLogin: { userData },
@@ -137,7 +131,7 @@ export const getUserInfo = () => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.get('/api/users/userInfo', config);
+    const res = await axios.get('/api/users/userData', config);
 
     dispatch({
       type: USER_INFO_SUCCESS,
@@ -154,12 +148,10 @@ export const getUserInfo = () => async (dispatch, getState) => {
   }
 };
 
-// logged in user
-export const updateUserInfo = user => async (dispatch, getState) => {
+// logged in user updates her/his own info
+export const updateuserData = user => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USER_UPDATE_REQUEST,
-    });
+    dispatch({ type: USER_UPDATE_REQUEST });
 
     const {
       userLogin: { userData },
@@ -172,7 +164,7 @@ export const updateUserInfo = user => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.put('/api/users/userInfo', user, config);
+    const res = await axios.put('/api/users/userData', user, config);
 
     dispatch({
       type: USER_UPDATE_SUCCESS,
@@ -202,9 +194,7 @@ export const updateUserInfo = user => async (dispatch, getState) => {
 
 export const getUsersList = () => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USERS_LIST_REQUEST,
-    });
+    dispatch({ type: USERS_LIST_REQUEST });
 
     const {
       userLogin: { userData },
@@ -235,9 +225,7 @@ export const getUsersList = () => async (dispatch, getState) => {
 
 export const deleteUser = userId => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: USER_DELETE_REQUEST,
-    });
+    dispatch({ type: USER_DELETE_REQUEST });
 
     const {
       userLogin: { userData },
@@ -265,11 +253,9 @@ export const deleteUser = userId => async (dispatch, getState) => {
   }
 };
 
-export const adminUpdateUserInfo = user => async (dispatch, getState) => {
+export const adminUpdateuserData = user => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: ADMIN_UPDATE_USER_REQUEST,
-    });
+    dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
 
     const {
       userLogin: { userData },
@@ -283,7 +269,7 @@ export const adminUpdateUserInfo = user => async (dispatch, getState) => {
     };
 
     const res = await axios.put(
-      `/api/users/${user._id}/userInfo`,
+      `/api/users/${user._id}/userData`,
       user,
       config
     );

@@ -24,9 +24,7 @@ import {
 
 export const createOrder = order => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: CREATE_ORDER_REQUEST,
-    });
+    dispatch({ type: CREATE_ORDER_REQUEST });
 
     const {
       userLogin: { userData },
@@ -58,9 +56,7 @@ export const createOrder = order => async (dispatch, getState) => {
 
 export const getOrderDetails = orderId => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: ORDER_DETAILS_REQUEST,
-    });
+    dispatch({ type: ORDER_DETAILS_REQUEST });
 
     const {
       userLogin: { userData },
@@ -94,9 +90,7 @@ export const payForOrder = (orderId, paymentResult) => async (
   getState
 ) => {
   try {
-    dispatch({
-      type: ORDER_TO_PAID_REQUEST,
-    });
+    dispatch({ type: ORDER_TO_PAID_REQUEST });
 
     const {
       userLogin: { userData },
@@ -132,9 +126,8 @@ export const payForOrder = (orderId, paymentResult) => async (
 
 export const deliverOrder = orderId => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: ADMIN_OUT_FOR_DELIVERY_REQUEST,
-    });
+    dispatch({ type: ADMIN_OUT_FOR_DELIVERY_REQUEST });
+
     const {
       userLogin: { userData },
     } = getState();

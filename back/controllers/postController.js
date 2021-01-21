@@ -45,6 +45,26 @@ const getPostById = asyncHandler(async (req, res) => {
   res.json(post);
 });
 
+// Edit a post
+// PUT /api/posts/:postId
+// private
+const editPost = asyncHandler(async (req, res) => {
+  const { title, content } = req.body;
+  const post = await Post.findById(req.params.postId);
+
+  if (!req.params.postId.match(/^[0-9a-fA-F]{24}$/) || !post) {
+    res.status(404);
+    throw new Error('Post not found');
+  } else {
+    post.title = title || post.title;
+    post.content = content || post.content;
+    post.date = Date.now();
+
+    const editedPost = await post.save();
+    res.json(editedPost);
+  }
+});
+
 // Delete a post
 // DELETE /api/posts/:postId
 // private
@@ -189,13 +209,34 @@ const addComment = asyncHandler(async (req, res) => {
   }
 });
 
+// Edit a comment on a post
+// PUT /api/posts/:postId/comments/:commentId
+// private
+const editComment = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.postId);
+  const comment = post.comments.filter(
+    comment => comment._id === req.params.commentId
+  );
+
+  if (!comment) {
+    res.status(404);
+    throw new Error('Comment not found');
+  } else {
+    comment.text = req.body.text || comment.text;
+    comment.date = Date.now();
+
+    await post.save();
+    res.json(post.comments);
+  }
+});
+
 // Delete a comment
 // DELETE /api/posts/:postId/comments/:commentId
 // private
 const deleteComment = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.postId);
   const comment = post.comments.filter(
-    (comment = comment._id === req.params.commentId)
+    comment => comment._id === req.params.commentId
   );
   if (!comment) {
     res.status(404);
@@ -215,11 +256,13 @@ export {
   createPost,
   getPosts,
   getPostById,
+  editPost,
   deletePost,
   addLikePost,
   removeLikePost,
   addDislikePost,
   removeDislikePost,
   addComment,
+  editComment,
   deleteComment,
 };

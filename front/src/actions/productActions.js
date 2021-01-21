@@ -27,9 +27,7 @@ export const getProductsList = (
   pageNumber = ''
 ) => async dispatch => {
   try {
-    dispatch({
-      type: GET_PRODUCTS_REQUEST,
-    });
+    dispatch({ type: GET_PRODUCTS_REQUEST });
 
     const res = await axios.get(
       `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
@@ -52,9 +50,7 @@ export const getProductsList = (
 
 export const getProductItem = productId => async dispatch => {
   try {
-    dispatch({
-      type: GET_PRODUCT_ITEM_REQUEST,
-    });
+    dispatch({ type: GET_PRODUCT_ITEM_REQUEST });
 
     const res = await axios.get(`/api/products/${productId}`);
 
@@ -75,17 +71,15 @@ export const getProductItem = productId => async dispatch => {
 
 export const deleteProductItem = productId => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: ADMIN_DELETE_PRODUCT_REQUEST,
-    });
+    dispatch({ type: ADMIN_DELETE_PRODUCT_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userData },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
 
@@ -107,18 +101,16 @@ export const deleteProductItem = productId => async (dispatch, getState) => {
 
 export const createProductItem = () => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: ADMIN_CREATE_PRODUCT_REQUEST,
-    });
+    dispatch({ type: ADMIN_CREATE_PRODUCT_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userData },
     } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
 
@@ -142,18 +134,16 @@ export const createProductItem = () => async (dispatch, getState) => {
 export const updateProductItem = product => async (dispatch, getState) => {
   try {
   } catch (error) {
-    dispatch({
-      type: ADMIN_UPDATE_PRODUCT_REQUEST,
-    });
+    dispatch({ type: ADMIN_UPDATE_PRODUCT_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userData },
     } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
 
@@ -183,18 +173,16 @@ export const writeProductReviewItem = (productId, review) => async (
   getState
 ) => {
   try {
-    dispatch({
-      type: CREATE_PRODUCT_REVIEW_REQUEST,
-    });
+    dispatch({ type: CREATE_PRODUCT_REVIEW_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userData },
     } = getState();
 
     const config = {
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userData.token}`,
       },
     };
 
@@ -221,9 +209,7 @@ export const writeProductReviewItem = (productId, review) => async (
 
 export const getTopProducts = () => async dispatch => {
   try {
-    dispatch({
-      type: GET_TOP_PRODUCTS_REQUEST,
-    });
+    dispatch({ type: GET_TOP_PRODUCTS_REQUEST });
 
     const res = await axios.get('/api/products/top');
 

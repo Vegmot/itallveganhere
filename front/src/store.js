@@ -112,7 +112,7 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : [];
 
-const userInfoFromStorage = localStorage.getItem('userData')
+const userDataFromStorage = localStorage.getItem('userData')
   ? JSON.parse(localStorage.getItem('userData'))
   : null;
 
@@ -130,7 +130,7 @@ const initialState = {
     shippingAddress: shippingAddressFromStorage,
     paymentMethod: paymentMethodFromStorage,
   },
-  userLogin: { userData: userInfoFromStorage },
+  userLogin: { userData: userDataFromStorage },
 };
 
 const middleware = [thunk];
