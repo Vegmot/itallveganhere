@@ -8,13 +8,15 @@ import {
   DELETE_PREMIUM_PACKAGE_REQUEST,
   DELETE_PREMIUM_PACKAGE_SUCCESS,
   DELETE_PREMIUM_PACKAGE_FAIL,
+} from '../constants/premiumConstants';
+import {
   SET_USER_TO_PREMIUM_REQUEST,
   SET_USER_TO_PREMIUM_SUCCESS,
   SET_USER_TO_PREMIUM_FAIL,
   CANCEL_USER_PREMIUM_REQUEST,
   CANCEL_USER_PREMIUM_SUCCESS,
   CANCEL_USER_PREMIUM_FAIL,
-} from '../constants/premiumConstants';
+} from '../constants/userConstants';
 
 export const createPremiumPackageReducer = (state = {}, action) => {
   switch (action.type) {

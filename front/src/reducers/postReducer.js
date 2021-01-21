@@ -64,9 +64,11 @@ export const likesUpdateReducer = (state = { posts: [] }, action) => {
     case UPDATE_LIKES_SUCCESS:
       return {
         ...state,
-        posts: state.posts.map(post => post._id === action.payload.id)
-          ? { ...post, likes: action.payload.likes }
-          : post,
+        posts: state.posts.map(post =>
+          post._id === action.payload.id
+            ? { ...post, likes: action.payload.likes }
+            : post
+        ),
         loading: false,
       };
     case UPDATE_LIKES_FAIL:
@@ -83,9 +85,11 @@ export const dislikesUpdateReducer = (state = { posts: [] }, action) => {
     case UPDATE_DISLIKES_SUCCESS:
       return {
         ...state,
-        posts: state.posts.map(post => post._id === action.payload.id)
-          ? { ...post, dislikes: action.payload.dislikes }
-          : post,
+        posts: state.posts.map(post =>
+          post._id === action.payload.id
+            ? { ...post, dislikes: action.payload.dislikes }
+            : post
+        ),
         loading: false,
       };
     case UPDATE_DISLIKES_FAIL:

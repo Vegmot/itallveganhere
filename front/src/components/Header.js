@@ -1,16 +1,18 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userData } = userLogin;
 
   const logoutHandler = () => {
-    console.log('Logged out!');
+    dispatch(logout());
   };
 
   return (
@@ -25,36 +27,36 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
               <Nav className='ml-auto'>
-                <LinkContainer to={userInfo ? '/users' : '/login'}>
+                <LinkContainer to={userData ? '/users' : '/login'}>
                   <Nav.Link>
                     <i className='fas fa-seedling'></i> Vegans
                   </Nav.Link>
                 </LinkContainer>
 
-                <LinkContainer to={userInfo ? '/products' : '/login'}>
+                <LinkContainer to={userData ? '/products' : '/login'}>
                   <Nav.Link>
                     <i className='fas fa-shopping-bag'></i> Products
                   </Nav.Link>
                 </LinkContainer>
 
-                <LinkContainer to={userInfo ? '/posts' : '/login'}>
+                <LinkContainer to={userData ? '/posts' : '/login'}>
                   <Nav.Link>
                     <i className='fas fa-pencil-alt'></i> Posts
                   </Nav.Link>
                 </LinkContainer>
 
-                {userInfo ? (
-                  userInfo.isAdmin ? (
+                {userData ? (
+                  userData.isAdmin ? (
                     <NavDropdown title='Admin' id='adminMenu'>
-                      <LinkContainer to='/admin/userslist'>
+                      <LinkContainer to='/admin/users'>
                         <NavDropdown.Item>Users</NavDropdown.Item>
                       </LinkContainer>
 
-                      <LinkContainer to='/admin/productslist'>
+                      <LinkContainer to='/admin/products'>
                         <NavDropdown.Item>Products</NavDropdown.Item>
                       </LinkContainer>
 
-                      <LinkContainer to='/admin/orderslist'>
+                      <LinkContainer to='/admin/orders'>
                         <NavDropdown.Item>Orders</NavDropdown.Item>
                       </LinkContainer>
 
@@ -65,7 +67,7 @@ const Header = () => {
                     </NavDropdown>
                   ) : (
                     <NavDropdown
-                      title={userInfo.firstName + ' ' + userInfo.lastName}
+                      title={userData.firstName + ' ' + userData.lastName}
                       id='username'
                     >
                       <NavDropdown.Item href='/users/info'>

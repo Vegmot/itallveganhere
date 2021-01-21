@@ -23,4 +23,4 @@ app.use('/api/profiles', profileRoute);
 app.use('/api/users', userRoute);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}.`));
+app.listen(PORT, () => console.log(`.Server running on port ${PORT}.`));

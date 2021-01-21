@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
@@ -207,7 +208,7 @@ export const writeProductReviewItem = (productId, review) => async (
   }
 };
 
-export const getTopProducts = () => async dispatch => {
+export const getTopFiveProducts = () => async dispatch => {
   try {
     dispatch({ type: GET_TOP_PRODUCTS_REQUEST });
 
