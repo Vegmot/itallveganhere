@@ -68,47 +68,9 @@ const deletePremiumPackage = asyncHandler(async (req, res) => {
   }
 });
 
-// Update logged in user to Premium - admins can do this too and this is already in userController.js
-// PUT /api/users/userInfo/premium
-// private
-const setUserToPremium = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  if (user) {
-    user.isPremium = true;
-    user.premiumAt = Date.now();
-
-    const updatedPremiumUser = await user.save();
-    res.json(updatedPremiumUser);
-  } else {
-    res.status(404);
-    throw new Error('User not found');
-  }
-});
-
-// Cancel logged in user's premium service
-// PUT /api/users/userInfo/unpremium
-// private
-const cancelUserPremium = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-
-  if (user) {
-    user.isPremium = false;
-    user.cancelPremiumAt = Date.now();
-
-    const updatedPremiumUser = await user.save();
-    res.json(updatedPremiumUser);
-  } else {
-    res.status(404);
-    throw new Error('User not found');
-  }
-});
-
 export {
   getPremiumPackages,
   createPremiumPackage,
   updatePremiumPackage,
   deletePremiumPackage,
-  setUserToPremium,
-  cancelUserPremium,
 };

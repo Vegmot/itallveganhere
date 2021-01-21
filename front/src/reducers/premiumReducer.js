@@ -16,36 +16,72 @@ import {
   CANCEL_USER_PREMIUM_FAIL,
 } from '../constants/premiumConstants';
 
-export const createPremiumPackageReducer = (state, action) => {
+export const createPremiumPackageReducer = (state = {}, action) => {
   switch (action.type) {
+    case CREATE_PREMIUM_PACKAGE_REQUEST:
+      return { loading: true };
+    case CREATE_PREMIUM_PACKAGE_SUCCESS:
+      return { loading: false, premiumPackage: action.payload };
+    case CREATE_PREMIUM_PACKAGE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export const updatePremiumPackageReducer = (state, action) => {
+export const updatePremiumPackageReducer = (
+  state = { premiumPackage: {} },
+  action
+) => {
   switch (action.type) {
+    case UPDATE_PREMIUM_PACKAGE_REQUEST:
+      return { loading: true };
+    case UPDATE_PREMIUM_PACKAGE_SUCCESS:
+      return { loading: false, premiumPackage: action.payload };
+    case UPDATE_PREMIUM_PACKAGE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export const removePremiumPackageReducer = (state, action) => {
+export const removePremiumPackageReducer = (
+  state = { premiumPackage: {} },
+  action
+) => {
   switch (action.type) {
+    case DELETE_PREMIUM_PACKAGE_REQUEST:
+      return { loading: true };
+    case DELETE_PREMIUM_PACKAGE_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_PREMIUM_PACKAGE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export const setUserToPremiumReducer = (state, action) => {
+export const setUserToPremiumReducer = (state = { userData: {} }, action) => {
   switch (action.type) {
+    case SET_USER_TO_PREMIUM_REQUEST:
+      return { loading: true };
+    case SET_USER_TO_PREMIUM_SUCCESS:
+      return { loading: false, userData: action.payload };
+    case SET_USER_TO_PREMIUM_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export const cancelUserPremiumReducer = (state, action) => {
+export const cancelUserPremiumReducer = (state = { userData: {} }, action) => {
   switch (action.type) {
+    case CANCEL_USER_PREMIUM_REQUEST:
+      return { loading: true };
+    case CANCEL_USER_PREMIUM_SUCCESS:
+      return { loading: false, userData: action.payload };
+    case CANCEL_USER_PREMIUM_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

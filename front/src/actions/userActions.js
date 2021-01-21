@@ -25,6 +25,18 @@ import {
   USER_LOGOUT,
   USER_INFO_RESET,
   USERS_LIST_RESET,
+  CANCEL_USER_PREMIUM_FAIL,
+  CANCEL_USER_PREMIUM_REQUEST,
+  CANCEL_USER_PREMIUM_SUCCESS,
+  SET_USER_TO_PREMIUM_FAIL,
+  SET_USER_TO_PREMIUM_REQUEST,
+  SET_USER_TO_PREMIUM_SUCCESS,
+  ADMIN_CANCEL_USER_PREMIUM_FAIL,
+  ADMIN_CANCEL_USER_PREMIUM_REQUEST,
+  ADMIN_CANCEL_USER_PREMIUM_SUCCESS,
+  ADMIN_SET_USER_TO_PREMIUM_FAIL,
+  ADMIN_SET_USER_TO_PREMIUM_REQUEST,
+  ADMIN_SET_USER_TO_PREMIUM_SUCCESS,
 } from '../constants/userConstants';
 import { LIST_MY_ORDERS_RESET } from '../constants/orderConstants';
 
@@ -131,7 +143,7 @@ export const getuserData = () => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.get('/api/users/userData', config);
+    const res = await axios.get('/api/users/userInfo', config);
 
     dispatch({
       type: USER_INFO_SUCCESS,
@@ -164,7 +176,7 @@ export const updateuserData = user => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.put('/api/users/userData', user, config);
+    const res = await axios.put('/api/users/userInfo', user, config);
 
     dispatch({
       type: USER_UPDATE_SUCCESS,
@@ -253,7 +265,7 @@ export const deleteUser = userId => async (dispatch, getState) => {
   }
 };
 
-export const adminUpdateuserData = user => async (dispatch, getState) => {
+export const adminUpdateuserInfo = user => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
 
@@ -269,7 +281,7 @@ export const adminUpdateuserData = user => async (dispatch, getState) => {
     };
 
     const res = await axios.put(
-      `/api/users/${user._id}/userData`,
+      `/api/users/${user._id}/userInfo`,
       user,
       config
     );
@@ -281,6 +293,134 @@ export const adminUpdateuserData = user => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_UPDATE_USER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUserToPremium = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SET_USER_TO_PREMIUM_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.put(`/api/users/userInfo/premium`, {}, config);
+
+    dispatch({
+      type: SET_USER_TO_PREMIUM_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_USER_TO_PREMIUM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const stopUserPremium = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: CANCEL_USER_PREMIUM_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.put('/api/users/userInfo/unpremium', {}, config);
+
+    dispatch({
+      type: CANCEL_USER_PREMIUM_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CANCEL_USER_PREMIUM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const adminUpdateUserToPremium = user => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_SET_USER_TO_PREMIUM_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.put(`/api/users/${user._id}/premium`, user, config);
+
+    dispatch({
+      type: ADMIN_SET_USER_TO_PREMIUM_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_SET_USER_TO_PREMIUM_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const adminStopUserPremium = user => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_CANCEL_USER_PREMIUM_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.put(
+      `/api/users/${user._id}/unpremium`,
+      user,
+      config
+    );
+
+    dispatch({
+      type: ADMIN_CANCEL_USER_PREMIUM_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_CANCEL_USER_PREMIUM_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

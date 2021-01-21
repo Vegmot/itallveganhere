@@ -213,6 +213,78 @@ const adminUpdateUserInfo = asyncHandler(async (req, res) => {
   }
 });
 
+// Update logged in user to Premium
+// PUT /api/users/userInfo/premium
+// private
+const setUserToPremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.isPremium = true;
+    user.premiumAt = Date.now();
+
+    const updatedPremiumUser = await user.save();
+    res.json(updatedPremiumUser);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// Cancel logged in user's premium service
+// PUT /api/users/userInfo/unpremium
+// private
+const cancelUserPremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.isPremium = false;
+    user.cancelPremiumAt = Date.now();
+
+    const updatedPremiumUser = await user.save();
+    res.json(updatedPremiumUser);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// Update a user to Premium
+// PUT /api/users/:userId/premium
+// private_admin
+const adminSetUserToPremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params._id);
+
+  if (user) {
+    user.isPremium = true;
+    user.premiumAt = Date.now();
+
+    const updatedPremiumUser = await user.save();
+    res.json(updatedPremiumUser);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// Cancel a user's premium service
+// PUT /api/users/:userId/unpremium
+// private_admin
+const adminCancelUserPremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params._id);
+
+  if (user) {
+    user.isPremium = false;
+    user.cancelPremiumAt = Date.now();
+
+    const updatedPremiumUser = await user.save();
+    res.json(updatedPremiumUser);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   authUser,
   registerUser,
@@ -222,4 +294,8 @@ export {
   deleteUser,
   getUserById,
   adminUpdateUserInfo,
+  setUserToPremium,
+  cancelUserPremium,
+  adminSetUserToPremium,
+  adminCancelUserPremium,
 };

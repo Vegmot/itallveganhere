@@ -9,11 +9,12 @@ import {
   deleteUser,
   getUserById,
   adminUpdateUserInfo,
-} from '../controllers/userController.js';
-import {
   setUserToPremium,
   cancelUserPremium,
-} from '../controllers/premiumController.js';
+  adminSetUserToPremium,
+  adminCancelUserPremium,
+} from '../controllers/userController.js';
+
 import { protect, admin } from '../middleware/authMiddleware.js';
 
 router.route('/login').post(authUser);
@@ -24,8 +25,10 @@ router
   .route('/userInfo')
   .get(protect, getUserInfo)
   .put(protect, updateUserInfo);
-router.route('/:userId').get(protect, getUserById).delete(protect, deleteUser);
+router.route('/:userId/premium').put(protect, admin, adminSetUserToPremium);
+router.route('/:userId/unpremium').put(protect, admin, adminCancelUserPremium);
 router.route('/:userId/userInfo').put(protect, admin, adminUpdateUserInfo);
+router.route('/:userId').get(protect, getUserById).delete(protect, deleteUser);
 router.route('/').get(protect, admin, getAllUsers);
 
 export default router;
