@@ -65,6 +65,39 @@ const Header = () => {
                         Logout
                       </NavDropdown.Item>
                     </NavDropdown>
+                  ) : userData.isPremium ? (
+                    <NavDropdown
+                      title={
+                        '* ' +
+                        ' ' +
+                        userData.firstName +
+                        ' ' +
+                        userData.lastName +
+                        ' *'
+                      }
+                      id='username'
+                    >
+                      <NavDropdown.Item href='/users/info'>
+                        <i className='fas fa-info-circle'></i> Basic info
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item href='/profiles/:userId'>
+                        <i className='far fa-id-card'></i> Profile
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item href='/cart/:userId'>
+                        <i className='fas fa-shopping-cart'></i> My cart
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item href='/orders/:orderId'>
+                        <i className='fas fa-shipping-fast'></i> My order
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={logoutHandler}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
                   ) : (
                     <NavDropdown
                       title={userData.firstName + ' ' + userData.lastName}

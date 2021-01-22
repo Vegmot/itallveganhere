@@ -8,6 +8,8 @@ import Register from './screens/RegisterScreen';
 import Login from './screens/LoginScreen';
 import ProductsHomeScreen from './screens/products/ProductsHomeScreen';
 import ProductItemScreen from './screens/products/ProductItemScreen';
+import PostsHomeScreen from './screens/posts/PostsHomeScreen';
+import PostForm from './screens/posts/PostForm';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -40,6 +42,8 @@ const App = () => {
               />
               <Route exact path='/products/:id' component={ProductItemScreen} />
               <Route exact path='/products' component={ProductsHomeScreen} />
+              <Route exact path='/posts/post-form' component={PostForm} />
+              <Route exact path='/posts' component={PostsHomeScreen} />
               <Route component={NotFound} />
             </Switch>
           </Container>

@@ -74,7 +74,7 @@ export const getPostItem = postId => async dispatch => {
   }
 };
 
-export const editPostItem = post => async dispatch => {
+export const editPostItem = post => async (dispatch, getState) => {
   try {
     dispatch({ type: EDIT_POST_ITEM_REQUEST });
 
@@ -124,7 +124,7 @@ export const addLikePost = postId => async (dispatch, getState) => {
 
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
-      payload: { id, likes: res.data },
+      payload: { postId, likes: res.data },
     });
   } catch (error) {
     dispatch({
@@ -155,7 +155,7 @@ export const removeLikePost = postId => async (dispatch, getState) => {
 
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
-      payload: { id, likes: res.data },
+      payload: { postId, likes: res.data },
     });
   } catch (error) {
     dispatch({
@@ -186,7 +186,7 @@ export const addDislikesPost = postId => async (dispatch, getState) => {
 
     dispatch({
       type: UPDATE_DISLIKES_SUCCESS,
-      payload: { id, dislikes: res.data },
+      payload: { postId, dislikes: res.data },
     });
   } catch (error) {
     dispatch({
@@ -217,7 +217,7 @@ export const removeDislikesPost = postId => async (dispatch, getState) => {
 
     dispatch({
       type: UPDATE_DISLIKES_SUCCESS,
-      payload: { id, dislikes: res.data },
+      payload: { postId, dislikes: res.data },
     });
   } catch (error) {
     dispatch({
@@ -230,7 +230,7 @@ export const removeDislikesPost = postId => async (dispatch, getState) => {
   }
 };
 
-export const writeNewPost = () => async (dispatch, getState) => {
+export const writeNewPost = (title, content) => async (dispatch, getState) => {
   try {
     dispatch({ type: ADD_POST_REQUEST });
 
@@ -245,7 +245,7 @@ export const writeNewPost = () => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.post('/api/posts', config);
+    const res = await axios.post('/api/posts', { title, content }, config);
 
     dispatch({
       type: ADD_POST_SUCCESS,
@@ -294,7 +294,10 @@ export const writeNewComment = postId => async (dispatch, getState) => {
   }
 };
 
-export const editCommentItem = (postId, comment) => async dispatch => {
+export const editCommentItem = (postId, comment) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: EDIT_COMMENT_REQUEST });
 
