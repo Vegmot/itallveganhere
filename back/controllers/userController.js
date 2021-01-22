@@ -18,6 +18,7 @@ const authUser = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      avatar: user.avatar,
       isAdmin: user.isAdmin,
       isPremium: user.isPremium,
       premiumAt: user.premiumAt && user.premiumAt,
@@ -42,12 +43,17 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists');
   }
 
+  // users will have random avatar images when signing up
+  const imageNumber = Number(await User.countDocuments({})) + 1;
+  const avatar = `https://i.pravatar.cc/250?img=${imageNumber}`;
+
   const user = await User.create({
     firstName:
       firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase(),
     lastName:
       lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase(),
     email,
+    avatar,
     password,
   });
 
@@ -57,9 +63,9 @@ const registerUser = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      avatar: user.avatar,
       isAdmin: user.isAdmin,
       isPremium: user.isPremium,
-      premiumAt: user.premiumAt && user.premiumAt,
       token: generateToken(user._id),
     });
   } else {
@@ -80,6 +86,7 @@ const getUserInfo = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      avatar: user.avatar,
       isAdmin: user.isAdmin,
       isPremium: user.isPremium,
       premiumAt: user.premiumAt && user.premiumAt,
@@ -116,6 +123,7 @@ const updateUserInfo = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      avatar: user.avatar,
       isAdmin: user.isAdmin,
       isPremium: user.isPremium,
       premiumAt: user.premiumAt && user.premiumAt,
@@ -195,6 +203,7 @@ const adminUpdateUserInfo = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin || user.isAdmin;
     user.isPremium = req.body.isPremium || user.isPremium;
+    user.cancelPremium = req.body.cancelPremium || user.cancelledPremium;
 
     await user.save();
 
@@ -203,9 +212,12 @@ const adminUpdateUserInfo = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      avatar: user.avatar,
       isAdmin: user.isAdmin,
       isPremium: user.isPremium,
       premiumAt: user.premiumAt && user.premiumAt,
+      cancelPremium: user.cancelPremium,
+      cancelPremiumAt: user.cancelPremiumAt && user.cancelPremiumAt,
     });
   } else {
     res.status(404);
@@ -220,8 +232,22 @@ const setUserToPremium = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.isPremium = true;
-    user.premiumAt = Date.now();
+    // if the user buys premium package for the first time
+    if (user.isPremium === false) {
+      user.isPremium = true;
+      user.premiumAt = Date.now();
+    }
+
+    // if the user has cancelled a premium before
+    if (
+      user.cancelPremium === true &&
+      user.isPremium === false &&
+      user.cancelPremiumAt !== null
+    ) {
+      user.isPremium = true;
+      user.cancelPremium = false;
+      user.premiumAt = Date.now();
+    }
 
     const updatedPremiumUser = await user.save();
     res.json(updatedPremiumUser);
@@ -238,8 +264,14 @@ const cancelUserPremium = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.isPremium = false;
-    user.cancelPremiumAt = Date.now();
+    if (
+      (user.isPremium === true && user.premiumAt !== null) ||
+      user.cancelPremium === false
+    ) {
+      user.isPremium = false;
+      user.cancelPremium = true;
+      user.cancelPremiumAt = Date.now();
+    }
 
     const updatedPremiumUser = await user.save();
     res.json(updatedPremiumUser);
@@ -256,8 +288,22 @@ const adminSetUserToPremium = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params._id);
 
   if (user) {
-    user.isPremium = true;
-    user.premiumAt = Date.now();
+    // if the user buys premium package for the first time
+    if (user.isPremium === false) {
+      user.isPremium = true;
+      user.premiumAt = Date.now();
+    }
+
+    // if the user has cancelled a premium before
+    if (
+      user.cancelPremium === true &&
+      user.isPremium === false &&
+      user.cancelPremiumAt !== null
+    ) {
+      user.isPremium = true;
+      user.cancelPremium = false;
+      user.premiumAt = Date.now();
+    }
 
     const updatedPremiumUser = await user.save();
     res.json(updatedPremiumUser);
@@ -274,8 +320,14 @@ const adminCancelUserPremium = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params._id);
 
   if (user) {
-    user.isPremium = false;
-    user.cancelPremiumAt = Date.now();
+    if (
+      (user.isPremium === true && user.premiumAt !== null) ||
+      user.cancelPremium === false
+    ) {
+      user.isPremium = false;
+      user.cancelPremium = true;
+      user.cancelPremiumAt = Date.now();
+    }
 
     const updatedPremiumUser = await user.save();
     res.json(updatedPremiumUser);

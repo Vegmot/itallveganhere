@@ -159,7 +159,7 @@ const writeProductReview = asyncHandler(async (req, res) => {
 });
 
 // Get top products
-// GET /api/products
+// GET /api/products/top
 // public
 const getTopProducts = asyncHandler(async (req, res) => {
   const topProducts = await Product.find({}).sort({ rating: -1 }).limit(5);

@@ -49,7 +49,7 @@ export const getProductsList = (
   }
 };
 
-export const getProductItem = productId => async dispatch => {
+export const getProductItemDetails = productId => async dispatch => {
   try {
     dispatch({ type: GET_PRODUCT_ITEM_REQUEST });
 

@@ -14,6 +14,9 @@ const app = express();
 // mongoDB
 connectDB();
 
+// bodyParser
+app.use(express.json());
+
 // routes
 app.use('/api/orders', orderRoute);
 app.use('/api/posts', postRoute);

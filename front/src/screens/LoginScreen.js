@@ -12,15 +12,15 @@ const LoginScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
   const userLogin = useSelector(state => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error, userData } = userLogin;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (userInfo) {
+    if (userData) {
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+  }, [history, userData, redirect]);
 
   const submitHandler = e => {
     e.preventDefault();

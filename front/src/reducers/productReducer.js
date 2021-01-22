@@ -43,10 +43,13 @@ export const productsListReducer = (state = { products: [] }, action) => {
   }
 };
 
-export const getProductItemReducer = (state = { product: {} }, action) => {
+export const getProductItemReducer = (
+  state = { product: { reviews: [] } },
+  action
+) => {
   switch (action.type) {
     case GET_PRODUCT_ITEM_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case GET_PRODUCT_ITEM_SUCCESS:
       return { loading: false, product: action.payload };
     case GET_PRODUCT_ITEM_FAIL:

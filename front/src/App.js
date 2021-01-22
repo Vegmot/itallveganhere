@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import NotFound from './components/NotFound';
 import HomeScreen from './screens/HomeScreen';
 import Register from './screens/RegisterScreen';
 import Login from './screens/LoginScreen';
-import ProductsListScreen from './screens/products/ProductsListScreen';
+import ProductsHomeScreen from './screens/products/ProductsHomeScreen';
+import ProductItemScreen from './screens/products/ProductItemScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -15,12 +18,31 @@ const App = () => {
       <Router>
         <Header />
         <main className='py-3'>
-          <Switch>
-            <Route exact path='/' component={HomeScreen} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/products' component={ProductsListScreen} />
-          </Switch>
+          <Container>
+            <Switch>
+              <Route exact path='/' component={HomeScreen} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              <Route
+                exact
+                path='/products/search/:keyword/page/:pageNumber'
+                component={ProductsHomeScreen}
+              />
+              <Route
+                exact
+                path='/products/search/:keyword'
+                component={ProductsHomeScreen}
+              />
+              <Route
+                exact
+                path='/products/page/:pageNumber'
+                component={ProductsHomeScreen}
+              />
+              <Route exact path='/products/:id' component={ProductItemScreen} />
+              <Route exact path='/products' component={ProductsHomeScreen} />
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
         </main>
         <Footer />
       </Router>

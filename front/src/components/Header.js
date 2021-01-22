@@ -33,13 +33,13 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
 
-                <LinkContainer to={userData ? '/products' : '/login'}>
+                <LinkContainer to='/products'>
                   <Nav.Link>
                     <i className='fas fa-shopping-bag'></i> Products
                   </Nav.Link>
                 </LinkContainer>
 
-                <LinkContainer to={userData ? '/posts' : '/login'}>
+                <LinkContainer to='/posts'>
                   <Nav.Link>
                     <i className='fas fa-pencil-alt'></i> Posts
                   </Nav.Link>
