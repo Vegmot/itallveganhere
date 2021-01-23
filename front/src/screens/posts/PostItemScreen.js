@@ -12,7 +12,7 @@ import {
   removeDislikePost,
   deletePostItem,
 } from '../../actions/postActions';
-import { getUsersList } from '../../actions/userActions';
+import { ADD_COMMENT_RESET } from '../../constants/postConstants';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PostItemScreen = ({ match, history }) => {
@@ -24,18 +24,23 @@ const PostItemScreen = ({ match, history }) => {
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
 
+  const writeComment = useSelector(state => state.writeComment);
+  const { loading: loadingComment, error: errorComment } = writeComment;
+
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
+    if (!loadingComment && !errorComment) {
+      setComment('');
+      dispatch({ type: ADD_COMMENT_RESET });
+    }
     dispatch(getPostItem(postId));
-    dispatch(getUsersList());
-  }, [dispatch, postId]);
+  }, [dispatch, postId, loadingComment, errorComment]);
 
   const writeCommentHandler = e => {
     e.preventDefault();
     dispatch(writeNewComment(postId, comment));
-    setComment('');
   };
 
   const deletePostHandler = id => {
@@ -53,144 +58,134 @@ const PostItemScreen = ({ match, history }) => {
         Go back
       </Button>
 
-      <div className='post'>
-        <Card>
-          <Card.Header>
-            {post.firstName + ' ' + post.lastName} posted on{' '}
-            {post.date.substring(0, 10)}
-          </Card.Header>
+      {post ? (
+        <div className='postItem'>
+          <Card>
+            <Card.Header>
+              <Link to={`/users/${post.user}`}>
+                {post.firstName + ' ' + post.lastName}
+              </Link>{' '}
+              posted on {post.date.substring(0, 10)}
+            </Card.Header>
 
-          <Card.Body>
-            <Card.Title>{post.title}</Card.Title>
-            <Card.Text>
-              <p className='my-1'>{post.content}</p>
-            </Card.Text>
+            <Card.Body>
+              <Card.Title>{post.title}</Card.Title>
+              <Card.Text>
+                <p className='my-1'>{post.content}</p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
 
-            <button
-              type='button'
-              className={`btn ${
-                post.likes.find(like => like.user === userData._id)
-                  ? 'btn-primary'
-                  : 'btn-light'
-              }`}
-              onClick={() => {
-                if (post.likes.find(like => like.user === userData._id)) {
-                  dispatch(removeLikePost(postId));
-                } else {
-                  if (
-                    !post.dislikes.find(
-                      dislike => dislike.user === userData._id
-                    )
-                  ) {
-                    dispatch(addLikePost(postId));
-                  }
-                }
-              }}
-            >
-              <i className='fas fa-thumbs-up'></i>{' '}
-              <span>
-                {post.likes.length > 0 && <span>{post.likes.length}</span>}
-              </span>
-            </button>
-
-            <button
-              type='button'
-              className={`btn ${
-                post.dislikes.find(dislike => dislike.user === userData._id)
-                  ? 'btn-danger'
-                  : 'btn-light'
-              }`}
-              onClick={() => {
+          <Button
+            type='button'
+            className={`btn ${
+              post.likes.find(like => like.user === userData._id)
+                ? 'btn-primary'
+                : 'btn-light'
+            }`}
+            onClick={() => {
+              if (post.likes.find(like => like.user === userData._id)) {
+                dispatch(removeLikePost(postId));
+              } else {
                 if (
-                  post.dislikes.find(dislike => dislike.user === userData._id)
+                  !post.dislikes.find(dislike => dislike.user === userData._id)
                 ) {
-                  dispatch(removeDislikePost(postId));
-                } else {
-                  if (!post.likes.find(like => like.user === userData._id)) {
-                    dispatch(addDislikePost(postId));
-                  }
+                  dispatch(addLikePost(postId));
                 }
-              }}
-            >
-              <i className='fas fa-thumbs-down'></i>{' '}
-              <span>
-                {post.dislikes.length > 0 && (
-                  <span>{post.dislikes.length}</span>
-                )}
-              </span>
-            </button>
+              }
+            }}
+          >
+            <i className='fas fa-thumbs-up'></i>{' '}
+            <span>
+              {post.likes.length > 0 && <span>{post.likes.length}</span>}
+            </span>
+          </Button>
 
-            <textarea
-              name='comment'
-              cols='30'
-              rows='10'
-              value={comment}
-              onChange={e => setComment(e.target.value)}
-            ></textarea>
+          <Button
+            type='button'
+            className={`btn ${
+              post.dislikes.find(dislike => dislike.user === userData._id)
+                ? 'btn-danger'
+                : 'btn-light'
+            }`}
+            onClick={() => {
+              if (
+                post.dislikes.find(dislike => dislike.user === userData._id)
+              ) {
+                dispatch(removeDislikePost(postId));
+              } else {
+                if (!post.likes.find(like => like.user === userData._id)) {
+                  dispatch(addDislikePost(postId));
+                }
+              }
+            }}
+          >
+            <i className='fas fa-thumbs-down'></i>{' '}
+            <span>
+              {post.dislikes.length > 0 && <span>{post.dislikes.length}</span>}
+            </span>
+          </Button>
+
+          {userData._id === post.user || userData.isAdmin ? (
             <Button
-              type='button'
-              className='btn btn-primary'
-              onClick={writeCommentHandler}
+              className='btn btn-danger'
+              onClick={() => deletePostHandler(postId)}
             >
-              Submit
+              <i className='fas fa-trash'></i>
             </Button>
+          ) : (
+            ''
+          )}
 
-            <Table>
-              <tbody>
-                {post.comments.length > 0 &&
-                  post.comments.map(comment => (
-                    <tr key={comment._id}>
-                      <td>{comment.avatar}</td>
-                      <td>{comment.firstName}</td>
-                      <td>{comment.text}</td>
-                      <td>{comment.date}</td>
-                      <td>
-                        {userData && userData._id === comment.user && (
-                          <Button
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  'Are you sure to delete this comment?'
-                                )
-                              ) {
-                                dispatch(deleteCommentItem(comment._id));
-                              }
-                            }}
-                          >
-                            <i clasName='fas fa-trash'></i>
-                          </Button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
+          <textarea
+            name='comment'
+            cols='30'
+            rows='10'
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+          ></textarea>
+          <Button
+            type='button'
+            className='btn btn-primary'
+            onClick={writeCommentHandler}
+          >
+            Submit
+          </Button>
 
-            <Link to={`/posts/${postId}`} className='btn btn-primary'>
-              Comments{' '}
-              {post.comments.length > 0 && (
-                <span className='comment-count'>{post.comments.length}</span>
-              )}
-            </Link>
-
-            {userData._id === post.user || userData.isAdmin ? (
-              <Button
-                className='btn btn-danger'
-                onClick={() => deletePostHandler(postId)}
-              >
-                <i className='fas fa-trash'></i>
-              </Button>
-            ) : (
-              ''
-            )}
-          </Card.Body>
-        </Card>
-
-        <Link to={`/users/${post.user}`}>
-          <img className='round-img' src={post.avatar} alt='Profile avatar' />
-          <h4>View {post.firstName}'s profile</h4>
-        </Link>
-      </div>
+          <Table>
+            <tbody>
+              {post.comments.length > 0 &&
+                post.comments.map(comment => (
+                  <tr key={comment._id}>
+                    <td>{comment.avatar}</td>
+                    <td>{comment.firstName}</td>
+                    <td>{comment.text}</td>
+                    <td>{comment.date}</td>
+                    <td>
+                      {userData && userData._id === comment.user && (
+                        <Button
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                'Are you sure to delete this comment?'
+                              )
+                            ) {
+                              dispatch(deleteCommentItem(comment._id));
+                            }
+                          }}
+                        >
+                          <i clasName='fas fa-trash'></i>
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      ) : (
+        <Message variant='danger'>Unable to load post</Message>
+      )}
     </>
   );
 };

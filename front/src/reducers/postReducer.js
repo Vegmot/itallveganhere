@@ -22,6 +22,7 @@ import {
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAIL,
+  ADD_COMMENT_RESET,
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAIL,
@@ -153,6 +154,8 @@ export const writeCommentReducer = (state = { post: {} }, action) => {
       };
     case ADD_COMMENT_FAIL:
       return { loading: false, error: action.payload };
+    case ADD_COMMENT_RESET:
+      return {};
     default:
       return state;
   }
