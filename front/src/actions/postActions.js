@@ -380,7 +380,7 @@ export const deleteCommentItem = (postId, commentId) => async (
       },
     };
 
-    await axios.delete(`/api/posts/${postId}/comments/${commentId}`);
+    await axios.delete(`/api/posts/${postId}/comments/${commentId}`, config);
 
     dispatch({ type: DELETE_COMMENT_SUCCESS });
   } catch (error) {

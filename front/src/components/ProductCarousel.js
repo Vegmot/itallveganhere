@@ -8,8 +8,8 @@ import { getTopFiveProducts } from '../actions/productActions';
 const ProductCarousel = () => {
   const dispatch = useDispatch();
 
-  const getTopProducts = useSelector(state => state.getTopProducts);
-  const { loading, error, products } = getTopProducts;
+  const getTopRatedProducts = useSelector(state => state.getTopRatedProducts);
+  const { loading, error, products } = getTopRatedProducts;
 
   useEffect(() => {
     dispatch(getTopFiveProducts());
@@ -18,9 +18,7 @@ const ProductCarousel = () => {
   return loading ? (
     <Spinner animation='border' variant='primary' />
   ) : error ? (
-    <Message variant='danger'>
-      An error occurred while loading top products
-    </Message>
+    <Message variant='danger'>{error}</Message>
   ) : (
     <Carousel pause='hover' className='bg-light'>
       {products.map(product => (

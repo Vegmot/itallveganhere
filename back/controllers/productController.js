@@ -123,6 +123,8 @@ const updateProduct = asyncHandler(async (req, res) => {
 // POST /api/products/:productId/reviews
 // private
 const writeProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
   const product = await Product.findById(req.params.productId);
 
   if (product) {
@@ -162,9 +164,9 @@ const writeProductReview = asyncHandler(async (req, res) => {
 // GET /api/products/top
 // public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const topProducts = await Product.find({}).sort({ rating: -1 }).limit(5);
+  const products = await Product.find({}).sort({ rating: -1 }).limit(5);
 
-  res.json(topProducts);
+  res.json(products);
 });
 
 export {

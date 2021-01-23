@@ -117,7 +117,10 @@ export const writeProductReviewReducer = (state = {}, action) => {
   }
 };
 
-export const getTopProductsReducer = (state = { products: [] }, action) => {
+export const getTopRatedProductsReducer = (
+  state = { products: [] },
+  action
+) => {
   switch (action.type) {
     case GET_TOP_PRODUCTS_REQUEST:
       return { loading: true };

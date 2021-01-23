@@ -34,7 +34,7 @@ import {
   adminCreateProductReducer,
   adminUpdateProductReducer,
   writeProductReviewReducer,
-  getTopProductsReducer,
+  getTopRatedProductsReducer,
 } from './reducers/productReducer';
 import {
   getAProfileReducer,
@@ -89,7 +89,7 @@ const reducer = combineReducers({
   adminUpdateProduct: adminUpdateProductReducer,
   adminRemoveProduct: adminRemoveProductReducer,
   writeProductReview: writeProductReviewReducer,
-  getTopProducts: getTopProductsReducer,
+  getTopRatedProducts: getTopRatedProductsReducer,
 
   // profile
   getAProfile: getAProfileReducer,

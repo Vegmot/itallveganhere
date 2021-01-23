@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
 import Post from '../../components/Post';
 import { getPostsList } from '../../actions/postActions';
+import { getUsersList } from '../../actions/userActions';
 
 const PostsHomeScreen = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,10 @@ const PostsHomeScreen = () => {
   const { loading, error, posts } = postsList;
 
   useEffect(() => {
-    dispatch(getPostsList);
+    dispatch(getUsersList());
+    dispatch(getPostsList());
   }, [dispatch]);
+
   return (
     <>
       {' '}
