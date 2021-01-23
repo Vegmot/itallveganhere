@@ -13,9 +13,9 @@ const PostForm = ({ history }) => {
   const writePost = useSelector(state => state.writePost);
   const { loading, error } = writePost;
 
-  const postHandler = () => {
+  const postHandler = e => {
+    e.preventDefault();
     dispatch(writeNewPost(title, content));
-    history.push('/posts');
   };
 
   return (
@@ -28,7 +28,7 @@ const PostForm = ({ history }) => {
           Back to posts
         </Link>
 
-        <Form>
+        <Form onSubmit={postHandler}>
           <Form.Group controlId='postTitle'>
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -52,7 +52,7 @@ const PostForm = ({ history }) => {
             />
           </Form.Group>
 
-          <Button className='btn btn-primary ml-auto' onClick={postHandler}>
+          <Button type='submit' className='btn btn-primary ml-auto'>
             Post
           </Button>
         </Form>

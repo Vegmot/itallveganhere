@@ -85,7 +85,7 @@ export const updateUserInfoReducer = (state = { user: {} }, action) => {
 export const getUsersListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USERS_LIST_REQUEST:
-      return { loading: true };
+      return { loading: true, users: [] };
     case USERS_LIST_SUCCESS:
       return { loading: false, users: action.payload };
     case USERS_LIST_FAIL:

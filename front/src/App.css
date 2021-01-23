@@ -50,6 +50,15 @@ h2 {
 }
 
 /* Posts */
+.posts-list-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.posts-list-avatar {
+  width: 33px;
+  height: 33px;
+}
 
 /* Footer */
 #main-footer {

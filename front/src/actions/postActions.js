@@ -251,6 +251,8 @@ export const writeNewPost = (title, content) => async (dispatch, getState) => {
       type: ADD_POST_SUCCESS,
       payload: res.data,
     });
+
+    document.location.href = '/posts';
   } catch (error) {
     dispatch({
       type: ADD_POST_FAIL,

@@ -13,6 +13,9 @@ const PostsHomeScreen = () => {
   const postsList = useSelector(state => state.postsList);
   const { loading, error, posts } = postsList;
 
+  const userLogin = useSelector(state => state.userLogin);
+  const { userData } = userLogin;
+
   useEffect(() => {
     dispatch(getUsersList());
     dispatch(getPostsList());
@@ -24,11 +27,20 @@ const PostsHomeScreen = () => {
       {loading && <Spinner animation='border' variant='primary' />}
       {error && <Message variant='danger'>{error}</Message>}
       {posts.length === 0 && <h2>There is no post.</h2>}
-      <Link to='/posts/post-form' className='btn btn-primary my-3'>
+      <Link
+        to={userData ? '/posts/post-form' : '/login'}
+        className='btn btn-primary my-3'
+      >
         Write a post
       </Link>
       <div className='posts my-3'>
-        <Table striped bordered hover responsive className='table-sm'>
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className='table-sm posts-list-table'
+        >
           <thead>
             <tr>
               <td>#</td>

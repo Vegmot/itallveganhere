@@ -11,7 +11,7 @@ const Post = ({ post }) => {
   const { users: aUsers } = getUsersList;
 
   const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userData } = userLogin;
 
   const deletePostHandler = postId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
@@ -85,9 +85,9 @@ const Post = ({ post }) => {
       </td>
 
       <td>
-        {userInfo.isAdmin || userInfo._id === post.user ? (
+        {userData && (userData.isAdmin || userData._id === post.user) ? (
           <Button
-            className='btn btn-danger'
+            className='btn btn-sm btn-danger'
             onClick={() => deletePostHandler(post._id)}
           >
             <i className='fas fa-trash'></i>

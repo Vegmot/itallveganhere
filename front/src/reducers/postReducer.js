@@ -45,7 +45,7 @@ export const postItemReducer = (state = { post: {} }, action) => {
 export const postsListReducer = (state = { posts: [] }, action) => {
   switch (action.type) {
     case GET_POSTS_REQUEST:
-      return { loading: true };
+      return { loading: true, posts: [] };
     case GET_POSTS_SUCCESS:
       return { loading: false, posts: action.payload };
     case GET_POSTS_FAIL:
@@ -102,7 +102,7 @@ export const dislikesUpdateReducer = (state = { posts: [] }, action) => {
 export const writePostReducer = (state = { post: {}, posts: [] }, action) => {
   switch (action.type) {
     case ADD_POST_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case ADD_POST_SUCCESS:
       return {
         ...state,
