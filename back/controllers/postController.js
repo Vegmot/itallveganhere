@@ -25,9 +25,41 @@ const createPost = asyncHandler(async (req, res) => {
 // GET /api/posts
 // public
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).sort({ date: -1 });
+  const postsOnPage = 8;
+  const postsPage = Number(req.query.pageNumber) || 1;
 
-  res.json(posts);
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i', // case insensitive
+        },
+      }
+    : {};
+
+  /* // Thank you Viktoras from Q&A!
+  // use the next line in SearchBox.js
+  const query = search
+    ? {
+        name: {
+          $regex: search.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, '\\$&'),
+          $options: 'i',
+        },
+      }
+    : {}; */
+
+  const postsCount = await Post.countDocuments({ ...keyword });
+
+  const posts = await Post.find({ ...keyword })
+    .sort({ date: -1 })
+    .limit(postsOnPage)
+    .skip(postsOnPage * (postsPage - 1));
+
+  res.json({
+    posts,
+    postsPage,
+    postsPages: Math.ceil(postsCount / postsOnPage),
+  });
 });
 
 // Get a post by id

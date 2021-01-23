@@ -4,22 +4,26 @@ import { Table, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
 import Post from '../../components/Post';
+import PostPaginate from '../../components/PostPaginate';
 import { getPostsList } from '../../actions/postActions';
 import { getUsersList } from '../../actions/userActions';
 
-const PostsHomeScreen = () => {
+const PostsHomeScreen = ({ match }) => {
+  const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   const postsList = useSelector(state => state.postsList);
-  const { loading, error, posts } = postsList;
+  const { loading, error, posts, postsPage, postsPages } = postsList;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
     dispatch(getUsersList());
-    dispatch(getPostsList());
-  }, [dispatch]);
+    dispatch(getPostsList(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
@@ -48,8 +52,8 @@ const PostsHomeScreen = () => {
               <td>Username</td>
               <td>Title</td>
               <td>Date</td>
-              <td>Like</td>
-              <td>Dislike</td>
+              <td>likes</td>
+              <td>Dislikes</td>
               <td></td>
             </tr>
           </thead>
@@ -62,6 +66,11 @@ const PostsHomeScreen = () => {
           </tbody>
         </Table>
       </div>
+      <PostPaginate
+        postsPage={postsPage}
+        postsPages={postsPages}
+        keyword={keyword ? keyword : ''}
+      />
     </>
   );
 };

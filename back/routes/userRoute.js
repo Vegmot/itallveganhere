@@ -29,6 +29,6 @@ router.route('/:userId/premium').put(protect, admin, adminSetUserToPremium);
 router.route('/:userId/unpremium').put(protect, admin, adminCancelUserPremium);
 router.route('/:userId/userInfo').put(protect, admin, adminUpdateUserInfo);
 router.route('/:userId').get(protect, getUserById).delete(protect, deleteUser);
-router.route('/').get(protect, admin, getAllUsers);
+router.route('/').get(protect, getAllUsers);
 
 export default router;

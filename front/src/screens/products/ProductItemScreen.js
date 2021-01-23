@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
   Card,
   Row,
@@ -66,9 +66,9 @@ const ProductItemScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to='/' className='btn btn-dark my-3'>
+      <Button onClick={history.goBack} className='btn btn-dark my-3'>
         Go back
-      </Link>
+      </Button>
 
       {loading ? (
         <Spinner animation='border' variant='primary' />
@@ -228,4 +228,4 @@ const ProductItemScreen = ({ match, history }) => {
   );
 };
 
-export default ProductItemScreen;
+export default withRouter(ProductItemScreen);

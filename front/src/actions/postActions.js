@@ -32,11 +32,16 @@ import {
   DELETE_COMMENT_FAIL,
 } from '../constants/postConstants';
 
-export const getPostsList = () => async dispatch => {
+export const getPostsList = (
+  keyword = '',
+  pageNumber = ''
+) => async dispatch => {
   try {
     dispatch({ type: GET_POSTS_REQUEST });
 
-    const res = await axios.get('/api/posts');
+    const res = await axios.get(
+      `/api/posts?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
 
     dispatch({
       type: GET_POSTS_SUCCESS,
@@ -168,7 +173,7 @@ export const removeLikePost = postId => async (dispatch, getState) => {
   }
 };
 
-export const addDislikesPost = postId => async (dispatch, getState) => {
+export const addDislikePost = postId => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_DISLIKES_REQUEST });
 
@@ -199,7 +204,7 @@ export const addDislikesPost = postId => async (dispatch, getState) => {
   }
 };
 
-export const removeDislikesPost = postId => async (dispatch, getState) => {
+export const removeDislikePost = postId => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_DISLIKES_REQUEST });
 

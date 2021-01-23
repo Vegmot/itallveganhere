@@ -82,7 +82,7 @@ export const updateUserInfoReducer = (state = { user: {} }, action) => {
   }
 };
 
-export const getUsersListReducer = (state = { users: [] }, action) => {
+export const usersListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USERS_LIST_REQUEST:
       return { loading: true, users: [] };

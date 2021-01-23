@@ -47,7 +47,7 @@ import {
   userLoginReducer,
   userRegisterReducer,
   getUserInfoReducer,
-  getUsersListReducer,
+  usersListReducer,
   updateUserInfoReducer,
   deleteUserReducer,
   adminUpdateUserReducer,
@@ -103,7 +103,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   getUserInfo: getUserInfoReducer,
   updateUserInfo: updateUserInfoReducer,
-  getUsersList: getUsersListReducer,
+  usersList: usersListReducer,
   deleteUser: deleteUserReducer,
   adminUpdateUser: adminUpdateUserReducer,
 });

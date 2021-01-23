@@ -30,7 +30,7 @@ import {
 export const postItemReducer = (state = { post: {} }, action) => {
   switch (action.type) {
     case GET_POST_ITEM_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case GET_POST_ITEM_SUCCESS:
       return { loading: false, post: action.payload };
     case GET_POST_ITEM_FAIL:
@@ -47,7 +47,12 @@ export const postsListReducer = (state = { posts: [] }, action) => {
     case GET_POSTS_REQUEST:
       return { loading: true, posts: [] };
     case GET_POSTS_SUCCESS:
-      return { loading: false, posts: action.payload };
+      return {
+        loading: false,
+        posts: action.payload.posts,
+        postsPage: action.payload.postsPage,
+        postsPages: action.payload.postsPages,
+      };
     case GET_POSTS_FAIL:
       return { loading: false, error: action.payload };
     case GET_POSTS_RESET:

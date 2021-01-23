@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
-const NotFound = () => {
+const NotFound = ({ history }) => {
   return (
     <>
       <h1 className='x-large text-primary'>
@@ -11,11 +12,11 @@ const NotFound = () => {
         Unfortunately, the page you were trying to reach does not exist.
       </p>
 
-      <Link to='/' clasName='btn btn-primary'>
-        Back to home
-      </Link>
+      <Button onClick={history.goBack} clasName='btn btn-secondary'>
+        Go back
+      </Button>
     </>
   );
 };
 
-export default NotFound;
+export default withRouter(NotFound);

@@ -7,8 +7,8 @@ import { deletePostItem } from '../actions/postActions';
 const Post = ({ post }) => {
   const dispatch = useDispatch();
 
-  const getUsersList = useSelector(state => state.getUsersList);
-  const { users: aUsers } = getUsersList;
+  const usersList = useSelector(state => state.usersList);
+  const { users: aUsers } = usersList;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
