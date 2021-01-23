@@ -43,7 +43,7 @@ const App = () => {
                   path='/products/page/:pageNumber'
                   component={ProductsHomeScreen}
                 />
-                <Route exact path='/posts/:postId' component={PostItemScreen} />
+                <Route exact path='/posts/:id' component={PostItemScreen} />
                 <Route
                   exact
                   path='/posts/search/:keyword/postsPage/:pageNumber'

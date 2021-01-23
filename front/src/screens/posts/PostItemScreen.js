@@ -16,51 +16,25 @@ import { getUsersList } from '../../actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PostItemScreen = ({ match, history }) => {
-  const postId = match.params.postId;
+  const postId = match.params.id;
   const [comment, setComment] = useState('');
-
-  const likeUsers = [];
-  const dislikeUsers = [];
 
   const dispatch = useDispatch();
 
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
 
-  const usersList = useSelector(state => state.usersList);
-  const { users } = usersList;
-
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
-
-  function getLikeUsers() {
-    post.likes.map(like => {
-      users.map(user => {
-        if (user._id === like.user) {
-          likeUsers.push(user.firstName);
-        }
-      });
-    });
-  }
-
-  function getDislikeUsers() {
-    post.dislikes.map(dislike => {
-      users.map(user => {
-        if (user._id === dislike.user) {
-          dislikeUsers.push(user.firstName);
-        }
-      });
-    });
-  }
 
   useEffect(() => {
     dispatch(getPostItem(postId));
     dispatch(getUsersList());
   }, [dispatch, postId]);
 
-  const commentHandler = e => {
+  const writeCommentHandler = e => {
     e.preventDefault();
-    writeNewComment(postId);
+    dispatch(writeNewComment(postId, comment));
     setComment('');
   };
 
@@ -82,12 +56,8 @@ const PostItemScreen = ({ match, history }) => {
       <div className='post'>
         <Card>
           <Card.Header>
-            {users.find(user => user._id === post.user) ? (
-              post.firstName + ' ' + post.lastName
-            ) : (
-              <span className='deleted-user'>&#40;Deleted user&#41;</span>
-            )}{' '}
-            posted on {post.date.substring(0, 10)}
+            {post.firstName + ' ' + post.lastName} posted on{' '}
+            {post.date.substring(0, 10)}
           </Card.Header>
 
           <Card.Body>
@@ -160,7 +130,7 @@ const PostItemScreen = ({ match, history }) => {
             <Button
               type='button'
               className='btn btn-primary'
-              onClick={commentHandler}
+              onClick={writeCommentHandler}
             >
               Submit
             </Button>
@@ -183,7 +153,7 @@ const PostItemScreen = ({ match, history }) => {
                                   'Are you sure to delete this comment?'
                                 )
                               ) {
-                                deleteCommentItem(comment._id);
+                                dispatch(deleteCommentItem(comment._id));
                               }
                             }}
                           >
@@ -213,25 +183,6 @@ const PostItemScreen = ({ match, history }) => {
             ) : (
               ''
             )}
-
-            <div className='likeUsers'>
-              <small>
-                {post.likes.length > 0
-                  ? post.likes.length === 1
-                    ? likeUsers.join(', ') + ' likes this post.'
-                    : likeUsers.join(', ') + ' like this post.'
-                  : ''}
-              </small>
-            </div>
-            <div className='dislikeUsers'>
-              <small>
-                {post.dislikes.length > 0
-                  ? post.dislikes.length === 1
-                    ? dislikeUsers.join(', ') + ' dislikes this post.'
-                    : dislikeUsers.join(', ') + ' dislike this post.'
-                  : ''}
-              </small>
-            </div>
           </Card.Body>
         </Card>
 

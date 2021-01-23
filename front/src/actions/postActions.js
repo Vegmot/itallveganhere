@@ -269,7 +269,10 @@ export const writeNewPost = (title, content) => async (dispatch, getState) => {
   }
 };
 
-export const writeNewComment = postId => async (dispatch, getState) => {
+export const writeNewComment = (postId, comment) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: ADD_COMMENT_REQUEST });
 
@@ -284,7 +287,11 @@ export const writeNewComment = postId => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.post(`/api/posts/${postId}/comments`, config);
+    const res = await axios.post(
+      `/api/posts/${postId}/comments`,
+      comment,
+      config
+    );
 
     dispatch({
       type: ADD_COMMENT_SUCCESS,
