@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Table, Button, Card, Spinner } from 'react-bootstrap';
 import Message from '../../components/Message';
+import formatDate from '../../utils/formatDate';
 import {
   getPostItem,
   writeNewComment,
@@ -25,18 +26,19 @@ const PostItemScreen = ({ match, history }) => {
   const { loading, error, post } = postItem;
 
   const writeComment = useSelector(state => state.writeComment);
-  const { loading: loadingComment, error: errorComment } = writeComment;
+  const { success: successComment } = writeComment;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
-    if (!loadingComment && !errorComment) {
+    dispatch(getPostItem(postId));
+
+    if (successComment) {
       setComment('');
       dispatch({ type: ADD_COMMENT_RESET });
     }
-    dispatch(getPostItem(postId));
-  }, [dispatch, postId, loadingComment, errorComment]);
+  }, [dispatch, postId, successComment]);
 
   const writeCommentHandler = e => {
     e.preventDefault();
@@ -65,7 +67,7 @@ const PostItemScreen = ({ match, history }) => {
               <Link to={`/users/${post.user}`}>
                 {post.firstName + ' ' + post.lastName}
               </Link>{' '}
-              posted on {post.date.substring(0, 10)}
+              posted on {post.date && post.date.substring(0, 10)}
             </Card.Header>
 
             <Card.Body>

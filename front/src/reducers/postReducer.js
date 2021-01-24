@@ -28,7 +28,10 @@ import {
   DELETE_COMMENT_FAIL,
 } from '../constants/postConstants';
 
-export const postItemReducer = (state = { post: {} }, action) => {
+export const postItemReducer = (
+  state = { post: { comments: [], likes: [], dislikes: [] } },
+  action
+) => {
   switch (action.type) {
     case GET_POST_ITEM_REQUEST:
       return { loading: true, ...state };
@@ -151,6 +154,7 @@ export const writeCommentReducer = (state = { post: {} }, action) => {
           comments: action.payload,
         },
         loading: false,
+        success: true,
       };
     case ADD_COMMENT_FAIL:
       return { loading: false, error: action.payload };
