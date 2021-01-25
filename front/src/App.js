@@ -12,6 +12,7 @@ import ProductItemScreen from './screens/products/ProductItemScreen';
 import PostsHomeScreen from './screens/posts/PostsHomeScreen';
 import PostItemScreen from './screens/posts/PostItemScreen';
 import PostForm from './screens/posts/PostForm';
+import ProfileForm from './screens/profiles/ProfileForm';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -28,6 +29,7 @@ const App = () => {
                 <Route exact path='/' component={HomeScreen} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/profile-form' component={ProfileForm} />
                 <Route exact path='/posts/post-form' component={PostForm} />
                 <Route
                   exact

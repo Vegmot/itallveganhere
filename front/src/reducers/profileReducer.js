@@ -54,7 +54,7 @@ export const createProfileReducer = (state = {}, action) => {
     case CREATE_PROFILE_REQUEST:
       return { loading: true };
     case CREATE_PROFILE_SUCCESS:
-      return { loading: false, profile: action.payload };
+      return { loading: false, success: true, profile: action.payload };
     case CREATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     default:

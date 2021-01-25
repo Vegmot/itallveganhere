@@ -59,7 +59,7 @@ export const getAllUserProfiles = () => async dispatch => {
   }
 };
 
-export const createUserProfileItem = () => async (dispatch, getState) => {
+export const createUserProfileItem = formData => async (dispatch, getState) => {
   try {
     dispatch({ type: CREATE_PROFILE_REQUEST });
 
@@ -74,7 +74,7 @@ export const createUserProfileItem = () => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.post('/api/profiles', {}, config);
+    const res = await axios.post('/api/profiles', formData, config);
 
     dispatch({
       type: CREATE_PROFILE_SUCCESS,

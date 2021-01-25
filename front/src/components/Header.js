@@ -27,12 +27,6 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
               <Nav className='ml-auto'>
-                <LinkContainer to={userData ? '/users' : '/login'}>
-                  <Nav.Link>
-                    <i className='fas fa-seedling'></i> Vegans
-                  </Nav.Link>
-                </LinkContainer>
-
                 <LinkContainer to='/products'>
                   <Nav.Link>
                     <i className='fas fa-shopping-bag'></i> Products
@@ -49,20 +43,27 @@ const Header = () => {
                   userData.isAdmin ? (
                     <NavDropdown title='Admin' id='adminMenu'>
                       <LinkContainer to='/admin/users'>
-                        <NavDropdown.Item>Users</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <i className='fas fa-seedling'></i> Manage users
+                        </NavDropdown.Item>
                       </LinkContainer>
 
                       <LinkContainer to='/admin/products'>
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <i className='fas fa-shopping-bag'></i> Manage
+                          products
+                        </NavDropdown.Item>
                       </LinkContainer>
 
                       <LinkContainer to='/admin/orders'>
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <i className='fas fa-shipping-fast'></i> Manage orders
+                        </NavDropdown.Item>
                       </LinkContainer>
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler}>
-                        Logout
+                        <i className='fas fa-user-minus'></i> Logout
                       </NavDropdown.Item>
                     </NavDropdown>
                   ) : userData.isPremium ? (
@@ -95,7 +96,7 @@ const Header = () => {
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler}>
-                        Logout
+                        <i className='fas fa-user-minus'></i> Logout
                       </NavDropdown.Item>
                     </NavDropdown>
                   ) : (
@@ -103,7 +104,7 @@ const Header = () => {
                       title={userData.firstName + ' ' + userData.lastName}
                       id='username'
                     >
-                      <NavDropdown.Item href='/users/info'>
+                      <NavDropdown.Item href='/users/userInfo'>
                         <i className='fas fa-info-circle'></i> Basic info
                       </NavDropdown.Item>
 
@@ -121,7 +122,7 @@ const Header = () => {
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler}>
-                        Logout
+                        <i className='fas fa-user-minus'></i> Logout
                       </NavDropdown.Item>
                     </NavDropdown>
                   )
