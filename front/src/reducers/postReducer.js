@@ -165,7 +165,10 @@ export const writeCommentReducer = (state = { post: {} }, action) => {
   }
 };
 
-export const removeCommentReducer = (state = { post: {} }, action) => {
+export const removeCommentReducer = (
+  state = { post: { comments: [] } },
+  action
+) => {
   switch (action.type) {
     case DELETE_COMMENT_REQUEST:
       return { loading: true };
@@ -179,8 +182,10 @@ export const removeCommentReducer = (state = { post: {} }, action) => {
           ),
         },
         loading: false,
+        success: true,
       };
     case DELETE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

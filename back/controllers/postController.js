@@ -232,7 +232,6 @@ const addComment = asyncHandler(async (req, res) => {
       text: req.body.text,
       firstName: req.user.firstName,
       lastName: req.user.lastName,
-      avatar: req.user.avatar,
     };
 
     post.comments.push(newComment);
@@ -267,20 +266,27 @@ const editComment = asyncHandler(async (req, res) => {
 // private
 const deleteComment = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.postId);
-  const comment = post.comments.filter(
-    comment => comment._id === req.params.commentId
-  );
-  if (!comment) {
-    res.status(404);
-    throw new Error('Comment not found');
-  } else {
-    const removeIndex = post.comments
-      .map(comment => comment._id)
-      .indexOf(req.params.commentId);
-    post.comments.splice(removeIndex, 1);
 
-    await post.save();
-    res.json(post.comments);
+  if (post) {
+    const comment = post.comments.filter(
+      comment => comment._id === req.params.commentId
+    );
+
+    if (!comment) {
+      res.status(404);
+      throw new Error('Comment not found');
+    } else {
+      const removeIndex = post.comments
+        .map(comment => comment._id)
+        .indexOf(req.params.commentId);
+      post.comments.splice(removeIndex, 1);
+
+      await post.save();
+      res.json(post.comments);
+    }
+  } else {
+    res.status(404);
+    throw new Error('Post not found');
   }
 });
 

@@ -23,16 +23,28 @@ const PostItemScreen = ({ match, history }) => {
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
 
+  const removeComment = useSelector(state => state.removeComment);
+  const { success } = removeComment;
+
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
     dispatch(getPostItem(postId));
-  }, [dispatch, postId]);
+    if (success) {
+      dispatch(getPostItem(postId));
+    }
+  }, [dispatch, postId, success]);
 
   const deletePostHandler = id => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       dispatch(deletePostItem(id));
+    }
+  };
+
+  const deleteCommentHandler = (pId, cId) => {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      dispatch(deleteCommentItem(pId, cId));
     }
   };
 
@@ -161,13 +173,7 @@ const PostItemScreen = ({ match, history }) => {
                                   : 'no-display'
                               }
                               onClick={() => {
-                                if (
-                                  window.confirm(
-                                    'Are you sure to delete this comment?'
-                                  )
-                                ) {
-                                  dispatch(deleteCommentItem(comment._id));
-                                }
+                                deleteCommentHandler(postId, comment._id);
                               }}
                             >
                               <i className='fas fa-times'></i>
