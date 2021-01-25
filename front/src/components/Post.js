@@ -7,9 +7,6 @@ import { deletePostItem } from '../actions/postActions';
 const Post = ({ post }) => {
   const dispatch = useDispatch();
 
-  const usersList = useSelector(state => state.usersList);
-  const { users: aUsers } = usersList;
-
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
@@ -34,13 +31,7 @@ const Post = ({ post }) => {
 
       <td>
         <Link to={`/users/${post.user}`}>
-          <h6>
-            {aUsers.find(aUser => aUser._id === post.user) ? (
-              post.firstName + ' ' + post.lastName
-            ) : (
-              <span className='deleted-user'>&#40;Deleted user&#41;</span>
-            )}
-          </h6>
+          <h6>{post.firstName + ' ' + post.lastName}</h6>
         </Link>
       </td>
 

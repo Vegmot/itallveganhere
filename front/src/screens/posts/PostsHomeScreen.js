@@ -6,7 +6,6 @@ import Message from '../../components/Message';
 import Post from '../../components/Post';
 import PostPaginate from '../../components/PostPaginate';
 import { getPostsList } from '../../actions/postActions';
-import { getUsersList } from '../../actions/userActions';
 
 const PostsHomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -21,7 +20,6 @@ const PostsHomeScreen = ({ match }) => {
   const { userData } = userLogin;
 
   useEffect(() => {
-    dispatch(getUsersList());
     dispatch(getPostsList(keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
 
