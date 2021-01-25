@@ -163,12 +163,9 @@ export const removeLikeFromPostItem = postId => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.delete(`/api/posts/${postId}/like`, config);
+    await axios.delete(`/api/posts/${postId}/like`, config);
 
-    dispatch({
-      type: REMOVE_LIKE_POST_SUCCESS,
-      payload: res.data,
-    });
+    dispatch({ type: REMOVE_LIKE_POST_SUCCESS });
   } catch (error) {
     dispatch({
       type: REMOVE_LIKE_POST_FAIL,
@@ -195,7 +192,7 @@ export const addDislikeToPostItem = postId => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.put(`/api/posts/${postId}/dislike`, {}, config);
+    const res = await axios.post(`/api/posts/${postId}/dislike`, {}, config);
 
     dispatch({
       type: ADD_DISLIKE_POST_SUCCESS,
@@ -229,12 +226,9 @@ export const removeDislikeFromPostItem = postId => async (
       },
     };
 
-    const res = await axios.put(`/api/posts/${postId}/undislike`, config);
+    await axios.delete(`/api/posts/${postId}/dislike`, config);
 
-    dispatch({
-      type: REMOVE_DISLIKE_POST_SUCCESS,
-      payload: res.data,
-    });
+    dispatch({ type: REMOVE_DISLIKE_POST_SUCCESS });
   } catch (error) {
     dispatch({
       type: REMOVE_DISLIKE_POST_FAIL,

@@ -22,9 +22,9 @@ router
   .put(protect, editComment);
 router.route('/:postId/comments').post(protect, addComment);
 router.route('/:postId/like').post(protect, addLikePost);
+router.route('/:postId/dislike').post(protect, addDislikePost);
 router.route('/:postId/like').delete(protect, removeLikePost);
-router.route('/:postId/dislike').put(protect, addDislikePost);
-router.route('/:postId/undislike').put(protect, removeDislikePost);
+router.route('/:postId/dislike').delete(protect, removeDislikePost);
 router
   .route('/:postId')
   .get(getPostById)

@@ -99,11 +99,14 @@ export const removeLikePostReducer = (
 ) => {
   switch (action.type) {
     case REMOVE_LIKE_POST_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case REMOVE_LIKE_POST_SUCCESS:
       return {
         ...state,
-        likes: state.post.likes.filter(like => like.user !== action.payload),
+        post: {
+          ...state.post,
+          likes: state.post.likes.filter(like => like.user !== action.payload),
+        },
         loading: false,
         success: true,
       };
@@ -114,18 +117,19 @@ export const removeLikePostReducer = (
   }
 };
 
-export const addDislikePostReducer = (
-  state = { post: { dislikes: [] } },
-  action
-) => {
+export const addDislikePostReducer = (state = { post: {} }, action) => {
   switch (action.type) {
     case ADD_DISLIKE_POST_REQUEST:
       return { loading: true };
     case ADD_DISLIKE_POST_SUCCESS:
       return {
         ...state,
-        dislikes: [...state.post.dislikes, action.payload],
+        post: {
+          ...state.post,
+          dislikes: action.payload,
+        },
         loading: false,
+        success: true,
       };
     case ADD_DISLIKE_POST_FAIL:
       return { loading: false, error: action.payload };
@@ -140,13 +144,16 @@ export const removeDislikePostReducer = (
 ) => {
   switch (action.type) {
     case REMOVE_DISLIKE_POST_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case REMOVE_DISLIKE_POST_SUCCESS:
       return {
         ...state,
-        dislikes: state.post.dislikes.filter(
-          dislike => dislike.user !== action.payload
-        ),
+        post: {
+          ...state.post,
+          dislikes: state.post.dislikes.filter(
+            dislike => dislike.user !== action.payload
+          ),
+        },
         loading: false,
         success: true,
       };

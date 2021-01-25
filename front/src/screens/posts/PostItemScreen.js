@@ -29,6 +29,12 @@ const PostItemScreen = ({ match, history }) => {
   const removeLikePost = useSelector(state => state.removeLikePost);
   const { success: successUnlike } = removeLikePost;
 
+  const addDislikePost = useSelector(state => state.addDislikePost);
+  const { success: successDislike } = addDislikePost;
+
+  const removeDislikePost = useSelector(state => state.removeDislikePost);
+  const { success: successUndislike } = removeDislikePost;
+
   const removePost = useSelector(state => state.removePost);
   const { success: successRemovePost } = removePost;
 
@@ -45,7 +51,13 @@ const PostItemScreen = ({ match, history }) => {
       history.push('/posts');
     }
 
-    if ((successRemoveComment, successLike, successUnlike)) {
+    if (
+      (successRemoveComment,
+      successLike,
+      successUnlike,
+      successDislike,
+      successUndislike)
+    ) {
       dispatch(getPostItem(postId));
     }
   }, [
@@ -56,6 +68,8 @@ const PostItemScreen = ({ match, history }) => {
     successRemoveComment,
     successLike,
     successUnlike,
+    successDislike,
+    successUndislike,
   ]);
 
   const deletePostHandler = pId => {
