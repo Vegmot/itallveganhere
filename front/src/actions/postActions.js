@@ -363,9 +363,7 @@ export const deletePostItem = postId => async (dispatch, getState) => {
 
     await axios.delete(`/api/posts/${postId}`, config);
 
-    dispatch({
-      type: DELETE_POST_SUCCESS,
-    });
+    dispatch({ type: DELETE_POST_SUCCESS });
   } catch (error) {
     dispatch({
       type: DELETE_POST_FAIL,

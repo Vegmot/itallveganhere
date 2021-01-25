@@ -23,22 +23,30 @@ const PostItemScreen = ({ match, history }) => {
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
 
+  const removePost = useSelector(state => state.removePost);
+  const { success: successRemovePost } = removePost;
+
   const removeComment = useSelector(state => state.removeComment);
-  const { success } = removeComment;
+  const { success: successRemoveComment } = removeComment;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
     dispatch(getPostItem(postId));
-    if (success) {
+
+    if (successRemovePost) {
+      history.push('/posts');
+    }
+
+    if (successRemoveComment) {
       dispatch(getPostItem(postId));
     }
-  }, [dispatch, postId, success]);
+  }, [dispatch, postId, history, successRemovePost, successRemoveComment]);
 
-  const deletePostHandler = id => {
+  const deletePostHandler = pId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      dispatch(deletePostItem(id));
+      dispatch(deletePostItem(pId));
     }
   };
 

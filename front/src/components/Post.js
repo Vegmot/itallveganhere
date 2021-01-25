@@ -10,11 +10,12 @@ const Post = ({ post }) => {
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
-  const deletePostHandler = postId => {
+  const deletePostHandler = pId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      dispatch(deletePostItem(postId));
+      dispatch(deletePostItem(pId));
     }
   };
+
   return (
     <>
       <td>{post.postNumber}</td>

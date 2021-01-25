@@ -28,6 +28,7 @@ const App = () => {
                 <Route exact path='/' component={HomeScreen} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/posts/post-form' component={PostForm} />
                 <Route
                   exact
                   path='/products/search/:keyword/page/:pageNumber'
@@ -65,7 +66,7 @@ const App = () => {
                   component={ProductItemScreen}
                 />
                 <Route exact path='/products' component={ProductsHomeScreen} />
-                <Route exact path='/posts/post-form' component={PostForm} />
+
                 <Route exact path='/posts' component={PostsHomeScreen} />
                 <Route component={NotFound} />
               </Switch>

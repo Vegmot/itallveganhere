@@ -125,15 +125,16 @@ export const writePostReducer = (state = { post: {}, posts: [] }, action) => {
   }
 };
 
-export const removePostReducer = (state = { post: {} }, action) => {
+export const removePostReducer = (state = { posts: [] }, action) => {
   switch (action.type) {
     case DELETE_POST_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case DELETE_POST_SUCCESS:
       return {
         ...state,
         posts: state.posts.filter(post => post._id !== action.payload),
         loading: false,
+        success: true,
       };
     case DELETE_POST_FAIL:
       return { loading: false, error: action.payload };
@@ -171,7 +172,7 @@ export const removeCommentReducer = (
 ) => {
   switch (action.type) {
     case DELETE_COMMENT_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case DELETE_COMMENT_SUCCESS:
       return {
         ...state,

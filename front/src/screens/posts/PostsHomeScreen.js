@@ -16,12 +16,18 @@ const PostsHomeScreen = ({ match }) => {
   const postsList = useSelector(state => state.postsList);
   const { loading, error, posts, postsPage, postsPages } = postsList;
 
+  const removePost = useSelector(state => state.removePost);
+  const { success: successRemovePost } = removePost;
+
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
   useEffect(() => {
+    if (successRemovePost) {
+      dispatch(getPostsList(keyword, pageNumber));
+    }
     dispatch(getPostsList(keyword, pageNumber));
-  }, [dispatch, keyword, pageNumber]);
+  }, [successRemovePost, dispatch, keyword, pageNumber]);
 
   return (
     <>
