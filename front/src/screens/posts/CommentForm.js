@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Container, Row, Col } from 'react-bootstrap';
-import { writeNewComment } from '../../actions/postActions';
+import { writeNewComment, getPostItem } from '../../actions/postActions';
 import { ADD_COMMENT_RESET } from '../../constants/postConstants';
 
 const CommentForm = ({ postId }) => {
@@ -15,8 +15,9 @@ const CommentForm = ({ postId }) => {
     if (success) {
       setText('');
       dispatch({ type: ADD_COMMENT_RESET });
+      dispatch(getPostItem(postId));
     }
-  }, [success, dispatch]);
+  }, [success, dispatch, postId]);
 
   const writeCommentHandler = e => {
     e.preventDefault();
