@@ -113,7 +113,7 @@ const deletePost = asyncHandler(async (req, res) => {
 });
 
 // Like a post
-// PUT /api/posts/:postId/like
+// POST /api/posts/:postId/like
 // private
 const addLikePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.postId);
@@ -136,7 +136,7 @@ const addLikePost = asyncHandler(async (req, res) => {
 });
 
 // Unlike a post
-// PUT /api/posts/:postId/unlike
+// DELETE /api/posts/:postId/like
 // private
 const removeLikePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.postId);

@@ -9,12 +9,6 @@ import {
   EDIT_POST_ITEM_REQUEST,
   EDIT_POST_ITEM_SUCCESS,
   EDIT_POST_ITEM_FAIL,
-  UPDATE_LIKES_REQUEST,
-  UPDATE_LIKES_SUCCESS,
-  UPDATE_LIKES_FAIL,
-  UPDATE_DISLIKES_REQUEST,
-  UPDATE_DISLIKES_SUCCESS,
-  UPDATE_DISLIKES_FAIL,
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
   ADD_POST_FAIL,
@@ -30,6 +24,18 @@ import {
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAIL,
+  ADD_LIKE_POST_REQUEST,
+  ADD_LIKE_POST_SUCCESS,
+  ADD_LIKE_POST_FAIL,
+  REMOVE_LIKE_POST_REQUEST,
+  REMOVE_LIKE_POST_SUCCESS,
+  REMOVE_LIKE_POST_FAIL,
+  ADD_DISLIKE_POST_REQUEST,
+  ADD_DISLIKE_POST_SUCCESS,
+  ADD_DISLIKE_POST_FAIL,
+  REMOVE_DISLIKE_POST_REQUEST,
+  REMOVE_DISLIKE_POST_SUCCESS,
+  REMOVE_DISLIKE_POST_FAIL,
 } from '../constants/postConstants';
 
 export const getPostsList = (
@@ -111,9 +117,41 @@ export const editPostItem = post => async (dispatch, getState) => {
   }
 };
 
-export const addLikePost = postId => async (dispatch, getState) => {
+export const addLikeToPostItem = postId => async (dispatch, getState) => {
   try {
-    dispatch({ type: UPDATE_LIKES_REQUEST });
+    dispatch({ type: ADD_LIKE_POST_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.post(`/api/posts/${postId}/like`, {}, config);
+
+    dispatch({
+      type: ADD_LIKE_POST_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_LIKE_POST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const removeLikeFromPostItem = postId => async (dispatch, getState) => {
+  try {
+    dispatch({ type: REMOVE_LIKE_POST_REQUEST });
 
     const {
       userLogin: { userData },
@@ -125,15 +163,15 @@ export const addLikePost = postId => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.put(`/api/posts/${postId}/like`, config);
+    const res = await axios.delete(`/api/posts/${postId}/like`, config);
 
     dispatch({
-      type: UPDATE_LIKES_SUCCESS,
-      payload: { postId, likes: res.data },
+      type: REMOVE_LIKE_POST_SUCCESS,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: UPDATE_LIKES_FAIL,
+      type: REMOVE_LIKE_POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -142,9 +180,9 @@ export const addLikePost = postId => async (dispatch, getState) => {
   }
 };
 
-export const removeLikePost = postId => async (dispatch, getState) => {
+export const addDislikeToPostItem = postId => async (dispatch, getState) => {
   try {
-    dispatch({ type: UPDATE_LIKES_REQUEST });
+    dispatch({ type: ADD_DISLIKE_POST_REQUEST });
 
     const {
       userLogin: { userData },
@@ -152,19 +190,20 @@ export const removeLikePost = postId => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userData.token}`,
       },
     };
 
-    const res = await axios.put(`/api/posts/${postId}/unlike`, config);
+    const res = await axios.put(`/api/posts/${postId}/dislike`, {}, config);
 
     dispatch({
-      type: UPDATE_LIKES_SUCCESS,
-      payload: { postId, likes: res.data },
+      type: ADD_DISLIKE_POST_SUCCESS,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: UPDATE_LIKES_FAIL,
+      type: ADD_DISLIKE_POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -173,40 +212,12 @@ export const removeLikePost = postId => async (dispatch, getState) => {
   }
 };
 
-export const addDislikePost = postId => async (dispatch, getState) => {
+export const removeDislikeFromPostItem = postId => async (
+  dispatch,
+  getState
+) => {
   try {
-    dispatch({ type: UPDATE_DISLIKES_REQUEST });
-
-    const {
-      userLogin: { userData },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
-
-    const res = await axios.put(`/api/posts/${postId}/dislike`, config);
-
-    dispatch({
-      type: UPDATE_DISLIKES_SUCCESS,
-      payload: { postId, dislikes: res.data },
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_DISLIKES_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
-
-export const removeDislikePost = postId => async (dispatch, getState) => {
-  try {
-    dispatch({ type: UPDATE_DISLIKES_REQUEST });
+    dispatch({ type: REMOVE_DISLIKE_POST_REQUEST });
 
     const {
       userLogin: { userData },
@@ -221,12 +232,12 @@ export const removeDislikePost = postId => async (dispatch, getState) => {
     const res = await axios.put(`/api/posts/${postId}/undislike`, config);
 
     dispatch({
-      type: UPDATE_DISLIKES_SUCCESS,
-      payload: { postId, dislikes: res.data },
+      type: REMOVE_DISLIKE_POST_SUCCESS,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: UPDATE_DISLIKES_FAIL,
+      type: REMOVE_DISLIKE_POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

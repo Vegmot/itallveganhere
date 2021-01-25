@@ -7,12 +7,18 @@ import {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAIL,
   GET_POSTS_RESET,
-  UPDATE_LIKES_REQUEST,
-  UPDATE_LIKES_SUCCESS,
-  UPDATE_LIKES_FAIL,
-  UPDATE_DISLIKES_REQUEST,
-  UPDATE_DISLIKES_SUCCESS,
-  UPDATE_DISLIKES_FAIL,
+  ADD_LIKE_POST_REQUEST,
+  ADD_LIKE_POST_SUCCESS,
+  ADD_LIKE_POST_FAIL,
+  REMOVE_LIKE_POST_REQUEST,
+  REMOVE_LIKE_POST_SUCCESS,
+  REMOVE_LIKE_POST_FAIL,
+  ADD_DISLIKE_POST_REQUEST,
+  ADD_DISLIKE_POST_SUCCESS,
+  ADD_DISLIKE_POST_FAIL,
+  REMOVE_DISLIKE_POST_REQUEST,
+  REMOVE_DISLIKE_POST_SUCCESS,
+  REMOVE_DISLIKE_POST_FAIL,
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
   ADD_POST_FAIL,
@@ -66,42 +72,85 @@ export const postsListReducer = (state = { posts: [] }, action) => {
   }
 };
 
-export const likesUpdateReducer = (state = { posts: [] }, action) => {
+export const addLikePostReducer = (state = { post: {} }, action) => {
   switch (action.type) {
-    case UPDATE_LIKES_REQUEST:
+    case ADD_LIKE_POST_REQUEST:
       return { loading: true };
-    case UPDATE_LIKES_SUCCESS:
+    case ADD_LIKE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.map(post =>
-          post._id === action.payload.id
-            ? { ...post, likes: action.payload.likes }
-            : post
-        ),
+        post: {
+          ...state.post,
+          likes: action.payload,
+        },
         loading: false,
+        success: true,
       };
-    case UPDATE_LIKES_FAIL:
+    case ADD_LIKE_POST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export const dislikesUpdateReducer = (state = { posts: [] }, action) => {
+export const removeLikePostReducer = (
+  state = { post: { likes: [] } },
+  action
+) => {
   switch (action.type) {
-    case UPDATE_DISLIKES_REQUEST:
+    case REMOVE_LIKE_POST_REQUEST:
       return { loading: true };
-    case UPDATE_DISLIKES_SUCCESS:
+    case REMOVE_LIKE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.map(post =>
-          post._id === action.payload.id
-            ? { ...post, dislikes: action.payload.dislikes }
-            : post
-        ),
+        likes: state.post.likes.filter(like => like.user !== action.payload),
+        loading: false,
+        success: true,
+      };
+    case REMOVE_LIKE_POST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const addDislikePostReducer = (
+  state = { post: { dislikes: [] } },
+  action
+) => {
+  switch (action.type) {
+    case ADD_DISLIKE_POST_REQUEST:
+      return { loading: true };
+    case ADD_DISLIKE_POST_SUCCESS:
+      return {
+        ...state,
+        dislikes: [...state.post.dislikes, action.payload],
         loading: false,
       };
-    case UPDATE_DISLIKES_FAIL:
+    case ADD_DISLIKE_POST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const removeDislikePostReducer = (
+  state = { post: { dislikes: [] } },
+  action
+) => {
+  switch (action.type) {
+    case REMOVE_DISLIKE_POST_REQUEST:
+      return { loading: true };
+    case REMOVE_DISLIKE_POST_SUCCESS:
+      return {
+        ...state,
+        dislikes: state.post.dislikes.filter(
+          dislike => dislike.user !== action.payload
+        ),
+        loading: false,
+        success: true,
+      };
+    case REMOVE_DISLIKE_POST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -7,10 +7,10 @@ import CommentFormContainer from '../../components/CommentFormContainer';
 import {
   getPostItem,
   deleteCommentItem,
-  addLikePost,
-  removeLikePost,
-  addDislikePost,
-  removeDislikePost,
+  addLikeToPostItem,
+  removeLikeFromPostItem,
+  addDislikeToPostItem,
+  removeDislikeFromPostItem,
   deletePostItem,
 } from '../../actions/postActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,12 @@ const PostItemScreen = ({ match, history }) => {
 
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
+
+  const addLikePost = useSelector(state => state.addLikePost);
+  const { success: successLike } = addLikePost;
+
+  const removeLikePost = useSelector(state => state.removeLikePost);
+  const { success: successUnlike } = removeLikePost;
 
   const removePost = useSelector(state => state.removePost);
   const { success: successRemovePost } = removePost;
@@ -39,10 +45,18 @@ const PostItemScreen = ({ match, history }) => {
       history.push('/posts');
     }
 
-    if (successRemoveComment) {
+    if ((successRemoveComment, successLike, successUnlike)) {
       dispatch(getPostItem(postId));
     }
-  }, [dispatch, postId, history, successRemovePost, successRemoveComment]);
+  }, [
+    dispatch,
+    postId,
+    history,
+    successRemovePost,
+    successRemoveComment,
+    successLike,
+    successUnlike,
+  ]);
 
   const deletePostHandler = pId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
@@ -102,14 +116,14 @@ const PostItemScreen = ({ match, history }) => {
                   }`}
                   onClick={() => {
                     if (post.likes.find(like => like.user === userData._id)) {
-                      dispatch(removeLikePost(postId));
+                      dispatch(removeLikeFromPostItem(postId));
                     } else {
                       if (
                         !post.dislikes.find(
                           dislike => dislike.user === userData._id
                         )
                       ) {
-                        dispatch(addLikePost(postId));
+                        dispatch(addLikeToPostItem(postId));
                       }
                     }
                   }}
@@ -133,12 +147,12 @@ const PostItemScreen = ({ match, history }) => {
                         dislike => dislike.user === userData._id
                       )
                     ) {
-                      dispatch(removeDislikePost(postId));
+                      dispatch(removeDislikeFromPostItem(postId));
                     } else {
                       if (
                         !post.likes.find(like => like.user === userData._id)
                       ) {
-                        dispatch(addDislikePost(postId));
+                        dispatch(addDislikeToPostItem(postId));
                       }
                     }
                   }}
