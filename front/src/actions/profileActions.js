@@ -1,8 +1,11 @@
 import axios from 'axios';
 import {
-  GET_PROFILE_REQUEST,
-  GET_PROFILE_SUCCESS,
-  GET_PROFILE_FAIL,
+  GET_MY_PROFILE_REQUEST,
+  GET_MY_PROFILE_SUCCESS,
+  GET_MY_PROFILE_FAIL,
+  GET_PROFILE_ITEM_REQUEST,
+  GET_PROFILE_ITEM_SUCCESS,
+  GET_PROFILE_ITEM_FAIL,
   GET_ALL_PROFILES_REQUEST,
   GET_ALL_PROFILES_SUCCESS,
   GET_ALL_PROFILES_FAIL,
@@ -17,19 +20,50 @@ import {
   DELETE_PROFILE_FAIL,
 } from '../constants/profileConstants';
 
-export const getUserProfileItem = userId => async dispatch => {
+export const getMyProfile = () => async (dispatch, getState) => {
   try {
-    dispatch({ type: GET_PROFILE_REQUEST });
+    dispatch({ type: GET_MY_PROFILE_REQUEST });
 
-    const res = await axios.get(`/api/profiles/${userId}`);
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.get('/api/profiles/myprofile', config);
 
     dispatch({
-      type: GET_PROFILE_SUCCESS,
+      type: GET_MY_PROFILE_SUCCESS,
       payload: res.data,
     });
   } catch (error) {
     dispatch({
-      type: GET_PROFILE_FAIL,
+      type: GET_MY_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUserProfileItem = userId => async dispatch => {
+  try {
+    dispatch({ type: GET_PROFILE_ITEM_REQUEST });
+
+    const res = await axios.get(`/api/profiles/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE_ITEM_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PROFILE_ITEM_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

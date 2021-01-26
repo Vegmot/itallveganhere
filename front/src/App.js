@@ -7,12 +7,18 @@ import ScrollToTop from './components/ScrollToTop';
 import HomeScreen from './screens/HomeScreen';
 import Register from './screens/RegisterScreen';
 import Login from './screens/LoginScreen';
+// Products
 import ProductsHomeScreen from './screens/products/ProductsHomeScreen';
 import ProductItemScreen from './screens/products/ProductItemScreen';
+// Posts
 import PostsHomeScreen from './screens/posts/PostsHomeScreen';
 import PostItemScreen from './screens/posts/PostItemScreen';
 import PostForm from './screens/posts/PostForm';
+// Profiles
 import ProfileForm from './screens/profiles/ProfileForm';
+import ProfileScreen from './screens/profiles/ProfileScreen';
+// Users
+import UserInfo from './screens/users/UserInfo';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -29,7 +35,13 @@ const App = () => {
                 <Route exact path='/' component={HomeScreen} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
-                <Route exact path='/profile-form' component={ProfileForm} />
+                <Route exact path='/userInfo' component={UserInfo} />
+                <Route
+                  exact
+                  path='/profile/profile-form'
+                  component={ProfileForm}
+                />
+                <Route exact path='/profile' component={ProfileScreen} />
                 <Route exact path='/posts/post-form' component={PostForm} />
                 <Route
                   exact

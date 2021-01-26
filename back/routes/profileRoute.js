@@ -24,6 +24,9 @@ router
   .put(protect, updateProfile)
   .delete(protect, deleteProfile)
   .get(getProfileById);
-router.route('/').get(getAllProfiles).post(protect, createProfile);
+router
+  .route('/')
+  .get(protect, admin, getAllProfiles)
+  .post(protect, createProfile);
 
 export default router;

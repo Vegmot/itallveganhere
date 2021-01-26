@@ -128,7 +128,7 @@ export const logout = () => dispatch => {
 };
 
 // logged in user gets her/his own info
-export const getuserData = () => async (dispatch, getState) => {
+export const getUserData = () => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_INFO_REQUEST });
 
@@ -160,7 +160,7 @@ export const getuserData = () => async (dispatch, getState) => {
 };
 
 // logged in user updates her/his own info
-export const updateuserData = user => async (dispatch, getState) => {
+export const updateUserData = user => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_UPDATE_REQUEST });
 

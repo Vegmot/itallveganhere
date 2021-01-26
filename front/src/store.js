@@ -39,7 +39,8 @@ import {
   getTopRatedProductsReducer,
 } from './reducers/productReducer';
 import {
-  getAProfileReducer,
+  getLoggedInUserProfileReducer,
+  getProfileItemReducer,
   getAllProfilesReducer,
   createProfileReducer,
   updateProfileReducer,
@@ -96,7 +97,8 @@ const reducer = combineReducers({
   getTopRatedProducts: getTopRatedProductsReducer,
 
   // profile
-  getAProfile: getAProfileReducer,
+  getLoggedInUserProfile: getLoggedInUserProfileReducer,
+  getProfileItem: getProfileItemReducer,
   getAllProfiles: getAllProfilesReducer,
   createProfile: createProfileReducer,
   updateProfile: updateProfileReducer,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Form, Col, Row, FormGroup } from 'react-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,20 +53,20 @@ const ProfileForm = ({ history }) => {
   return (
     <FormContainer>
       <div>
-        <Button className='btn btn-light my-1' to={history.goBack}>
+        <Link className='btn btn-light my-1' to='/'>
           Go Back
-        </Button>
+        </Link>
       </div>
 
       <h1 className='large text-primary'>Create your profile</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Please let us know who you are
       </p>
-      <small>*: Required</small>
+
       <Form className='form' onSubmit={e => submitHandler(e)}>
-        <FormGroup controlId='status'>
+        <FormGroup controlId='status' className='status'>
           <select name='status' value={status} onChange={e => changeHandler(e)}>
-            <option value='0'>* Select status</option>
+            <option value='0'>Select status</option>
             <option value='1'>0 - 1 year</option>
             <option value='2'>2 - 4 years</option>
             <option value='3'>5 - 8 years</option>
@@ -76,7 +77,7 @@ const ProfileForm = ({ history }) => {
           </small>
         </FormGroup>
 
-        <FormGroup controlId='company'>
+        <FormGroup controlId='company' className='company'>
           <input
             type='text'
             placeholder='Enter company...'
@@ -89,7 +90,7 @@ const ProfileForm = ({ history }) => {
           </small>
         </FormGroup>
 
-        <FormGroup controlId='website'>
+        <FormGroup controlId='website' className='website'>
           <input
             type='text'
             placeholder='Enter website address...'
@@ -97,10 +98,10 @@ const ProfileForm = ({ history }) => {
             value={website}
             onChange={e => changeHandler(e)}
           />
-          <small className='form-text'>Are you available online?</small>
+          <small className='form-text'>Do you have any website?</small>
         </FormGroup>
 
-        <FormGroup controlId='city'>
+        <FormGroup controlId='city' className='city'>
           <input
             type='text'
             placeholder='Enter city...'
@@ -108,17 +109,23 @@ const ProfileForm = ({ history }) => {
             value={city}
             onChange={e => changeHandler(e)}
           />
+          <small className='form-text'>
+            I'll just assume you are located within the US for now...
+          </small>
         </FormGroup>
 
-        <FormGroup controlId='state'>
+        <FormGroup controlId='state' className='state'>
           <select name='state' value={state} onChange={e => changeHandler(e)}>
-            <option value='0'>* Select state</option>
+            <option value='0'>Select state</option>
             <option value='CA'>CA</option>
             <option value='NY'>NY</option>
           </select>
+          <small className='form-text'>
+            I'll just assume you are located within the US for now...
+          </small>
         </FormGroup>
 
-        <FormGroup controlId='favourites'>
+        <FormGroup controlId='favourites' className='favourites'>
           <input
             type='text'
             placeholder='Enter your favourite fruits or veggies...'
@@ -132,17 +139,20 @@ const ProfileForm = ({ history }) => {
           </small>
         </FormGroup>
 
-        <FormGroup controlId='bio'>
+        <FormGroup controlId='bio' className='bio'>
           <textarea
             placeholder='A short bio of yourself'
             name='bio'
             value={bio}
             onChange={e => changeHandler(e)}
           ></textarea>
-          <small className='form-text'>Tell us a little about yourself</small>
+          <small className='form-text'>
+            A short and simple self-introductory text would be nice. It doesn't
+            have to be short, though.
+          </small>
         </FormGroup>
 
-        <div className='my-2'>
+        <div className='my-4'>
           <button
             type='button'
             className='btn btn-light'
@@ -150,12 +160,14 @@ const ProfileForm = ({ history }) => {
           >
             Add Social Network Links
           </button>
-          <span>(Optional)</span>
+          <span>
+            <small className='ml-3'> (Optional)</small>
+          </span>
         </div>
 
         {displaySocialInputs && (
           <>
-            <FormGroup className='social-input'>
+            <FormGroup controlId='socialInput' className='social-input'>
               <i className='fab fa-twitter fa-2x'></i>
               <input
                 type='text'
@@ -212,7 +224,7 @@ const ProfileForm = ({ history }) => {
           </>
         )}
 
-        <input type='submit' className='btn btn-primary my-1' />
+        <input type='submit' className='btn btn-primary my-2' />
       </Form>
     </FormContainer>
   );

@@ -78,11 +78,11 @@ const Header = () => {
                       }
                       id='username'
                     >
-                      <NavDropdown.Item href='/users/info'>
+                      <NavDropdown.Item href='/userInfo'>
                         <i className='fas fa-info-circle'></i> Basic info
                       </NavDropdown.Item>
 
-                      <NavDropdown.Item href='/profiles/:userId'>
+                      <NavDropdown.Item href='/profile'>
                         <i className='far fa-id-card'></i> Profile
                       </NavDropdown.Item>
 
@@ -104,11 +104,11 @@ const Header = () => {
                       title={userData.firstName + ' ' + userData.lastName}
                       id='username'
                     >
-                      <NavDropdown.Item href='/users/userInfo'>
+                      <NavDropdown.Item href='/userInfo'>
                         <i className='fas fa-info-circle'></i> Basic info
                       </NavDropdown.Item>
 
-                      <NavDropdown.Item href='/profiles/:userId'>
+                      <NavDropdown.Item href='/profile'>
                         <i className='far fa-id-card'></i> Profile
                       </NavDropdown.Item>
 

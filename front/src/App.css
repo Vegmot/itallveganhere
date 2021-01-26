@@ -68,6 +68,26 @@ h2 {
   width: 40%;
 }
 
+/* Profile */
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+}
+
+.form .social-input {
+  text-align: center;
+}
+
+.form .social-input input {
+  width: 60%;
+}
+
+.social-input .fab {
+  font-size: 1.6rem;
+  margin-right: 1rem;
+}
+
 /* Footer */
 #main-footer {
   background-color: #ecf0f1;

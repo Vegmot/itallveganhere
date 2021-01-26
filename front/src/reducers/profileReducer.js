@@ -1,8 +1,12 @@
 import {
-  GET_PROFILE_REQUEST,
-  GET_PROFILE_SUCCESS,
-  GET_PROFILE_FAIL,
-  GET_PROFILE_RESET,
+  GET_MY_PROFILE_REQUEST,
+  GET_MY_PROFILE_SUCCESS,
+  GET_MY_PROFILE_FAIL,
+  GET_MY_PROFILE_RESET,
+  GET_PROFILE_ITEM_REQUEST,
+  GET_PROFILE_ITEM_SUCCESS,
+  GET_PROFILE_ITEM_FAIL,
+  GET_PROFILE_ITEM_RESET,
   GET_ALL_PROFILES_REQUEST,
   GET_ALL_PROFILES_SUCCESS,
   GET_ALL_PROFILES_FAIL,
@@ -19,15 +23,33 @@ import {
   DELETE_PROFILE_FAIL,
 } from '../constants/profileConstants';
 
-export const getAProfileReducer = (state = { profile: {} }, action) => {
+export const getLoggedInUserProfileReducer = (
+  state = { profile: {} },
+  action
+) => {
   switch (action.type) {
-    case GET_PROFILE_REQUEST:
+    case GET_MY_PROFILE_REQUEST:
       return { loading: true };
-    case GET_PROFILE_SUCCESS:
+    case GET_MY_PROFILE_SUCCESS:
       return { loading: false, profile: action.payload };
-    case GET_PROFILE_FAIL:
+    case GET_MY_PROFILE_FAIL:
       return { loading: false, error: action.payload };
-    case GET_PROFILE_RESET:
+    case GET_MY_PROFILE_RESET:
+      return { profile: {} };
+    default:
+      return state;
+  }
+};
+
+export const getProfileItemReducer = (state = { profile: {} }, action) => {
+  switch (action.type) {
+    case GET_PROFILE_ITEM_REQUEST:
+      return { loading: true };
+    case GET_PROFILE_ITEM_SUCCESS:
+      return { loading: false, profile: action.payload };
+    case GET_PROFILE_ITEM_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_PROFILE_ITEM_RESET:
       return { profile: {} };
     default:
       return state;
