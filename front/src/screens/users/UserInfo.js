@@ -78,7 +78,15 @@ const UserInfo = ({ history }) => {
       {userData && (
         <FormContainer>
           <h1 className='mb-0'>Basic user information</h1>
-          <p className='mt-0'>You can also update your information here.</p>
+          <p className='mt-0'>
+            You can also update your information here.
+            {userData && userData.isPremium && (
+              <small className='ml-3'>
+                | <span className='ml-3'>*</span> Premium since{' '}
+                {userData.premiumAt.substring(0, 10)} *
+              </small>
+            )}
+          </p>
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='firstName'>
               <Form.Label>First name</Form.Label>

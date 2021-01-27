@@ -108,6 +108,11 @@ h2 {
   border-right: 0;
 }
 
+.premium-checkout,
+.premium-checkout:hover {
+  border: none;
+}
+
 /* Footer */
 #main-footer {
   background-color: #ecf0f1;
