@@ -24,7 +24,7 @@ h2 {
   display: none;
 }
 
-/* carousel */
+/* Products */
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -51,6 +51,14 @@ h2 {
 
 .carousel a {
   margin: 0 auto;
+}
+
+.product-item-card-outline:hover {
+  cursor: pointer;
+}
+
+.product-item-card:hover {
+  border: #000 1px solid;
 }
 
 /* Posts */
@@ -86,6 +94,18 @@ h2 {
 .social-input .fab {
   font-size: 1.6rem;
   margin-right: 1rem;
+}
+
+/* Premium */
+.premium-card:hover {
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.premium-image {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
 }
 
 /* Footer */
