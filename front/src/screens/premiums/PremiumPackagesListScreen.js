@@ -23,11 +23,12 @@ const PremiumPackagesListScreen = () => {
   return (
     <>
       <Row>
-        {premiumPackages.map(premiumPackage => (
-          <Col key={premiumPackage._id} md={4}>
-            <PremiumPackage premiumPackage={premiumPackage} />
-          </Col>
-        ))}
+        {premiumPackages &&
+          premiumPackages.map(premiumPackage => (
+            <Col key={premiumPackage._id} md={4}>
+              <PremiumPackage premiumPackage={premiumPackage} />
+            </Col>
+          ))}
       </Row>
     </>
   );
