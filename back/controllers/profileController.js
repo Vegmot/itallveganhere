@@ -20,7 +20,19 @@ const getMyProfile = asyncHandler(async (req, res) => {
 // POST /api/profiles
 // private
 const createProfile = asyncHandler(async (req, res) => {
-  const { website, city, state, status, favourites, bio } = req.body;
+  const {
+    website,
+    city,
+    state,
+    status,
+    favourites,
+    bio,
+    youtube,
+    instagram,
+    facebook,
+    twitter,
+    linkedin,
+  } = req.body;
 
   const profile = new Profile({
     user: req.user._id,

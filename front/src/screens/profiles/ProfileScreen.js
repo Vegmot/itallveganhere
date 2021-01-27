@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +8,12 @@ import { getMyProfile } from '../../actions/profileActions';
 const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch();
 
+  const [message, setMessage] = useState(null);
+
   const getLoggedInUserProfile = useSelector(
     state => state.getLoggedInUserProfile
   );
-  const { loading, error, profile } = getLoggedInUserProfile;
+  const { loading, profile } = getLoggedInUserProfile;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
@@ -19,13 +21,16 @@ const ProfileScreen = ({ history }) => {
   useEffect(() => {
     if (userData) {
       dispatch(getMyProfile());
+    } else {
+      history.push('/login');
     }
-  }, [userData, dispatch]);
+  }, [userData, history, dispatch]);
 
   return (
     <>
       {loading && <Spinner animation='border' variant='primary' />}
-      {error && <Message variant='danger'>{error}</Message>}
+      {message && <Message variant='danger'>{message}</Message>}
+
       <Button onClick={history.goBack} type='button' className='btn btn-light'>
         Go back
       </Button>
