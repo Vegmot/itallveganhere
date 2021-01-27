@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const NotFound = ({ history }) => {
   return (
@@ -12,9 +12,33 @@ const NotFound = ({ history }) => {
         Unfortunately, the page you were trying to reach does not exist.
       </p>
 
-      <Button onClick={history.goBack} clasName='btn btn-secondary'>
-        Go back
-      </Button>
+      <div className='mt-5 my-3'>
+        <Button onClick={history.goBack} className='btn btn-secondary'>
+          Go back
+        </Button>{' '}
+        to where you were, or
+      </div>
+
+      <div className='my-3'>
+        <Link to='/' className='btn btn-primary'>
+          Go Home
+        </Link>{' '}
+        to start fresh!
+      </div>
+
+      <div className='my-3'>
+        <Link to='/products' className='btn btn-success'>
+          Go to Products
+        </Link>{' '}
+        to browse vegan products we offer!
+      </div>
+
+      <div className='my-3'>
+        <Link to='/posts' className='btn btn-info'>
+          Go to Posts
+        </Link>{' '}
+        to discuss with other vegans!
+      </div>
     </>
   );
 };

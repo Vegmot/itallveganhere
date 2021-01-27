@@ -8,8 +8,14 @@ const HomeScreen = () => {
       <Container>
         <Row className='text-center'>
           <Col>
-            <h1>Welcome to IAVH!</h1>
-            <p>This is where all of your dreams, hopes and wishes come true.</p>
+            <h1>Welcome to IAVH - It All Vegan Here!</h1>
+            <p>This is every began vegins their journey.</p>
+            <p>I mean, every vegan. Every vegan veg...begins...</p>
+            <p>Where every VEGAN BEGINs their journey!</p>
+            <p>
+              Or, to simply put, this is where all* of your lifelong dreams,
+              hopes and wishes come true.
+            </p>
             <small>* Restrictions apply.</small>
           </Col>
         </Row>

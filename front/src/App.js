@@ -19,6 +19,11 @@ import ProfileForm from './screens/profiles/ProfileForm';
 import ProfileScreen from './screens/profiles/ProfileScreen';
 // Users
 import UserInfo from './screens/users/UserInfo';
+// Cart
+import CartScreen from './screens/carts/CartScreen';
+// Orders
+import OrdersScreen from './screens/orders/OrdersScreen';
+import MyOrdersListScreen from './screens/orders/MyOrdersListScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -32,10 +37,11 @@ const App = () => {
           <Container>
             <ScrollToTop>
               <Switch>
-                <Route exact path='/' component={HomeScreen} />
+                <Route exact path='/myorders' component={MyOrdersListScreen} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/userInfo' component={UserInfo} />
+                <Route exact path='/cart/:id?' component={CartScreen} />
                 <Route
                   exact
                   path='/profile/profile-form'
@@ -82,6 +88,7 @@ const App = () => {
                 <Route exact path='/products' component={ProductsHomeScreen} />
 
                 <Route exact path='/posts' component={PostsHomeScreen} />
+                <Route exact path='/' component={HomeScreen} />
                 <Route component={NotFound} />
               </Switch>
             </ScrollToTop>

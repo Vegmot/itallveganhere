@@ -78,21 +78,27 @@ const Header = () => {
                       }
                       id='username'
                     >
-                      <NavDropdown.Item href='/userInfo'>
-                        <i className='fas fa-info-circle'></i> Basic info
-                      </NavDropdown.Item>
+                      <LinkContainer to='/userInfo'>
+                        <NavDropdown.Item>
+                          <i className='fas fa-info-circle'></i> Basic info
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
-                      <NavDropdown.Item href='/profile'>
-                        <i className='far fa-id-card'></i> Profile
-                      </NavDropdown.Item>
+                      <LinkContainer to='/profile'>
+                        <NavDropdown.Item>
+                          <i className='far fa-id-card'></i> Profile
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
-                      <NavDropdown.Item href='/cart/:userId'>
+                      <NavDropdown.Item href='/cart'>
                         <i className='fas fa-shopping-cart'></i> My cart
                       </NavDropdown.Item>
 
-                      <NavDropdown.Item href='/orders/:orderId'>
-                        <i className='fas fa-shipping-fast'></i> My order
-                      </NavDropdown.Item>
+                      <LinkContainer to='/myorders'>
+                        <NavDropdown.Item>
+                          <i className='fas fa-shipping-fast'></i> My order
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler}>
@@ -104,21 +110,29 @@ const Header = () => {
                       title={userData.firstName + ' ' + userData.lastName}
                       id='username'
                     >
-                      <NavDropdown.Item href='/userInfo'>
-                        <i className='fas fa-info-circle'></i> Basic info
-                      </NavDropdown.Item>
+                      <LinkContainer to='/userInfo'>
+                        <NavDropdown.Item>
+                          <i className='fas fa-info-circle'></i> Basic info
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
-                      <NavDropdown.Item href='/profile'>
-                        <i className='far fa-id-card'></i> Profile
-                      </NavDropdown.Item>
+                      <LinkContainer to='/profile'>
+                        <NavDropdown.Item>
+                          <i className='far fa-id-card'></i> Profile
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
-                      <NavDropdown.Item href='/cart/:userId'>
-                        <i className='fas fa-shopping-cart'></i> My cart
-                      </NavDropdown.Item>
+                      <LinkContainer to='/cart'>
+                        <NavDropdown.Item>
+                          <i className='fas fa-shopping-cart'></i> My cart
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
-                      <NavDropdown.Item href='/orders/:orderId'>
-                        <i className='fas fa-shipping-fast'></i> My order
-                      </NavDropdown.Item>
+                      <LinkContainer to='/myorders'>
+                        <NavDropdown.Item>
+                          <i className='fas fa-shipping-fast'></i> My order
+                        </NavDropdown.Item>
+                      </LinkContainer>
 
                       <NavDropdown.Divider />
                       <NavDropdown.Item onClick={logoutHandler}>
