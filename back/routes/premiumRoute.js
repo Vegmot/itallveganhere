@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getPremiumPackages,
+  getPremiumPackageById,
   createPremiumPackage,
   updatePremiumPackage,
   deletePremiumPackage,
@@ -10,11 +11,12 @@ const router = express.Router();
 
 router
   .route('/:premiumId')
+  .get(getPremiumPackageById)
   .put(protect, admin, updatePremiumPackage)
   .delete(protect, admin, deletePremiumPackage);
 router
   .route('/')
-  .get(protect, admin, getPremiumPackages)
+  .get(getPremiumPackages)
   .post(protect, admin, createPremiumPackage);
 
 export default router;

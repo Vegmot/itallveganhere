@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Premium from '../models/premiumModel.js';
 
-// Get premium package item
+// Get all premium packages
 // GET /api/premiums
 // public
 const getPremiumPackages = asyncHandler(async (req, res) => {
@@ -12,6 +12,20 @@ const getPremiumPackages = asyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error('Package(s) not found');
+  }
+});
+
+// Get a premium package item
+// GET /api/premiums/:premiumId
+// public
+const getPremiumPackageById = asyncHandler(async (req, res) => {
+  const premiumPackage = await Premium.findById(req.params.premiumId);
+
+  if (premiumPackage) {
+    res.json(premiumPackage);
+  } else {
+    res.status(404);
+    throw new Error('Package not found');
   }
 });
 
@@ -70,6 +84,7 @@ const deletePremiumPackage = asyncHandler(async (req, res) => {
 
 export {
   getPremiumPackages,
+  getPremiumPackageById,
   createPremiumPackage,
   updatePremiumPackage,
   deletePremiumPackage,

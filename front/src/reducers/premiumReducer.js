@@ -1,4 +1,10 @@
 import {
+  GET_PREMIUM_PACKAGES_REQUEST,
+  GET_PREMIUM_PACKAGES_SUCCESS,
+  GET_PREMIUM_PACKAGES_FAIL,
+  GET_PREMIUM_PACKAGE_ITEM_REQUEST,
+  GET_PREMIUM_PACKAGE_ITEM_SUCCESS,
+  GET_PREMIUM_PACKAGE_ITEM_FAIL,
   CREATE_PREMIUM_PACKAGE_REQUEST,
   CREATE_PREMIUM_PACKAGE_SUCCESS,
   CREATE_PREMIUM_PACKAGE_FAIL,
@@ -17,6 +23,38 @@ import {
   CANCEL_USER_PREMIUM_SUCCESS,
   CANCEL_USER_PREMIUM_FAIL,
 } from '../constants/userConstants';
+
+export const getAllPremiumPackagesReducer = (
+  state = { premiumPackages: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_PREMIUM_PACKAGES_REQUEST:
+      return { loading: true };
+    case GET_PREMIUM_PACKAGES_SUCCESS:
+      return { loading: false, premiumPackages: action.payload };
+    case GET_PREMIUM_PACKAGES_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getPremiumPackageItemReducer = (
+  state = { premiumPackage: {} },
+  action
+) => {
+  switch (action.type) {
+    case GET_PREMIUM_PACKAGE_ITEM_REQUEST:
+      return { loading: true, ...state };
+    case GET_PREMIUM_PACKAGE_ITEM_SUCCESS:
+      return { loading: false, premiumPackage: action.payload };
+    case GET_PREMIUM_PACKAGE_ITEM_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 export const createPremiumPackageReducer = (state = {}, action) => {
   switch (action.type) {

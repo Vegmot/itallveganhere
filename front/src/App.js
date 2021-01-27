@@ -24,6 +24,8 @@ import CartScreen from './screens/carts/CartScreen';
 // Orders
 import OrdersScreen from './screens/orders/OrdersScreen';
 import MyOrdersListScreen from './screens/orders/MyOrdersListScreen';
+// Premiums
+import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -86,7 +88,11 @@ const App = () => {
                   component={ProductItemScreen}
                 />
                 <Route exact path='/products' component={ProductsHomeScreen} />
-
+                <Route
+                  exact
+                  path='/premiums'
+                  component={PremiumPackagesListScreen}
+                />
                 <Route exact path='/posts' component={PostsHomeScreen} />
                 <Route exact path='/' component={HomeScreen} />
                 <Route component={NotFound} />
