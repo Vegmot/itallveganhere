@@ -18,12 +18,11 @@ router.route('/:userId/experience/:expId').delete(protect, deleteExperience);
 router.route('/:userId/education/:eduId').delete(protect, deleteEducation);
 router.route('/:userId/experience').put(protect, addExperience);
 router.route('/:userId/education').put(protect, addEducation);
-router.route('/myprofile').get(protect, getMyProfile);
 router
-  .route(':/userId')
-  .put(protect, updateProfile)
-  .delete(protect, deleteProfile)
-  .get(getProfileById);
+  .route('/myprofile')
+  .get(protect, getMyProfile)
+  .put(protect, updateProfile);
+router.route(':/userId').delete(protect, deleteProfile).get(getProfileById);
 router
   .route('/')
   .get(protect, admin, getAllProfiles)

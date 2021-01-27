@@ -52,16 +52,20 @@ const ProfileForm = ({ history }) => {
       history.push('/login');
     } else {
       dispatch(getMyProfile());
-
-      if (
-        !profile ||
-        !profile.status ||
-        !profile.company ||
-        !profile.city ||
-        !profile.state ||
-        successUpdateProfile
-      ) {
-        dispatch({ type: UPDATE_PROFILE_RESET });
+      if (!profile) {
+        setMessage(null);
+        setCompany('');
+        setWebsite('');
+        setCity('');
+        setState('');
+        setStatus('');
+        setFavourites('');
+        setBio('');
+        setTwitter('');
+        setFacebook('');
+        setLinkedin('');
+        setYoutube('');
+        setInstagram('');
       } else {
         setMessage(null);
         setCompany(profile.company ? profile.company : '');
@@ -71,14 +75,14 @@ const ProfileForm = ({ history }) => {
         setStatus(profile.status ? profile.status : '');
         setFavourites(profile.favourites ? profile.favourites : '');
         setBio(profile.bio ? profile.bio : '');
-        setTwitter(profile.twitter ? profile.twitter : '');
-        setFacebook(profile.facebook ? profile.facebook : '');
-        setLinkedin(profile.linkedin ? profile.linkedin : '');
-        setYoutube(profile.youtube ? profile.youtube : '');
-        setInstagram(profile.instagram ? profile.instagram : '');
+        setTwitter(profile.social.twitter ? profile.social.twitter : '');
+        setFacebook(profile.social.facebook ? profile.social.facebook : '');
+        setLinkedin(profile.social.linkedin ? profile.social.linkedin : '');
+        setYoutube(profile.social.youtube ? profile.social.youtube : '');
+        setInstagram(profile.social.instagram ? profile.social.instagram : '');
       }
-    }
-  }, [userData, history, profile, successUpdateProfile, dispatch]);
+    } // no dependencies here as it falls into infinite loop
+  }, []);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -154,10 +158,10 @@ const ProfileForm = ({ history }) => {
               onChange={e => setStatus(e.target.value)}
             >
               <option value='0'>* Select status</option>
-              <option value='1'>0 - 1 year</option>
-              <option value='2'>2 - 4 years</option>
-              <option value='3'>5 - 8 years</option>
-              <option value='4'>8+ years</option>
+              <option value='0 - 1 year'>0 - 1 year</option>
+              <option value='2 - 4 years'>2 - 4 years</option>
+              <option value='5 - 8 years'>5 - 8 years</option>
+              <option value='8+ years'>8+ years</option>
             </select>
             <small className='form-text'>
               * How long have you been going vegan?

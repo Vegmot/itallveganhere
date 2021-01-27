@@ -125,10 +125,7 @@ export const createUserProfileItem = formData => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfileItem = (userId, profile) => async (
-  dispatch,
-  getState
-) => {
+export const updateUserProfileItem = profile => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
@@ -143,7 +140,7 @@ export const updateUserProfileItem = (userId, profile) => async (
       },
     };
 
-    const res = await axios.put(`/api/profiles/${userId}`, profile, config);
+    const res = await axios.put('/api/profiles/myprofile', profile, config);
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,

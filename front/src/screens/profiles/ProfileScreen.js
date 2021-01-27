@@ -37,7 +37,7 @@ const ProfileScreen = ({ history }) => {
 
       {profile ? (
         <>
-          <h1>You DID have create your profile!</h1>
+          <h1>You DID have created your profile!</h1>
           <Link to='/profile/profile-form' className='btn btn-primary'>
             Update profile
           </Link>

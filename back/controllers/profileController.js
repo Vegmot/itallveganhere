@@ -22,6 +22,7 @@ const getMyProfile = asyncHandler(async (req, res) => {
 const createProfile = asyncHandler(async (req, res) => {
   const {
     website,
+    company,
     city,
     state,
     status,
@@ -47,6 +48,14 @@ const createProfile = asyncHandler(async (req, res) => {
             .join(' ')
         : '',
     state,
+    company:
+      company && company !== ''
+        ? company
+            .toLowerCase()
+            .split(' ')
+            .map(c => c.charAt(0).toUpperCase() + c.substring(1))
+            .join(' ')
+        : '',
     status,
     favourites: Array.isArray(favourites)
       ? favourites
@@ -68,13 +77,26 @@ const createProfile = asyncHandler(async (req, res) => {
   res.json(newProfile);
 });
 
-// Update user's profile
-// PUT /api/profiles/:userId
+// Update logged in user's profile
+// PUT /api/profiles/myprofile
 // private
 const updateProfile = asyncHandler(async (req, res) => {
-  const { website, city, state, status, favourites, bio } = req.body;
+  const {
+    website,
+    company,
+    city,
+    state,
+    status,
+    favourites,
+    bio,
+    twitter,
+    facebook,
+    youtube,
+    linkedin,
+    instagram,
+  } = req.body;
 
-  const profile = await Profile.findOne({ user: req.params.userId });
+  const profile = await Profile.findOne({ user: req.user._id });
 
   if (profile) {
     profile.website =
@@ -90,13 +112,27 @@ const updateProfile = asyncHandler(async (req, res) => {
             .join(' ')
         : '' || profile.city;
     profile.state = state || profile.state;
+    profile.company =
+      company && company !== ''
+        ? company
+            .toLowerCase()
+            .split(' ')
+            .map(c => c.charAt(0).toUpperCase() + c.substring(1))
+            .join(' ')
+        : '' || profile.company;
     profile.status = status || profile.status;
     profile.favourites = Array.isArray(favourites)
       ? favourites
       : favourites.split(',').map(fav => fav.trim()) || profile.favourites;
     profile.bio = bio || profile.bio;
 
-    const socialFields = { youtube, instagram, facebook, twitter, linkedin };
+    const socialFields = {
+      youtube: youtube && youtube,
+      instagram: instagram && instagram,
+      facebook: facebook && facebook,
+      twitter: twitter && twitter,
+      linkedin: linkedin && linkedin,
+    };
 
     for (const [key, value] of Object.entries(socialFields)) {
       if (value && value.length > 0) {
