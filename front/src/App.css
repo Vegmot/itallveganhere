@@ -72,6 +72,10 @@ h2 {
   height: 33px;
 }
 
+.post-form-content {
+  white-space: pre-wrap;
+}
+
 .comment-form {
   width: 40%;
 }

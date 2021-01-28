@@ -34,7 +34,7 @@ const PostForm = ({ history }) => {
             <Form.Control
               type='text'
               name='title'
-              className={title ? 'has-success' : 'has-danger'}
+              className='post-form-title'
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
@@ -46,7 +46,8 @@ const PostForm = ({ history }) => {
               as='textarea'
               rows={12}
               name='content'
-              className={content ? 'has-success' : 'has-danger'}
+              className='post-form-content'
+              style={{ whiteSpace: 'pre-wrap' }}
               value={content}
               onChange={e => setContent(e.target.value)}
             />
