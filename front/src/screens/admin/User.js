@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Image } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser } from '../actions/userActions';
+import { useDispatch } from 'react-redux';
+import { deleteUser } from '../../actions/userActions';
 
 const User = ({ user }) => {
   const dispatch = useDispatch();

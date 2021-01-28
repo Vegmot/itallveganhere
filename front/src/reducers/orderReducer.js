@@ -84,7 +84,12 @@ export const adminGetAllOrdersReducer = (state = { orders: [] }, action) => {
     case ADMIN_GET_ALL_ORDERS_REQUEST:
       return { loading: true };
     case ADMIN_GET_ALL_ORDERS_SUCCESS:
-      return { loading: false, orders: action.payload };
+      return {
+        loading: false,
+        orders: action.payload.orders,
+        orderPage: action.payload.orderPage,
+        orderPages: action.payload.orderPages,
+      };
     case ADMIN_GET_ALL_ORDERS_FAIL:
       return { loading: false, error: action.payload };
     default:

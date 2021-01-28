@@ -108,11 +108,15 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // GET /api/orders
 // private_admin
 const getAllOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({}).populate(
-    'User',
-    'id firstName lastName email'
-  );
-  res.json(orders);
+  const itemsOnPage = 8;
+  const orderPage = Number(req.query.pageNumber) || 1;
+  const count = await Order.countDocuments({});
+
+  const orders = await Order.find({})
+    .limit(itemsOnPage)
+    .skip(itemsOnPage * (orderPage - 1));
+
+  res.json({ orders, orderPage, orderPages: Math.ceil(count / itemsOnPage) });
 });
 
 export {

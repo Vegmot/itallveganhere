@@ -28,6 +28,7 @@ import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScr
 // Admin
 import AdminOrdersListScreen from './screens/admin/AdminOrdersListScreen';
 import AdminUsersListScreen from './screens/admin/AdminUsersListScreen';
+import AdminProductsListScreen from './screens/admin/AdminProductsListScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -53,6 +54,7 @@ const App = () => {
                 />
                 <Route exact path='/profile' component={ProfileScreen} />
                 <Route exact path='/posts/post-form' component={PostForm} />
+
                 <Route
                   exact
                   path='/products/search/:keyword/page/:pageNumber'
@@ -100,6 +102,21 @@ const App = () => {
                   exact
                   path='/admin/users'
                   component={AdminUsersListScreen}
+                />
+                <Route
+                  exact
+                  path='/admin/products/page/:pageNumber'
+                  component={AdminProductsListScreen}
+                />
+                <Route
+                  exact
+                  path='/admin/products'
+                  component={AdminProductsListScreen}
+                />
+                <Route
+                  exact
+                  path='/admin/orders'
+                  component={AdminOrdersListScreen}
                 />
                 <Route exact path='/' component={HomeScreen} />
                 <Route component={NotFound} />
