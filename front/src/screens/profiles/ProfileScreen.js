@@ -29,7 +29,13 @@ const ProfileScreen = ({ history }) => {
   return (
     <>
       {loading && <Spinner animation='border' variant='primary' />}
-      {message && <Message variant='danger'>{message}</Message>}
+      {message && (
+        <Message
+          variant={message === 'Profile not found' ? 'danger' : 'success'}
+        >
+          {message}
+        </Message>
+      )}
 
       <Button onClick={history.goBack} type='button' className='btn btn-light'>
         Go back
@@ -37,6 +43,9 @@ const ProfileScreen = ({ history }) => {
 
       {profile ? (
         <>
+          {setTimeout(() => {
+            setMessage('Profile found');
+          }, 4000)}
           <h1>You DID have created your profile!</h1>
           <Link to='/profile/profile-form' className='btn btn-primary'>
             Update profile
@@ -44,6 +53,9 @@ const ProfileScreen = ({ history }) => {
         </>
       ) : (
         <>
+          {setTimeout(() => {
+            setMessage('Profile not found');
+          }, 4000)}
           <h1>You haven't created your profile yet.</h1>
           <Link to='/profile/profile-form' className='btn btn-primary'>
             Create profile

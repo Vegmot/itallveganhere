@@ -147,7 +147,7 @@ export const deletePremiumPackageItem = premiumId => async (
       },
     };
 
-    await axios.delete(`/api/premiums/${premiumId}`);
+    await axios.delete(`/api/premiums/${premiumId}`, config);
 
     dispatch({ type: DELETE_PREMIUM_PACKAGE_SUCCESS });
   } catch (error) {

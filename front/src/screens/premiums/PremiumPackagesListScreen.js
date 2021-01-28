@@ -8,13 +8,10 @@ import PremiumPackage from '../../components/PremiumPackage';
 const PremiumPackagesListScreen = () => {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userData } = userLogin;
-
   const getAllPremiumPackages = useSelector(
     state => state.getAllPremiumPackages
   );
-  const { loading, premiumPackages } = getAllPremiumPackages;
+  const { loading, error, premiumPackages } = getAllPremiumPackages;
 
   useEffect(() => {
     dispatch(getAllPremiumPackageItems());
@@ -23,6 +20,7 @@ const PremiumPackagesListScreen = () => {
   return (
     <>
       {loading && <Spinner animation='border' variant='primary' />}
+      {error && <Message variant='danger'>{error}</Message>}
       <Row>
         {premiumPackages &&
           premiumPackages.map(premiumPackage => (

@@ -22,10 +22,12 @@ import UserInfo from './screens/users/UserInfo';
 // Cart
 import CartScreen from './screens/carts/CartScreen';
 // Orders
-import OrdersScreen from './screens/orders/OrdersScreen';
 import MyOrdersListScreen from './screens/orders/MyOrdersListScreen';
 // Premiums
 import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScreen';
+// Admin
+import AdminOrdersListScreen from './screens/admin/AdminOrdersListScreen';
+import AdminUsersListScreen from './screens/admin/AdminUsersListScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -94,6 +96,11 @@ const App = () => {
                   component={PremiumPackagesListScreen}
                 />
                 <Route exact path='/posts' component={PostsHomeScreen} />
+                <Route
+                  exact
+                  path='/admin/users'
+                  component={AdminUsersListScreen}
+                />
                 <Route exact path='/' component={HomeScreen} />
                 <Route component={NotFound} />
               </Switch>

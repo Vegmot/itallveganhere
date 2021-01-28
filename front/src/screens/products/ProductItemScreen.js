@@ -51,7 +51,11 @@ const ProductItemScreen = ({ match, history }) => {
   const maxQtyPerOrder = 10;
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    if (!userData) {
+      history.push('/login');
+    } else {
+      history.push(`/cart/${match.params.id}?qty=${qty}`);
+    }
   };
 
   const submitReviewHandler = e => {

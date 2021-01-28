@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Spinner, Row, Col } from 'react-bootstrap';
+import { Form, Button, Spinner } from 'react-bootstrap';
 import Message from '../../components/Message';
 import FormContainer from '../../components/FormContainer';
 import { getUserData, updateUserData } from '../../actions/userActions';
