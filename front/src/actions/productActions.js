@@ -100,7 +100,7 @@ export const deleteProductItem = productId => async (dispatch, getState) => {
   }
 };
 
-export const createProductItem = () => async (dispatch, getState) => {
+export const createProductItem = formData => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_CREATE_PRODUCT_REQUEST });
 
@@ -115,7 +115,7 @@ export const createProductItem = () => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.post('/api/products', {}, config);
+    const res = await axios.post('/api/products', formData, config);
 
     dispatch({
       type: ADMIN_CREATE_PRODUCT_SUCCESS,

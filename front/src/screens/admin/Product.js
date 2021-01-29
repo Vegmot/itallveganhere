@@ -4,7 +4,7 @@ import { Button, Image } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { deleteProductItem } from '../../actions/productActions';
 
-const Product = ({ product }) => {
+const Product = ({ product, history }) => {
   const dispatch = useDispatch();
 
   const deleteProductHandler = id => {
@@ -14,6 +14,7 @@ const Product = ({ product }) => {
       )
     ) {
       dispatch(deleteProductItem(id));
+      history.push('/admin/products');
     }
   };
 
@@ -32,7 +33,7 @@ const Product = ({ product }) => {
       </td>
       <td className='align-middle'>{product.category}</td>
       <td className='align-middle'>{product.brand}</td>
-      <td className='align-middle'>{product.price}</td>
+      <td className='align-middle'>$ {product.price}</td>
       <td className='align-middle'>
         <Button
           className='btn btn-danger'

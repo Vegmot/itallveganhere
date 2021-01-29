@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, Spinner, Row, Col } from 'react-bootstrap';
-import {
-  getProductsList,
-  createProductItem,
-} from '../../actions/productActions';
+import { Button, Table, Spinner, Row, Col } from 'react-bootstrap';
+import { getProductsList } from '../../actions/productActions';
 import Message from '../../components/Message';
 import Product from './Product';
 import Paginate from '../../components/Paginate';
-import { ADMIN_CREATE_PRODUCT_RESET } from '../../../../../fruitables/frontend/src/constants/productConstants';
+import { ADMIN_CREATE_PRODUCT_RESET } from '../../constants/productConstants';
 
 const AdminProductssListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
@@ -27,8 +24,9 @@ const AdminProductssListScreen = ({ history, match }) => {
 
     if (userData && userData.isAdmin) {
       dispatch(getProductsList('', pageNumber));
+      setMessage('Successfully fetched products list');
       setTimeout(() => {
-        setMessage('Successfully fetched products list');
+        setMessage(null);
       }, 4000);
     } else {
       history.push('/login');
@@ -36,7 +34,7 @@ const AdminProductssListScreen = ({ history, match }) => {
   }, [userData, pageNumber, history]);
 
   const createProductHandler = () => {
-    dispatch(createProductItem());
+    history.push('/admin/products/create-update');
   };
 
   return (

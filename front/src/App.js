@@ -29,6 +29,7 @@ import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScr
 import AdminOrdersListScreen from './screens/admin/AdminOrdersListScreen';
 import AdminUsersListScreen from './screens/admin/AdminUsersListScreen';
 import AdminProductsListScreen from './screens/admin/AdminProductsListScreen';
+import AdminCreateUpdateProductScreen from './screens/admin/AdminCreateUpdateProductScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -107,6 +108,16 @@ const App = () => {
                   exact
                   path='/admin/products/page/:pageNumber'
                   component={AdminProductsListScreen}
+                />
+                <Route
+                  exact
+                  path='/admin/products/create-update/:id'
+                  component={AdminCreateUpdateProductScreen}
+                />
+                <Route
+                  exact
+                  path='/admin/products/create-update'
+                  component={AdminCreateUpdateProductScreen}
                 />
                 <Route
                   exact

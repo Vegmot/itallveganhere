@@ -23,6 +23,7 @@ const ProductItemScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -68,6 +69,17 @@ const ProductItemScreen = ({ match, history }) => {
     );
   };
 
+  const updateProductHandler = () => {
+    if (userData && userData.isAdmin) {
+      history.push(`/admin/products/create-update/${product._id}`);
+    } else {
+      setMessage('Not authorised as admin');
+      setTimeout(() => {
+        setMessage(null);
+      }, 4000);
+    }
+  };
+
   return (
     <>
       <Button onClick={history.goBack} className='btn btn-dark my-3'>
@@ -80,6 +92,7 @@ const ProductItemScreen = ({ match, history }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          {message && <Message variant='danger'>{message}</Message>}
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />
@@ -162,6 +175,18 @@ const ProductItemScreen = ({ match, history }) => {
                       Add to cart
                     </Button>
                   </ListGroup.Item>
+
+                  {userData.isAdmin && (
+                    <ListGroup.Item>
+                      <Button
+                        onClick={updateProductHandler}
+                        className='btn btn-info btn-block'
+                        type='button'
+                      >
+                        Update this product
+                      </Button>
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
               </Card>
             </Col>

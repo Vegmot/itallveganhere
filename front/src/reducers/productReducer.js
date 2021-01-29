@@ -77,7 +77,7 @@ export const adminCreateProductReducer = (state = {}, action) => {
     case ADMIN_CREATE_PRODUCT_REQUEST:
       return { loading: true };
     case ADMIN_CREATE_PRODUCT_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, product: action.payload, success: true };
     case ADMIN_CREATE_PRODUCT_FAIL:
       return { loading: false, error: action.payload };
     case ADMIN_CREATE_PRODUCT_RESET:
@@ -92,7 +92,7 @@ export const adminUpdateProductReducer = (state = { product: {} }, action) => {
     case ADMIN_UPDATE_PRODUCT_REQUEST:
       return { loading: true };
     case ADMIN_UPDATE_PRODUCT_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, product: action.payload, success: true };
     case ADMIN_UPDATE_PRODUCT_FAIL:
       return { loading: false, error: action.payload };
     case ADMIN_UPDATE_PRODUCT_RESET:
