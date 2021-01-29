@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { deliverOrder } from '../../actions/orderActions';
+import { deliverOrder, deleteOrderItem } from '../../actions/orderActions';
 
 const Order = ({ order }) => {
   const dispatch = useDispatch();
@@ -10,10 +10,20 @@ const Order = ({ order }) => {
   const deliverOrderHandler = id => {
     if (
       window.confirm(
-        'Are you sure you want to delete this user? This cannot be undone.'
+        'Are you sure this order is ready to be set out for delivery?'
       )
     ) {
       dispatch(deliverOrder(id));
+    }
+  };
+
+  const deleteOrderHandler = id => {
+    if (
+      window.confirm(
+        'Are you sure you want to delete this user? This cannot be undone.'
+      )
+    ) {
+      dispatch(deleteOrderItem(id));
     }
   };
 
@@ -36,16 +46,21 @@ const Order = ({ order }) => {
         {order.isOnDelivery ? (
           order.setOnDeliveryAt.substring(0, 10)
         ) : (
-          <i className='fas fa-times' style={{ color: 'red' }}></i>
+          <Button
+            className='btn btn-info'
+            onClick={() => deliverOrderHandler(order._id)}
+          >
+            <i className='fas fa-truck'></i>
+          </Button>
         )}
       </td>
 
       <td className='align-middle'>
         <Button
           className='btn btn-danger'
-          onClick={() => deliverOrderHandler(order._id)}
+          onClick={() => deleteOrderHandler(order._id)}
         >
-          <i className='fas fa-trash'></i>
+          <i className='fas fa-times'></i>
         </Button>
       </td>
     </>

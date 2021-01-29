@@ -119,6 +119,22 @@ const getAllOrders = asyncHandler(async (req, res) => {
   res.json({ orders, orderPage, orderPages: Math.ceil(count / itemsOnPage) });
 });
 
+// Cancel / delete an order
+// DELETE /api/orders/:orderId
+// private_admin
+const cancelOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.orderId);
+
+  if (order) {
+    await order.remove();
+
+    res.json({ message: 'Successfully deleted the order' });
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 export {
   addOrderItems,
   getOrderById,
@@ -126,4 +142,5 @@ export {
   updateOrderToOutForDelivery,
   getMyOrders,
   getAllOrders,
+  cancelOrder,
 };

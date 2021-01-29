@@ -5,6 +5,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
   ORDER_TO_PAID_REQUEST,
   ORDER_TO_PAID_SUCCESS,
   ORDER_TO_PAID_FAIL,
@@ -74,6 +77,19 @@ export const listOrdersReducer = (state = { orders: [] }, action) => {
       return { loading: false, error: action.payload };
     case LIST_MY_ORDERS_RESET:
       return { orders: [] };
+    default:
+      return state;
+  }
+};
+
+export const deleteOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_ORDER_REQUEST:
+      return { loading: true, ...state };
+    case DELETE_ORDER_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_ORDER_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

@@ -6,6 +6,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
   ORDER_TO_PAID_REQUEST,
   ORDER_TO_PAID_SUCCESS,
   ORDER_TO_PAID_FAIL,
@@ -75,6 +78,34 @@ export const getOrderDetails = orderId => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteOrderItem = orderId => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_ORDER_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    await axios.delete(`/api/orders/${orderId}`, config);
+
+    dispatch({ type: DELETE_ORDER_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
