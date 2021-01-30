@@ -4,7 +4,7 @@ import { Button, Image } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { deleteProductItem } from '../../actions/productActions';
 
-const Product = ({ product, history }) => {
+const Product = ({ product }) => {
   const dispatch = useDispatch();
 
   const deleteProductHandler = id => {
@@ -14,7 +14,6 @@ const Product = ({ product, history }) => {
       )
     ) {
       dispatch(deleteProductItem(id));
-      history.push('/admin/products');
     }
   };
 

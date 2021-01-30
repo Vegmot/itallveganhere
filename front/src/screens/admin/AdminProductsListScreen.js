@@ -28,6 +28,9 @@ const AdminProductssListScreen = ({ history, match }) => {
     product: productCreated,
   } = adminCreateProduct;
 
+  const adminRemoveProduct = useSelector(state => state.adminRemoveProduct);
+  const { success: successRemoveProduct } = adminRemoveProduct;
+
   useEffect(() => {
     dispatch({ type: ADMIN_CREATE_PRODUCT_RESET });
 
@@ -37,6 +40,8 @@ const AdminProductssListScreen = ({ history, match }) => {
 
     if (successCreate) {
       history.push(`/admin/products/${productCreated._id}/create-update`);
+    } else if (successRemoveProduct) {
+      dispatch(getProductsList('', pageNumber));
     } else {
       dispatch(getProductsList('', pageNumber));
       if (products) {
@@ -45,8 +50,15 @@ const AdminProductssListScreen = ({ history, match }) => {
           setMessage(null);
         }, 4000);
       }
-    }
-  }, [userData, pageNumber, history, successCreate, productCreated]);
+    } // if I add products as a dependency, this will result in an infinite loop
+  }, [
+    userData,
+    pageNumber,
+    history,
+    successCreate,
+    successRemoveProduct,
+    productCreated,
+  ]);
 
   const createProductHandler = () => {
     dispatch(createProductItem());
