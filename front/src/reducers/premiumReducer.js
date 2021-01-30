@@ -106,7 +106,7 @@ export const setUserToPremiumReducer = (state = { userData: {} }, action) => {
     case SET_USER_TO_PREMIUM_REQUEST:
       return { loading: true };
     case SET_USER_TO_PREMIUM_SUCCESS:
-      return { loading: false, userData: action.payload };
+      return { loading: false, userData: action.payload, success: true };
     case SET_USER_TO_PREMIUM_FAIL:
       return { loading: false, error: action.payload };
     default:

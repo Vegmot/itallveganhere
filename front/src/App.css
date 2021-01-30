@@ -117,6 +117,11 @@ h2 {
   border: none;
 }
 
+.premium-package-order-image {
+  width: 95px;
+  height: 80px;
+}
+
 /* Footer */
 #main-footer {
   background-color: #ecf0f1;

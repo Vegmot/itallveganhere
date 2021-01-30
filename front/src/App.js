@@ -25,6 +25,7 @@ import CartScreen from './screens/carts/CartScreen';
 import MyOrdersListScreen from './screens/orders/MyOrdersListScreen';
 // Premiums
 import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScreen';
+import PremiumPackageOrderScreen from './screens/premiums/PremiumPackageOrderScreen';
 // Admin
 import AdminOrdersListScreen from './screens/admin/AdminOrdersListScreen';
 import AdminUsersListScreen from './screens/admin/AdminUsersListScreen';
@@ -93,6 +94,11 @@ const App = () => {
                   component={ProductItemScreen}
                 />
                 <Route exact path='/products' component={ProductsHomeScreen} />
+                <Route
+                  exact
+                  path='/premiums/:id/order'
+                  component={PremiumPackageOrderScreen}
+                />
                 <Route
                   exact
                   path='/premiums'

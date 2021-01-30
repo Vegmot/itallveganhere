@@ -320,6 +320,13 @@ export const updateUserToPremium = () => async (dispatch, getState) => {
       type: SET_USER_TO_PREMIUM_SUCCESS,
       payload: res.data,
     });
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: res.data,
+    });
+
+    localStorage.setItem('userData', JSON.stringify(res.data));
   } catch (error) {
     dispatch({
       type: SET_USER_TO_PREMIUM_FAIL,

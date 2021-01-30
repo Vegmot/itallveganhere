@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { getAllPremiumPackageItems } from '../../actions/premiumActions';
 import Message from '../../components/Message';
-import PremiumPackage from '../../components/PremiumPackage';
+import PremiumPackage from './PremiumPackage';
 
 const PremiumPackagesListScreen = () => {
   const dispatch = useDispatch();

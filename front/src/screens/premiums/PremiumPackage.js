@@ -6,7 +6,7 @@ import { Card, ListGroup } from 'react-bootstrap';
 const PremiumPackage = ({ premiumPackage }) => {
   return (
     <>
-      <LinkContainer to='/'>
+      <LinkContainer to={`/premiums/${premiumPackage._id}/order`}>
         <Card className='my-5 premium-card'>
           <ListGroup.Item className='premium-image'>
             <Card.Img variant='top' src={premiumPackage.image} rounded />
@@ -22,7 +22,10 @@ const PremiumPackage = ({ premiumPackage }) => {
 
           <ListGroup>
             <ListGroup.Item className='premium-checkout'>
-              <Link to='/' className='btn btn-primary btn-block'>
+              <Link
+                to={`/premiums/${premiumPackage._id}/order`}
+                className='btn btn-primary btn-block'
+              >
                 Activate{' '}
                 <span className='ml-1'>($ {premiumPackage.price})</span>
               </Link>
