@@ -22,7 +22,9 @@ const Product = ({ product, history }) => {
     <>
       <td className='align-middle'>{product._id}</td>
       <td className='align-middle'>
-        <Link to={`/products/${product._id}`}>{product.name}</Link>
+        <Link to={`/admin/products/${product._id}/create-update`}>
+          {product.name}
+        </Link>
       </td>
       <td className='align-middle'>
         <Image

@@ -11,13 +11,13 @@ import {
 import { protect, admin } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.get('/top', getTopProducts);
+router.route('/').get(getAllProducts).post(protect, admin, createProduct);
 router.route('/:productId/reviews').post(protect, writeProductReview);
+router.get('/top', getTopProducts);
 router
   .route('/:productId')
   .get(getProductById)
-  .put(protect, admin, updateProduct)
-  .delete(protect, admin, deleteProduct);
-router.route('/').get(getAllProducts).post(protect, admin, createProduct);
+  .delete(protect, admin, deleteProduct)
+  .put(protect, admin, updateProduct);
 
 export default router;

@@ -96,7 +96,7 @@ export const adminUpdateProductReducer = (state = { product: {} }, action) => {
     case ADMIN_UPDATE_PRODUCT_FAIL:
       return { loading: false, error: action.payload };
     case ADMIN_UPDATE_PRODUCT_RESET:
-      return {};
+      return { product: {} };
     default:
       return state;
   }

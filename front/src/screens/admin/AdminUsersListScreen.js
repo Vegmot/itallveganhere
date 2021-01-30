@@ -18,12 +18,14 @@ const AdminUsersListScreen = () => {
   useEffect(() => {
     if (userData && userData.isAdmin) {
       dispatch(getUsersList());
+      setMessage('Successfully fetched users list');
       setTimeout(() => {
-        setMessage('Successfully fetched users list');
+        setMessage(null);
       }, 4000);
     } else {
+      setMessage('Only admin users are allowed to make this request');
       setTimeout(() => {
-        setMessage('Only admin users are allowed to make this request');
+        setMessage(null);
       }, 4000);
     }
   }, []);

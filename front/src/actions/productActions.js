@@ -100,7 +100,7 @@ export const deleteProductItem = productId => async (dispatch, getState) => {
   }
 };
 
-export const createProductItem = formData => async (dispatch, getState) => {
+export const createProductItem = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_CREATE_PRODUCT_REQUEST });
 
@@ -110,12 +110,11 @@ export const createProductItem = formData => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${userData.token}`,
       },
     };
 
-    const res = await axios.post('/api/products', formData, config);
+    const res = await axios.post('/api/products', {}, config);
 
     dispatch({
       type: ADMIN_CREATE_PRODUCT_SUCCESS,
@@ -134,7 +133,6 @@ export const createProductItem = formData => async (dispatch, getState) => {
 
 export const updateProductItem = product => async (dispatch, getState) => {
   try {
-  } catch (error) {
     dispatch({ type: ADMIN_UPDATE_PRODUCT_REQUEST });
 
     const {
@@ -158,7 +156,7 @@ export const updateProductItem = product => async (dispatch, getState) => {
       type: ADMIN_UPDATE_PRODUCT_SUCCESS,
       payload: res.data,
     });
-
+  } catch (error) {
     dispatch({
       type: ADMIN_UPDATE_PRODUCT_FAIL,
       payload:

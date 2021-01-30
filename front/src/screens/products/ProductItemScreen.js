@@ -71,7 +71,7 @@ const ProductItemScreen = ({ match, history }) => {
 
   const updateProductHandler = () => {
     if (userData && userData.isAdmin) {
-      history.push(`/admin/products/create-update/${product._id}`);
+      history.push(`/admin/products/${product._id}/create-update`);
     } else {
       setMessage('Not authorised as admin');
       setTimeout(() => {

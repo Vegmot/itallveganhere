@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { writeNewPost } from '../../actions/postActions';
 import Message from '../../components/Message';
 
-const PostForm = ({ history }) => {
+const PostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const dispatch = useDispatch();

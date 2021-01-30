@@ -111,12 +111,7 @@ const App = () => {
                 />
                 <Route
                   exact
-                  path='/admin/products/create-update/:id'
-                  component={AdminCreateUpdateProductScreen}
-                />
-                <Route
-                  exact
-                  path='/admin/products/create-update'
+                  path='/admin/products/:id/create-update/'
                   component={AdminCreateUpdateProductScreen}
                 />
                 <Route
