@@ -23,7 +23,7 @@ import {
   ADMIN_OUT_FOR_DELIVERY_FAIL,
 } from '../constants/orderConstants';
 
-export const createOrder = order => async (dispatch, getState) => {
+export const createOrderItem = order => async (dispatch, getState) => {
   try {
     dispatch({ type: CREATE_ORDER_REQUEST });
 

@@ -11,6 +11,7 @@ import {
 import { protect, admin } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
+router.route('/myorders').get(protect, getMyOrders);
 router.route('/:orderId/pay').put(protect, updateOrderToPaid);
 router
   .route('/:orderId/deliver')
@@ -19,7 +20,6 @@ router
   .route('/:orderId')
   .get(protect, getOrderById)
   .delete(protect, admin, cancelOrder);
-router.route('/myorders').get(protect, getMyOrders);
 router
   .route('/')
   .post(protect, addOrderItems)

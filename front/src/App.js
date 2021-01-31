@@ -23,6 +23,10 @@ import UserInfo from './screens/users/UserInfo';
 import CartScreen from './screens/carts/CartScreen';
 // Orders
 import MyOrdersListScreen from './screens/orders/MyOrdersListScreen';
+import ShippingScreen from './screens/orders/ShippingScreen';
+import PaymentScreen from './screens/orders/PaymentScreen';
+import PlaceOrderScreen from './screens/orders/PlaceOrderScreen';
+import OrderDetailsScreen from './screens/orders/OrderDetailsScreen';
 // Premiums
 import PremiumPackagesListScreen from './screens/premiums/PremiumPackagesListScreen';
 import PremiumPackageOrderScreen from './screens/premiums/PremiumPackageOrderScreen';
@@ -49,6 +53,10 @@ const App = () => {
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/userInfo' component={UserInfo} />
                 <Route exact path='/cart/:id?' component={CartScreen} />
+                <Route exact path='/shipping' component={ShippingScreen} />
+                <Route exact path='/payment' component={PaymentScreen} />
+                <Route exact path='/placeorder' component={PlaceOrderScreen} />
+                <Route exact path='/order/:id' component={OrderDetailsScreen} />
                 <Route
                   exact
                   path='/profile/profile-form'
