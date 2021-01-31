@@ -18,6 +18,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  ADMIN_GET_USER_INFO_REQUEST,
+  ADMIN_GET_USER_INFO_SUCCESS,
+  ADMIN_GET_USER_INFO_FAIL,
   ADMIN_UPDATE_USER_REQUEST,
   ADMIN_UPDATE_USER_SUCCESS,
   ADMIN_UPDATE_USER_FAIL,
@@ -159,6 +162,38 @@ export const getUserData = () => async (dispatch, getState) => {
   }
 };
 
+// getting a user's info by id
+export const adminGetUserInfoById = userId => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_GET_USER_INFO_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.get(`/api/users/${userId}`, config);
+
+    dispatch({
+      type: ADMIN_GET_USER_INFO_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_GET_USER_INFO_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 // logged in user updates her/his own info
 export const updateUserData = user => async (dispatch, getState) => {
   try {
@@ -198,7 +233,10 @@ export const updateUserData = user => async (dispatch, getState) => {
     }
     dispatch({
       type: USER_UPDATE_FAIL,
-      payload: message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -264,7 +302,7 @@ export const deleteUser = userId => async (dispatch, getState) => {
   }
 };
 
-export const adminUpdateuserInfo = user => async (dispatch, getState) => {
+export const adminUpdateUserInfo = user => async (dispatch, getState) => {
   try {
     dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
 

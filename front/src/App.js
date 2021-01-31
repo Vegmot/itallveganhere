@@ -35,6 +35,7 @@ import AdminOrdersListScreen from './screens/admin/AdminOrdersListScreen';
 import AdminUsersListScreen from './screens/admin/AdminUsersListScreen';
 import AdminProductsListScreen from './screens/admin/AdminProductsListScreen';
 import AdminCreateUpdateProductScreen from './screens/admin/AdminCreateUpdateProductScreen';
+import AdminUserEditScreen from './screens/admin/AdminUserEditScreen';
 
 import './bootstrap.min.css';
 import './App.css';
@@ -113,6 +114,11 @@ const App = () => {
                   component={PremiumPackagesListScreen}
                 />
                 <Route exact path='/posts' component={PostsHomeScreen} />
+                <Route
+                  exact
+                  path='/admin/users/:id/userInfo'
+                  component={AdminUserEditScreen}
+                />
                 <Route
                   exact
                   path='/admin/users'

@@ -177,7 +177,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 // GET /api/users/:userId
 // private_admin
 const getUserById = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id).select('-password');
+  const user = await User.findById(req.params.userId).select('-password');
 
   if (user) {
     res.json(user);
@@ -191,7 +191,7 @@ const getUserById = asyncHandler(async (req, res) => {
 // PUT /api/users/:userId/userInfo
 // private_admin
 const adminUpdateUserInfo = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+  const user = await User.findById(req.params.userId);
 
   if (user) {
     user.firstName =
@@ -285,7 +285,7 @@ const cancelUserPremium = asyncHandler(async (req, res) => {
 // PUT /api/users/:userId/premium
 // private_admin
 const adminSetUserToPremium = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+  const user = await User.findById(req.params.userId);
 
   if (user) {
     // if the user buys premium package for the first time
@@ -317,7 +317,7 @@ const adminSetUserToPremium = asyncHandler(async (req, res) => {
 // PUT /api/users/:userId/unpremium
 // private_admin
 const adminCancelUserPremium = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+  const user = await User.findById(req.params.userId);
 
   if (user) {
     if (

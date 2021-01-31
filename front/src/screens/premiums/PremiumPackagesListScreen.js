@@ -13,11 +13,24 @@ const PremiumPackagesListScreen = () => {
   );
   const { loading, error, premiumPackages } = getAllPremiumPackages;
 
+  const userLogin = useSelector(state => state.userLogin);
+  const { userData } = userLogin;
+
   useEffect(() => {
     dispatch(getAllPremiumPackageItems());
   }, [dispatch]);
 
-  return (
+  return userData && userData.isPremium ? (
+    <>
+      <h1>
+        <i className='fas fa-medal'></i> Premium Status
+      </h1>
+      <p>
+        You have activated your premium status on{' '}
+        {userData.premiumAt.substring(0, 10)}
+      </p>
+    </>
+  ) : (
     <>
       {loading && <Spinner animation='border' variant='primary' />}
       {error && <Message variant='danger'>{error}</Message>}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePostItem } from '../actions/postActions';
+import { deletePostItem } from '../../actions/postActions';
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();

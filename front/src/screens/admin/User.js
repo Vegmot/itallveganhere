@@ -23,7 +23,7 @@ const User = ({ user }) => {
         <Image src={user.avatar} fluid className='admin-users-avatar' />
       </td>
       <td className='align-middle'>
-        <Link to={`/users/${user._id}/userInfo`}>
+        <Link to={`/admin/users/${user._id}/userInfo`}>
           {user.firstName + ' ' + user.lastName}
         </Link>
       </td>

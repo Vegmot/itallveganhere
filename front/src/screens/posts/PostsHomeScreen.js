@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Table, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
-import Post from '../../components/Post';
-import PostPaginate from '../../components/PostPaginate';
+import Post from './Post';
+import PostPaginate from './PostPaginate';
 import { getPostsList } from '../../actions/postActions';
 
 const PostsHomeScreen = ({ match }) => {
