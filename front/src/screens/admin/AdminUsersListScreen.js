@@ -49,7 +49,7 @@ const AdminUsersListScreen = () => {
             <td>Name</td>
             <td>Email</td>
             <td>Member since</td>
-            <td>Premium</td>
+            <td>Premium since</td>
             <td>Admin</td>
             <td></td>
           </tr>

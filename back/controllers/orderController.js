@@ -114,7 +114,8 @@ const getAllOrders = asyncHandler(async (req, res) => {
 
   const orders = await Order.find({})
     .limit(itemsOnPage)
-    .skip(itemsOnPage * (orderPage - 1));
+    .skip(itemsOnPage * (orderPage - 1))
+    .populate('user', 'firstName lastName email isPremium');
 
   res.json({ orders, orderPage, orderPages: Math.ceil(count / itemsOnPage) });
 });

@@ -13,20 +13,22 @@ const AdminOrdersListScreen = () => {
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
-  const listOrders = useSelector(state => state.listOrders);
-  const { loading, orders, orderPage, orderPages } = listOrders;
+  const adminGetAllOrders = useSelector(state => state.adminGetAllOrders);
+  const { loading, orders, orderPage, orderPages } = adminGetAllOrders;
 
   useEffect(() => {
     if (userData && userData.isAdmin) {
       dispatch(adminGetAllOrdersList());
-      if (orders.length > 0) {
+      if (orders && orders.length > 0) {
+        setMessage('Successfully fetched orders list');
         setTimeout(() => {
-          setMessage('Successfully fetched orders list');
+          setMessage(null);
         }, 4000);
       }
     } else {
+      setMessage('Only admin users are allowed to make this request');
       setTimeout(() => {
-        setMessage('Only admin users are allowed to make this request');
+        setMessage(null);
       }, 4000);
     }
   }, []);
@@ -45,7 +47,7 @@ const AdminOrdersListScreen = () => {
           {message}
         </Message>
       )}
-      {orders.length > 0 ? (
+      {orders && orders.length > 0 ? (
         <Table
           striped
           bordered
@@ -56,7 +58,9 @@ const AdminOrdersListScreen = () => {
           <thead>
             <tr>
               <td>ID</td>
-              <td>Order destination</td>
+              <td>Name</td>
+              <td>Address</td>
+              <td>Premium?</td>
               <td>Paid?</td>
               <td>Delivered?</td>
               <td></td>

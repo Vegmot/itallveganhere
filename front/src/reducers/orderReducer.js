@@ -98,7 +98,7 @@ export const deleteOrderReducer = (state = {}, action) => {
 export const adminGetAllOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ADMIN_GET_ALL_ORDERS_REQUEST:
-      return { loading: true };
+      return { loading: true, orders: [] };
     case ADMIN_GET_ALL_ORDERS_SUCCESS:
       return {
         loading: false,

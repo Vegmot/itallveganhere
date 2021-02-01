@@ -33,7 +33,11 @@ const User = ({ user }) => {
       <td className='align-middle'>{user.createdAt.substring(0, 10)}</td>
       <td className='align-middle'>
         {user.isPremium ? (
-          user.premiumAt.substring(0, 10)
+          <>
+            <i className='fas fa-medal' style={{ color: 'blue' }}></i>{' '}
+            {user.premiumAt.substring(0, 10)}{' '}
+            <i className='fas fa-medal' style={{ color: 'blue' }}></i>
+          </>
         ) : (
           <i className='fas fa-times' style={{ color: 'red' }}></i>
         )}
@@ -47,7 +51,7 @@ const User = ({ user }) => {
       </td>
       <td className='align-middle'>
         <Button
-          className='btn btn-danger'
+          className='btn btn-danger btn-sm'
           onClick={() => deleteUserHandler(user._id)}
         >
           <i className='fas fa-trash'></i>

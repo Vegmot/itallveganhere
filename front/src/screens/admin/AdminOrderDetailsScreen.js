@@ -13,18 +13,20 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/Message';
-import { getOrderDetails, payForOrder } from '../../actions/orderActions';
+import {
+  getOrderDetails,
+  payForOrder,
+  deliverOrder,
+} from '../../actions/orderActions';
 import {
   ORDER_TO_PAID_RESET,
   ADMIN_OUT_FOR_DELIVERY_RESET,
 } from '../../constants/orderConstants';
 
-const OrderDetailsScreen = ({ match, history }) => {
+const AdminOrderDetailsScreen = ({ match, history }) => {
   const orderId = match.params.id;
 
   const dispatch = useDispatch();
-
-  const [sdkReady, setSdkReady] = useState(false);
 
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
@@ -32,45 +34,36 @@ const OrderDetailsScreen = ({ match, history }) => {
   const orderDetails = useSelector(state => state.orderDetails);
   const { order } = orderDetails;
 
-  const orderToPaid = useSelector(state => state.orderToPaid);
-  const { loading: loadingPay, success: successPay } = orderToPaid;
+  const adminSetOrderOutForDelivery = useSelector(
+    state => state.adminSetOrderOutForDelivery
+  );
+  const {
+    loading: loadingDelivery,
+    success: successDelivery,
+  } = adminSetOrderOutForDelivery;
 
   const addDecimals = num => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
   useEffect(() => {
-    if (!userData) {
+    if (!userData || !userData.isAdmin) {
       history.push('/login');
     }
-    // PayPal
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
 
-    if (!order || order._id !== orderId || successPay) {
+    if (!order || order._id !== orderId || successDelivery) {
       dispatch({ type: ORDER_TO_PAID_RESET });
+      dispatch({ type: ADMIN_OUT_FOR_DELIVERY_RESET });
       dispatch(getOrderDetails(orderId));
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
-      }
     }
-  }, [dispatch, order, orderId, successPay, history, userData]);
+  }, [dispatch, order, orderId, successDelivery, history, userData]);
 
-  const successPaymentHandler = paymentResult => {
-    console.log(paymentResult);
-    dispatch(payForOrder(orderId, paymentResult));
+  const payOrderHandler = () => {
+    dispatch(payForOrder());
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
   };
 
   return (
@@ -198,19 +191,32 @@ const OrderDetailsScreen = ({ match, history }) => {
                     </Row>
                   </ListGroup.Item>
 
-                  {!order.isPaid && (
+                  {loadingDelivery && (
+                    <Spinner animation='border' variant='primary' />
+                  )}
+
+                  {userData && userData.isAdmin && !order.isPaid && (
                     <ListGroup.Item>
-                      {loadingPay && (
-                        <Spinner animation='border' variant='primary' />
-                      )}
-                      {!sdkReady ? (
-                        <Spinner animation='border' variant='primary' />
-                      ) : (
-                        <PayPalButton
-                          amount={order.totalPrice}
-                          onSuccess={successPaymentHandler}
-                        />
-                      )}
+                      <Button
+                        type='button'
+                        className='btn btn-block btn-info'
+                        onClick={payOrderHandler}
+                      >
+                        <i className='fas fa-wallet'></i> Mark as paid
+                      </Button>
+                    </ListGroup.Item>
+                  )}
+
+                  {userData && userData.isAdmin && !order.isDelivered && (
+                    <ListGroup.Item>
+                      <Button
+                        type='button'
+                        className='btn btn-block'
+                        onClick={deliverHandler}
+                      >
+                        <i className='fas fa-truck'></i> Mark as out for
+                        delivery
+                      </Button>
                     </ListGroup.Item>
                   )}
                 </ListGroup>
@@ -225,4 +231,4 @@ const OrderDetailsScreen = ({ match, history }) => {
   );
 };
 
-export default OrderDetailsScreen;
+export default AdminOrderDetailsScreen;
