@@ -22,6 +22,10 @@ import {
   removePostReducer,
   writeCommentReducer,
   removeCommentReducer,
+  addLikeCommentReducer,
+  removeLikeCommentReducer,
+  addDisikeCommentReducer,
+  removeDislikeCommentReducer,
 } from './reducers/postReducer';
 import {
   getAllPremiumPackagesReducer,
@@ -84,6 +88,10 @@ const reducer = combineReducers({
   removePost: removePostReducer,
   writeComment: writeCommentReducer,
   removeComment: removeCommentReducer,
+  addLikeComment: addLikeCommentReducer,
+  removeLikeComment: removeLikeCommentReducer,
+  addDislikeComment: addDisikeCommentReducer,
+  removeDislikeComment: removeDislikeCommentReducer,
 
   // premium
   getAllPremiumPackages: getAllPremiumPackagesReducer,

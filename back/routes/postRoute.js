@@ -12,19 +12,35 @@ import {
   addComment,
   editComment,
   deleteComment,
+  addLikeComment,
+  removeLikeComment,
+  addDislikeComment,
+  removeDislikeComment,
 } from '../controllers/postController.js';
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router
+  .route('/:postId/comments/:commentId/like')
+  .post(protect, addLikeComment)
+  .delete(protect, removeLikeComment);
+router
+  .route('/:postId/comments/:commentId/dislike')
+  .post(protect, addDislikeComment)
+  .delete(protect, removeDislikeComment);
+router
   .route('/:postId/comments/:commentId')
   .delete(protect, deleteComment)
   .put(protect, editComment);
 router.route('/:postId/comments').post(protect, addComment);
-router.route('/:postId/like').post(protect, addLikePost);
-router.route('/:postId/dislike').post(protect, addDislikePost);
-router.route('/:postId/like').delete(protect, removeLikePost);
-router.route('/:postId/dislike').delete(protect, removeDislikePost);
+router
+  .route('/:postId/like')
+  .post(protect, addLikePost)
+  .delete(protect, removeLikePost);
+router
+  .route('/:postId/dislike')
+  .post(protect, addDislikePost)
+  .delete(protect, removeDislikePost);
 router
   .route('/:postId')
   .get(getPostById)

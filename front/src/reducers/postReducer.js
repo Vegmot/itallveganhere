@@ -32,6 +32,15 @@ import {
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAIL,
+  ADD_LIKE_COMMENT_REQUEST,
+  ADD_LIKE_COMMENT_SUCCESS,
+  ADD_LIKE_COMMENT_FAIL,
+  ADD_DISLIKE_COMMENT_REQUEST,
+  ADD_DISLIKE_COMMENT_SUCCESS,
+  ADD_DISLIKE_COMMENT_FAIL,
+  REMOVE_DISLIKE_COMMENT_REQUEST,
+  REMOVE_DISLIKE_COMMENT_SUCCESS,
+  REMOVE_DISLIKE_COMMENT_FAIL,
 } from '../constants/postConstants';
 
 export const postItemReducer = (
@@ -242,6 +251,120 @@ export const removeCommentReducer = (
         success: true,
       };
     case DELETE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const addLikeCommentReducer = (
+  state = { post: { comments: [] } },
+  action
+) => {
+  switch (action.type) {
+    case ADD_LIKE_COMMENT_REQUEST:
+      return { loading: true, ...state };
+    case ADD_LIKE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comment: {
+            ...state.post.comment,
+            commentLikes: action.payload,
+          },
+        },
+        loading: false,
+        success: true,
+      };
+    case ADD_LIKE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const removeLikeCommentReducer = (
+  state = { post: { comments: [] } },
+  action
+) => {
+  switch (action.type) {
+    case REMOVE_LIKE_POST_REQUEST:
+      return { loading: true, ...state };
+    case REMOVE_LIKE_POST_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: {
+            ...state.post.comments,
+            commentLikes: state.post.comments.filter(
+              comment => comment._id !== action.payload
+            ),
+          },
+        },
+        loading: false,
+        success: true,
+      };
+    case REMOVE_LIKE_POST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const addDisikeCommentReducer = (
+  state = { post: { comments: [] } },
+  action
+) => {
+  switch (action.type) {
+    case ADD_DISLIKE_COMMENT_REQUEST:
+      return { loading: true, ...state };
+    case ADD_DISLIKE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: {
+            ...state.post.comments,
+            commentDislikes: action.payload.map(
+              comment => comment.commentDislikes
+            ),
+          },
+        },
+        loading: false,
+        success: true,
+      };
+    case ADD_DISLIKE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const removeDislikeCommentReducer = (
+  state = { post: { comments: [] } },
+  action
+) => {
+  switch (action.type) {
+    case REMOVE_DISLIKE_COMMENT_REQUEST:
+      return { loading: true, ...state };
+    case REMOVE_DISLIKE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: {
+            ...state.post.comments,
+            commentDislikes: state.post.comments.filter(
+              comment => comment._id !== action.payload
+            ),
+          },
+        },
+        loading: false,
+        success: true,
+      };
+    case REMOVE_DISLIKE_COMMENT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

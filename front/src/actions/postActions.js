@@ -36,6 +36,18 @@ import {
   REMOVE_DISLIKE_POST_REQUEST,
   REMOVE_DISLIKE_POST_SUCCESS,
   REMOVE_DISLIKE_POST_FAIL,
+  ADD_LIKE_COMMENT_REQUEST,
+  ADD_LIKE_COMMENT_SUCCESS,
+  ADD_LIKE_COMMENT_FAIL,
+  REMOVE_LIKE_COMMENT_REQUEST,
+  REMOVE_LIKE_COMMENT_SUCCESS,
+  REMOVE_LIKE_COMMENT_FAIL,
+  ADD_DISLIKE_COMMENT_REQUEST,
+  ADD_DISLIKE_COMMENT_SUCCESS,
+  ADD_DISLIKE_COMMENT_FAIL,
+  REMOVE_DISLIKE_COMMENT_REQUEST,
+  REMOVE_DISLIKE_COMMENT_SUCCESS,
+  REMOVE_DISLIKE_COMMENT_FAIL,
 } from '../constants/postConstants';
 
 export const getPostsList = (
@@ -403,6 +415,152 @@ export const deleteCommentItem = (postId, commentId) => async (
   } catch (error) {
     dispatch({
       type: DELETE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const addLikeToCommentItem = (postId, commentId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ADD_LIKE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.post(
+      `/api/posts/${postId}/comments/${commentId}/like`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ADD_LIKE_COMMENT_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_LIKE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const removeLikeFromCommentItem = (postId, commentId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: REMOVE_LIKE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    await axios.delete(
+      `/api/posts/${postId}/comments/${commentId}/like`,
+      config
+    );
+
+    dispatch({ type: REMOVE_LIKE_COMMENT_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_LIKE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const addDislikeToCommentItem = (postId, commentId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ADD_DISLIKE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    const res = await axios.post(
+      `/api/posts/${postId}/comments/${commentId}/dislike`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ADD_DISLIKE_COMMENT_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_DISLIKE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const removeDislikeFromCommentItem = (postId, commentId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: REMOVE_DISLIKE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userData },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+
+    await axios.delete(
+      `/api/posts/${postId}/comments/${commentId}/dislike`,
+      config
+    );
+
+    dispatch({ type: REMOVE_DISLIKE_COMMENT_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_DISLIKE_COMMENT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
