@@ -47,7 +47,7 @@ const PostForm = () => {
               rows={12}
               name='content'
               className='post-form-content'
-              style={{ whiteSpace: 'pre-wrap' }}
+              style={{ whiteSpace: 'pre-line' }}
               value={content}
               onChange={e => setContent(e.target.value)}
             />

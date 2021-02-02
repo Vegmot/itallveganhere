@@ -20,7 +20,7 @@ const Post = ({ post }) => {
     <>
       <td>{post.postNumber}</td>
 
-      <td className='hide-sm'>
+      <td className='hide-sm align-middle'>
         <Link to={`/users/${post.user}`}>
           <img
             className='posts-list-avatar'
@@ -30,13 +30,13 @@ const Post = ({ post }) => {
         </Link>
       </td>
 
-      <td>
+      <td className='align-middle'>
         <Link to={`/users/${post.user}`}>
           <h6>{post.firstName + ' ' + post.lastName}</h6>
         </Link>
       </td>
 
-      <td>
+      <td className='align-middle'>
         <h6 className='text-primary'>
           {post.title.length > 30 ? (
             <Link to={`/posts/${post._id}`}>
@@ -54,11 +54,11 @@ const Post = ({ post }) => {
         </h6>
       </td>
 
-      <td>
+      <td className='align-middle'>
         <p className='post-date'>{post.date.substring(0, 10)}</p>
       </td>
 
-      <td>
+      <td className='align-middle'>
         <button type='button' className='btn btn-sm'>
           <i className='fas fa-thumbs-up'></i>{' '}
           <span>
@@ -67,7 +67,7 @@ const Post = ({ post }) => {
         </button>
       </td>
 
-      <td>
+      <td className='align-middle'>
         <button type='button' className='btn btn-sm'>
           <i className='fas fa-thumbs-down'></i>{' '}
           <span>
@@ -76,7 +76,7 @@ const Post = ({ post }) => {
         </button>
       </td>
 
-      <td>
+      <td className='align-middle'>
         {userData && (userData.isAdmin || userData._id === post.user) ? (
           <Button
             className='btn btn-sm btn-danger'
