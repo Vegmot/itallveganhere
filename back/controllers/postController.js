@@ -303,7 +303,7 @@ const addLikeComment = asyncHandler(async (req, res) => {
       comment => comment._id === req.params.commentId
     );
 
-    if (comment.commentLikes.find(comLike => comLike._id === req.user._id)) {
+    if (comment.commentLikes.find(comLike => comLike.user === req.user._id)) {
       res.json({ message: 'You unliked this comment' });
     } else {
       comment.commentLikes.unshift({ user: req.user._id });

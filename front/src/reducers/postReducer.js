@@ -284,6 +284,16 @@ export const addLikeCommentReducer = (
   }
 };
 
+/*
+Test
+
+post.comments.map(comment => (
+  comment.commentLikes.map(commLike => (
+    commLike.user === req.user._id
+  ))
+))
+*/
+
 export const removeLikeCommentReducer = (
   state = { post: { comments: [] } },
   action
