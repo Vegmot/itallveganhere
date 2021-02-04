@@ -385,7 +385,7 @@ export const removeDislikeCommentReducer = (
 export const editPostItemReducer = (state = { post: {} }, action) => {
   switch (action) {
     case EDIT_POST_ITEM_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case EDIT_POST_ITEM_SUCCESS:
       return { loading: false, post: action.payload, success: true };
     case EDIT_POST_ITEM_FAIL:

@@ -133,13 +133,13 @@ const PostItemScreen = ({ match, history }) => {
                 {userData && userData._id === post.user ? (
                   <>
                     <Link
-                      className='btn btn-sm btn-info mx-5'
-                      to='/edit-post-form'
+                      className='btn btn-sm btn-info ml-3'
+                      to={`/posts/edit/${postId}`}
                     >
                       <i className='far fa-edit'></i>
                     </Link>
                     <Button
-                      className='btn btn-sm btn-danger mx-5'
+                      className='btn btn-sm btn-danger ml-3'
                       onClick={() => deletePostHandler(postId)}
                     >
                       <i className='fas fa-times'></i>

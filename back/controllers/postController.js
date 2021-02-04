@@ -88,12 +88,22 @@ const editPost = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Post not found');
   } else {
-    post.title = title || post.title;
-    post.content = content || post.content;
-    post.updatedDate = Date.now();
+    await Post.findOneAndUpdate(
+      { _id: req.params.postId },
 
-    const editedPost = await post.save();
-    res.json(editedPost);
+      {
+        $set: {
+          title: title,
+          content: content,
+          updatedDate: Date.now(),
+        },
+      },
+      { new: true }
+    );
+
+    await post.save();
+
+    res.json(post);
   }
 });
 

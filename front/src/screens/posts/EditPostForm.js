@@ -5,28 +5,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPostItem, editPostContents } from '../../actions/postActions';
 import Message from '../../components/Message';
 
-const EditPostForm = ({ match }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const EditPostForm = ({ match, history }) => {
+  const [message, setMessage] = useState(null);
+
   const dispatch = useDispatch();
 
-  const editPostItem = useSelector(state => state.editPostItem);
-  const { success } = editPostItem;
+  const userLogin = useSelector(state => state.userLogin);
+  const { userData } = userLogin;
 
   const postItem = useSelector(state => state.postItem);
   const { loading, error, post } = postItem;
 
+  const [updatedTitle, setUpdatedTitle] = useState(post.title);
+  const [updatedContent, setUpdatedContent] = useState(post.content);
+
   useEffect(() => {
     if (userData && userData._id === post.user) {
       getPostItem(match.params.id);
-      setTitle(post.title);
-      setContent(post.content);
     }
   });
 
   const editPostHandler = e => {
     e.preventDefault();
-    dispatch(editPostContents({ title, content }));
+    dispatch(editPostContents(match.params.id, updatedTitle, updatedContent));
+
+    history.push(`/posts/${post._id}`);
+    setMessage('Successfully updated the post');
+    setTimeout(() => {
+      setMessage(null);
+    }, 4000);
   };
 
   return (
@@ -34,6 +41,7 @@ const EditPostForm = ({ match }) => {
       <Container>
         {loading && <Spinner animation='border' variant='primary' />}
         {error && <Message variant='danger'>{error}</Message>}
+        {message && <Message variant='success'>{message}</Message>}
 
         <Link to='/posts' className='btn btn-light mb-2'>
           Back to posts
@@ -46,8 +54,8 @@ const EditPostForm = ({ match }) => {
               type='text'
               name='title'
               className='post-form-title'
-              value={title}
-              onChange={e => setTitle(e.target.value)}
+              value={updatedTitle}
+              onChange={e => setUpdatedTitle(e.target.value)}
             />
           </Form.Group>
 
@@ -59,8 +67,8 @@ const EditPostForm = ({ match }) => {
               name='content'
               className='post-form-content'
               style={{ whiteSpace: 'pre-line' }}
-              value={content}
-              onChange={e => setContent(e.target.value)}
+              value={updatedContent}
+              onChange={e => setUpdatedContent(e.target.value)}
             />
           </Form.Group>
 

@@ -97,7 +97,10 @@ export const getPostItem = postId => async dispatch => {
   }
 };
 
-export const editPostContents = post => async (dispatch, getState) => {
+export const editPostContents = (postId, title, content) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: EDIT_POST_ITEM_REQUEST });
 
@@ -112,7 +115,11 @@ export const editPostContents = post => async (dispatch, getState) => {
       },
     };
 
-    const res = await axios.put(`/api/posts/${post._id}`, post, config);
+    const res = await axios.put(
+      `/api/posts/${postId}`,
+      { title, content },
+      config
+    );
 
     dispatch({
       type: EDIT_POST_ITEM_SUCCESS,

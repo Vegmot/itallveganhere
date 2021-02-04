@@ -28,10 +28,7 @@ router
   .route('/:postId/comments/:commentId/dislike')
   .post(protect, addDislikeComment)
   .delete(protect, removeDislikeComment);
-router
-  .route('/:postId/comments/:commentId')
-  .delete(protect, deleteComment)
-  .put(protect, editComment);
+router.route('/:postId/comments/:commentId').delete(protect, deleteComment);
 router.route('/:postId/comments').post(protect, addComment);
 router
   .route('/:postId/like')

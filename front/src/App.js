@@ -66,11 +66,7 @@ const App = () => {
                   component={ProfileForm}
                 />
                 <Route exact path='/profile' component={ProfileScreen} />
-                <Route
-                  exact
-                  path='/posts/edit-post-form'
-                  component={EditPostForm}
-                />
+                <Route exact path='/posts/edit/:id' component={EditPostForm} />
                 <Route exact path='/posts/post-form' component={PostForm} />
 
                 <Route
