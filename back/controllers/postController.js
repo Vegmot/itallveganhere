@@ -298,7 +298,6 @@ const addLikeComment = asyncHandler(async (req, res) => {
   }
 
   if (post) {
-    console.log(post.comments);
     const comment = post.comments.filter(
       comment => comment._id === req.params.commentId
     );
@@ -308,7 +307,7 @@ const addLikeComment = asyncHandler(async (req, res) => {
     } else {
       comment.commentLikes.unshift({ user: req.user._id });
       await post.save();
-      res.json(post.comments);
+      res.json({ comment, comments: post.comments });
     }
   }
 });

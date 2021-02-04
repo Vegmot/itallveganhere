@@ -269,10 +269,7 @@ export const addLikeCommentReducer = (
         ...state,
         post: {
           ...state.post,
-          comment: {
-            ...state.post.comment,
-            commentLikes: action.payload,
-          },
+          comment: action.payload.comment,
         },
         loading: false,
         success: true,

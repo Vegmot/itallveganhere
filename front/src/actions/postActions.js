@@ -449,7 +449,10 @@ export const addLikeToCommentItem = (postId, commentId) => async (
 
     dispatch({
       type: ADD_LIKE_COMMENT_SUCCESS,
-      payload: res.data,
+      payload: {
+        comment: res.data.comment,
+        comments: res.data.comments,
+      },
     });
   } catch (error) {
     dispatch({
