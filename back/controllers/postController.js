@@ -90,7 +90,7 @@ const editPost = asyncHandler(async (req, res) => {
   } else {
     post.title = title || post.title;
     post.content = content || post.content;
-    post.date = Date.now();
+    post.updatedDate = Date.now();
 
     const editedPost = await post.save();
     res.json(editedPost);

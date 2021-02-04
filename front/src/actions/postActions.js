@@ -97,7 +97,7 @@ export const getPostItem = postId => async dispatch => {
   }
 };
 
-export const editPostItem = post => async (dispatch, getState) => {
+export const editPostContents = post => async (dispatch, getState) => {
   try {
     dispatch({ type: EDIT_POST_ITEM_REQUEST });
 

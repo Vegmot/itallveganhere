@@ -125,17 +125,36 @@ const PostItemScreen = ({ match, history }) => {
                 <Link to={`/users/${post.user}`}>
                   {post.firstName + ' ' + post.lastName}
                 </Link>{' '}
-                posted on {post.date && post.date.substring(0, 10)}{' '}
-                {userData &&
-                (userData._id === post.user || userData.isAdmin) ? (
+                {post.updatedDate ? (
+                  <>updated on {post.updatedDate.substring(0, 10)}</>
+                ) : (
+                  <>posted on {post.date && post.date.substring(0, 10)}</>
+                )}{' '}
+                {userData && userData._id === post.user ? (
+                  <>
+                    <Link
+                      className='btn btn-sm btn-info mx-5'
+                      to='/edit-post-form'
+                    >
+                      <i className='far fa-edit'></i>
+                    </Link>
+                    <Button
+                      className='btn btn-sm btn-danger mx-5'
+                      onClick={() => deletePostHandler(postId)}
+                    >
+                      <i className='fas fa-times'></i>
+                    </Button>
+                  </>
+                ) : (
+                  ''
+                )}
+                {userData && userData.isAdmin && (
                   <Button
                     className='btn btn-sm btn-danger mx-5'
                     onClick={() => deletePostHandler(postId)}
                   >
                     <i className='fas fa-times'></i>
                   </Button>
-                ) : (
-                  ''
                 )}
               </Card.Header>
 

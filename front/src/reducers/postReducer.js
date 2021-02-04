@@ -10,6 +10,10 @@ import {
   ADD_LIKE_POST_REQUEST,
   ADD_LIKE_POST_SUCCESS,
   ADD_LIKE_POST_FAIL,
+  EDIT_POST_ITEM_REQUEST,
+  EDIT_POST_ITEM_SUCCESS,
+  EDIT_POST_ITEM_FAIL,
+  EDIT_POST_ITEM_RESET,
   REMOVE_LIKE_POST_REQUEST,
   REMOVE_LIKE_POST_SUCCESS,
   REMOVE_LIKE_POST_FAIL,
@@ -373,6 +377,21 @@ export const removeDislikeCommentReducer = (
       };
     case REMOVE_DISLIKE_COMMENT_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const editPostItemReducer = (state = { post: {} }, action) => {
+  switch (action) {
+    case EDIT_POST_ITEM_REQUEST:
+      return { loading: true };
+    case EDIT_POST_ITEM_SUCCESS:
+      return { loading: false, post: action.payload, success: true };
+    case EDIT_POST_ITEM_FAIL:
+      return { loading: false, error: action.payload };
+    case EDIT_POST_ITEM_RESET:
+      return { post: {} };
     default:
       return state;
   }

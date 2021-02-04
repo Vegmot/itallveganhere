@@ -14,6 +14,7 @@ import ProductItemScreen from './screens/products/ProductItemScreen';
 import PostsHomeScreen from './screens/posts/PostsHomeScreen';
 import PostItemScreen from './screens/posts/PostItemScreen';
 import PostForm from './screens/posts/PostForm';
+import EditPostForm from './screens/posts/EditPostForm';
 // Profiles
 import ProfileForm from './screens/profiles/ProfileForm';
 import ProfileScreen from './screens/profiles/ProfileScreen';
@@ -65,6 +66,11 @@ const App = () => {
                   component={ProfileForm}
                 />
                 <Route exact path='/profile' component={ProfileScreen} />
+                <Route
+                  exact
+                  path='/posts/edit-post-form'
+                  component={EditPostForm}
+                />
                 <Route exact path='/posts/post-form' component={PostForm} />
 
                 <Route
