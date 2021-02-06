@@ -12,10 +12,6 @@ import {
   addDislikeToPostItem,
   removeDislikeFromPostItem,
   deletePostItem,
-  addLikeToCommentItem,
-  removeLikeFromCommentItem,
-  addDislikeToCommentItem,
-  removeDislikeFromCommentItem,
 } from '../../actions/postActions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -45,18 +41,6 @@ const PostItemScreen = ({ match, history }) => {
   const removeComment = useSelector(state => state.removeComment);
   const { success: successRemoveComment } = removeComment;
 
-  const addLikeComment = useSelector(state => state.addLikeComment);
-  const { success: successLikeComment } = addLikeComment;
-
-  const removeLikeComment = useSelector(state => state.removeLikeComment);
-  const { success: successUnlikeComment } = removeLikeComment;
-
-  const addDislikeComment = useSelector(state => state.addDislikeComment);
-  const { success: successDislikeComment } = addDislikeComment;
-
-  const removeDislikeComment = useSelector(state => state.removeDislikeComment);
-  const { success: successUndislikeComment } = removeDislikeComment;
-
   const userLogin = useSelector(state => state.userLogin);
   const { userData } = userLogin;
 
@@ -72,11 +56,7 @@ const PostItemScreen = ({ match, history }) => {
       successLike,
       successUnlike,
       successDislike,
-      successUndislike,
-      successLikeComment,
-      successUnlikeComment,
-      successDislikeComment,
-      successUndislikeComment)
+      successUndislike)
     ) {
       dispatch(getPostItem(postId));
     }
@@ -90,10 +70,6 @@ const PostItemScreen = ({ match, history }) => {
     successUnlike,
     successDislike,
     successUndislike,
-    successLikeComment,
-    successUnlikeComment,
-    successDislikeComment,
-    successUndislikeComment,
   ]);
 
   const deletePostHandler = pId => {
@@ -241,95 +217,6 @@ const PostItemScreen = ({ match, history }) => {
 
                           <td>
                             {comment.date && comment.date.substring(0, 10)}
-                          </td>
-
-                          <td>
-                            <Button
-                              type='button'
-                              className={`btn mx-2 btn-sm ${
-                                comment.commentLikes.find(
-                                  like => like.user === userData._id
-                                )
-                                  ? 'btn-primary'
-                                  : 'btn-light'
-                              }`}
-                              onClick={() => {
-                                if (
-                                  comment.commentLikes.find(
-                                    like => like.user === userData._id
-                                  )
-                                ) {
-                                  dispatch(
-                                    removeLikeFromCommentItem(
-                                      postId,
-                                      comment._id
-                                    )
-                                  );
-                                } else {
-                                  if (
-                                    !comment.commentDislikes.find(
-                                      dislike => dislike.user === userData._id
-                                    )
-                                  ) {
-                                    dispatch(
-                                      addLikeToCommentItem(postId, comment._id)
-                                    );
-                                  }
-                                }
-                              }}
-                            >
-                              <i className='fas fa-thumbs-up'></i>{' '}
-                              <span>
-                                {comment.commentLikes.length > 0 && (
-                                  <span>{comment.commentLikes.length}</span>
-                                )}
-                              </span>
-                            </Button>
-
-                            <Button
-                              type='button'
-                              className={`btn mx-2 btn-sm ${
-                                comment.commentDislikes.find(
-                                  dislike => dislike.user === userData._id
-                                )
-                                  ? 'btn-danger'
-                                  : 'btn-light'
-                              }`}
-                              onClick={() => {
-                                if (
-                                  comment.commentDislikes.find(
-                                    dislike => dislike.user === userData._id
-                                  )
-                                ) {
-                                  dispatch(
-                                    removeDislikeFromCommentItem(
-                                      postId,
-                                      comment._id
-                                    )
-                                  );
-                                } else {
-                                  if (
-                                    !comment.commentLikes.find(
-                                      like => like.user === userData._id
-                                    )
-                                  ) {
-                                    dispatch(
-                                      addDislikeToCommentItem(
-                                        postId,
-                                        comment._id
-                                      )
-                                    );
-                                  }
-                                }
-                              }}
-                            >
-                              <i className='fas fa-thumbs-down'></i>{' '}
-                              <span>
-                                {comment.commentDislikes.length > 0 && (
-                                  <span>{comment.commentDislikes.length}</span>
-                                )}
-                              </span>
-                            </Button>
                           </td>
 
                           <td>

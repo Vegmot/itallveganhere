@@ -299,126 +299,18 @@ const deleteComment = asyncHandler(async (req, res) => {
 // Like a comment
 // POST /api/posts/:postId/comments/:commentId/like
 // private
-const addLikeComment = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.postId);
-
-  if (!req.params.postId.match(/^[0-9a-fA-F]{24}$/) || !post) {
-    res.status(404);
-    throw new Error('Post not found');
-  }
-
-  if (post) {
-    const comment = post.comments.filter(
-      comment => comment._id === req.params.commentId
-    );
-
-    if (comment.commentLikes.find(comLike => comLike.user === req.user._id)) {
-      res.json({ message: 'You unliked this comment' });
-    } else {
-      comment.commentLikes.unshift({ user: req.user._id });
-      await post.save();
-      res.json({ comment, comments: post.comments });
-    }
-  }
-});
 
 // Unlike a post
 // DELETE /api/posts/:postId/comments/:commentId/like
 // private
-const removeLikeComment = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.postId);
-
-  if (!req.params.postId.match(/^[0-9a-fA-F]{24}$/) || !post) {
-    res.status(404);
-    throw new Error('Post not found');
-  }
-
-  if (post) {
-    const comment = post.comments.filter(
-      comment => comment._id === req.params.commentId
-    );
-
-    if (
-      comment.commentLikes.find(
-        like => like.user.toString() !== req.user._id.toString()
-      )
-    ) {
-      res.json({ message: 'You liked this comment' });
-    } else {
-      const removeIndex = comment.commentLikes
-        .map(like => like.user.toString())
-        .indexOf(req.user._id.toString());
-      comment.commentLikes.splice(removeIndex, 1);
-
-      await post.save();
-      res.json(comment.commentLikes);
-    }
-  }
-});
 
 // Dislike a post
 // POST /api/posts/:postId/comments/:commentId/dislike
 // private
-const addDislikeComment = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.postId);
-
-  if (!req.params.postId.match(/^[0-9a-fA-F]{24}$/) || !post) {
-    res.status(404);
-    throw new Error('Post not found');
-  }
-
-  if (post) {
-    const comment = post.comments.filter(
-      comment => comment._id === req.params.commentId
-    );
-
-    if (
-      comment.commentDislikes.find(
-        comDislike => comDislike._id === req.user._id
-      )
-    ) {
-      res.json({ message: 'You undisliked this comment' });
-    } else {
-      comment.commentDislikes.unshift({ user: req.user._id });
-      await post.save();
-      res.json(post.comments);
-    }
-  }
-});
 
 // Undislike a post
 // DELETE /api/posts/:postId/comments/:commentId/dislike
 // private
-const removeDislikeComment = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.postId);
-
-  if (!req.params.postId.match(/^[0-9a-fA-F]{24}$/) || !post) {
-    res.status(404);
-    throw new Error('Post not found');
-  }
-
-  if (post) {
-    const comment = post.comments.filter(
-      comment => comment._id === req.params.commentId
-    );
-
-    if (
-      comment.commentDislikes.find(
-        dislike => dislike.user.toString() !== req.user._id.toString()
-      )
-    ) {
-      res.json({ message: 'You disliked this comment' });
-    } else {
-      const removeIndex = comment.commentDislikes
-        .map(dislike => dislike.user.toString())
-        .indexOf(req.user._id.toString());
-      comment.commentDislikes.splice(removeIndex, 1);
-
-      await post.save();
-      res.json(comment.commentDislikes);
-    }
-  }
-});
 
 export {
   createPost,
@@ -433,8 +325,4 @@ export {
   addComment,
   editComment,
   deleteComment,
-  addLikeComment,
-  removeLikeComment,
-  addDislikeComment,
-  removeDislikeComment,
 };
