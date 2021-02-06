@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Table, Button, Card, Spinner } from 'react-bootstrap';
 import Message from '../../components/Message';
 import CommentForm from './CommentForm';
@@ -113,9 +113,9 @@ const PostItemScreen = ({ match, history }) => {
       {loading && <Spinner animation='border' variant='primary' />}
       {error && <Message variant='danger'>{error}</Message>}
 
-      <Button onClick={history.goBack} className='btn btn-secondary mb-3'>
-        Go back
-      </Button>
+      <Link to='/posts' className='btn btn-secondary mb-3'>
+        Back to posts
+      </Link>
 
       {post ? (
         <>
@@ -367,4 +367,4 @@ const PostItemScreen = ({ match, history }) => {
   );
 };
 
-export default withRouter(PostItemScreen);
+export default PostItemScreen;
