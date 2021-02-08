@@ -9,6 +9,7 @@ import productRoute from './routes/productRoute.js';
 import profileRoute from './routes/profileRoute.js';
 import userRoute from './routes/userRoute.js';
 import uploadRoute from './routes/uploadRoutes.js';
+// maybe later I'll practice implementing Firebase
 
 dotenv.config();
 const app = express();
